@@ -1,0 +1,182 @@
+{\rtf1\ansi\uc0\deff0{\fonttbl{\f0\fmodern\fprq1\fcharset0;}}{\colortbl;\red136\green136\blue136;\red186\green33\blue33;\red0\green68\blue221;\red102\green102\blue102;\red64\green128\blue128;\red160\green160\blue0;\red25\green23\blue124;\red0\green128\blue0;\red187\green102\blue136;\red187\green102\blue34;\red136\green0\blue0;\red170\green34\blue255;\red153\green153\blue153;\red0\green160\blue0;\red160\green0\blue0;\red255\green0\blue0;\red128\green0\blue128;\red176\green0\blue64;\red0\green0\blue255;\red187\green187\blue187;\red188\green122\blue0;\red0\green0\blue128;\red125\green144\blue41;\red210\green65\blue58;}\f0 {\cf5\i /*\par
+ * To change this license header, choose License Headers in Project Properties.\par
+ * To change this template file, choose Tools | Templates\par
+ * and open the template in the editor.\par
+ */}\par
+{\cf8\b package} {\cf19\b bauernopfer}{\cf4 ;}\par
+\par
+{\cf8\b import} {\cf19\b java.util.ArrayList}{\cf4 ;}\par
+\par
+{\cf5\i /**\par
+ *\par
+ * @author lars\par
+ */}\par
+{\cf8\b public} {\cf8\b class} {\cf19\b BauernAL} {\cf4 \{}\par
+\par
+    {\cf8\b public} {\cf8\b static} {\cf8\b final} Punkt{\cf4 [}{\cf4 ]} RICHTUNGEN {\cf4 =} {\cf8\b new} Punkt{\cf4 [}{\cf4 ]}{\cf4 \{}{\cf8\b new} Punkt{\cf4 (}{\cf4 (}{\cf18 byte}{\cf4 )} {\cf4 0}{\cf4 ,} {\cf4 (}{\cf18 byte}{\cf4 )} {\cf4 -}{\cf4 1}{\cf4 )}{\cf4 ,} {\cf8\b new} Punkt{\cf4 (}{\cf4 (}{\cf18 byte}{\cf4 )} {\cf4 0}{\cf4 ,} {\cf4 (}{\cf18 byte}{\cf4 )} {\cf4 1}{\cf4 )}{\cf4 ,} {\cf8\b new} Punkt{\cf4 (}{\cf4 (}{\cf18 byte}{\cf4 )} {\cf4 -}{\cf4 1}{\cf4 ,} {\cf4 (}{\cf18 byte}{\cf4 )} {\cf4 0}{\cf4 )}{\cf4 ,} {\cf8\b new} Punkt{\cf4 (}{\cf4 (}{\cf18 byte}{\cf4 )} {\cf4 1}{\cf4 ,} {\cf4 (}{\cf18 byte}{\cf4 )} {\cf4 0}{\cf4 )}{\cf4 \}}{\cf4 ;} {\cf5\i //Bewegungsrichtungen Bauer\par
+}\par
+    {\cf8\b public} {\cf8\b static} Punktmenge {\cf19 platziereBauern}{\cf4 (}{\cf18 byte} bauern{\cf4 )} {\cf4 \{} {\cf5\i //Platziert "bauern" Bauern, falls eine Dame im Spiel ist, in einer Reihe, sonst in einer Diagonale\par
+}        ArrayList{\cf4 <}Punkt{\cf4 >} result {\cf4 =} {\cf8\b new} ArrayList{\cf4 (}{\cf4 )}{\cf4 ;}\par
+        {\cf18 float} faktor {\cf4 =} {\cf4 8.0f} {\cf4 /} {\cf4 (}{\cf18 float}{\cf4 )} bauern{\cf4 ;} {\cf5\i //Sorgt f{\u252}r eine gleichm{\u228}{\u223}ige Verteilung der Bauern auf der 8 Felder langen Diagonalen/Reihe\par
+}        {\cf8\b if} {\cf4 (}{\cf4 !}Bauernopfer{\cf4 .}{\cf23 dame}{\cf4 )} {\cf4 \{}\par
+            {\cf8\b for} {\cf4 (}{\cf18 byte} b {\cf4 =} {\cf4 0}{\cf4 ;} b {\cf4 <} bauern{\cf4 ;} b{\cf4 +}{\cf4 +}{\cf4 )} {\cf4 \{}\par
+                result{\cf4 .}{\cf23 add}{\cf4 (}{\cf8\b new} Punkt{\cf4 (}{\cf4 (}{\cf18 byte}{\cf4 )} {\cf4 (}b {\cf4 *} faktor{\cf4 )}{\cf4 ,} {\cf4 (}{\cf18 byte}{\cf4 )} {\cf4 (}b {\cf4 *} faktor{\cf4 )}{\cf4 )}{\cf4 )}{\cf4 ;} {\cf5\i //X und Y-Koordinate {\u228}ndern sich\par
+}            {\cf4 \}}\par
+        {\cf4 \}} {\cf8\b else} {\cf4 \{}\par
+            {\cf8\b for} {\cf4 (}{\cf18 byte} b {\cf4 =} {\cf4 0}{\cf4 ;} b {\cf4 <} bauern{\cf4 ;} b{\cf4 +}{\cf4 +}{\cf4 )} {\cf4 \{}\par
+                result{\cf4 .}{\cf23 add}{\cf4 (}{\cf8\b new} Punkt{\cf4 (}{\cf4 (}{\cf18 byte}{\cf4 )} {\cf4 (}b {\cf4 *} faktor{\cf4 )}{\cf4 ,} {\cf4 (}{\cf18 byte}{\cf4 )} {\cf4 3}{\cf4 )}{\cf4 )}{\cf4 ;} {\cf5\i //Nur die X-Koordinate {\u228}ndert sich, die Y-Koordinate bleibt 3(m{\u246}glichst mittig)\par
+}            {\cf4 \}}\par
+        {\cf4 \}}\par
+        {\cf8\b return} {\cf8\b new} Punktmenge{\cf4 (}result{\cf4 )}{\cf4 ;}\par
+    {\cf4 \}}\par
+\par
+    {\cf8\b public} {\cf8\b static} {\cf18 boolean} {\cf19 imFeld}{\cf4 (}Punkt p{\cf4 )} {\cf4 \{} {\cf5\i //Ermittelt, ob ein Punkt p innerhalb des Spielfeldes liegt\par
+}        {\cf8\b return} p{\cf4 .}{\cf23 x} {\cf4 >} {\cf4 0} {\cf4 &}{\cf4 &} p{\cf4 .}{\cf23 y} {\cf4 >} {\cf4 0} {\cf4 &}{\cf4 &} p{\cf4 .}{\cf23 x} {\cf4 <} {\cf4 8} {\cf4 &}{\cf4 &} p{\cf4 .}{\cf23 y} {\cf4 <} {\cf4 8}{\cf4 ;}\par
+    {\cf4 \}}\par
+\par
+    {\cf8\b public} {\cf8\b static} ArrayList{\cf4 <}Punkt{\cf4 >} {\cf19 bestimmeFelder}{\cf4 (}Punktmenge bauern{\cf4 ,} Punkt bauer{\cf4 )} {\cf4 \{} {\cf5\i //Bestimmt die Punkte, wo ein Bauer innerhalb eines Zuges hinziehen kann\par
+}        ArrayList{\cf4 <}Punkt{\cf4 >} ergebnis {\cf4 =} {\cf8\b new} ArrayList{\cf4 (}{\cf4 )}{\cf4 ;}\par
+        {\cf8\b if} {\cf4 (}bauer{\cf4 .}{\cf23 x} {\cf4 !}{\cf4 =} {\cf4 0}{\cf4 )} {\cf4 \{} {\cf5\i //Befindet er sich nicht am linken Rand\par
+}            ergebnis{\cf4 .}{\cf23 add}{\cf4 (}{\cf8\b new} Punkt{\cf4 (}{\cf4 (}{\cf18 byte}{\cf4 )} {\cf4 (}bauer{\cf4 .}{\cf23 x} {\cf4 -} {\cf4 1}{\cf4 )}{\cf4 ,} bauer{\cf4 .}{\cf23 y}{\cf4 )}{\cf4 )}{\cf4 ;} {\cf5\i //Kann er nach links ziehen\par
+}        {\cf4 \}}\par
+        {\cf8\b if} {\cf4 (}bauer{\cf4 .}{\cf23 y} {\cf4 !}{\cf4 =} {\cf4 0}{\cf4 )} {\cf4 \{} {\cf5\i //Befindet er sich nicht am rechten Rand\par
+}            ergebnis{\cf4 .}{\cf23 add}{\cf4 (}{\cf8\b new} Punkt{\cf4 (}bauer{\cf4 .}{\cf23 x}{\cf4 ,} {\cf4 (}{\cf18 byte}{\cf4 )} {\cf4 (}bauer{\cf4 .}{\cf23 y} {\cf4 -} {\cf4 1}{\cf4 )}{\cf4 )}{\cf4 )}{\cf4 ;} {\cf5\i //Kann er nach rechts ziehen\par
+}        {\cf4 \}}\par
+        {\cf8\b if} {\cf4 (}bauer{\cf4 .}{\cf23 x} {\cf4 !}{\cf4 =} {\cf4 7}{\cf4 )} {\cf4 \{} {\cf5\i //Befindet er sich nicht am unteren Rand\par
+}            ergebnis{\cf4 .}{\cf23 add}{\cf4 (}{\cf8\b new} Punkt{\cf4 (}{\cf4 (}{\cf18 byte}{\cf4 )} {\cf4 (}bauer{\cf4 .}{\cf23 x} {\cf4 +} {\cf4 1}{\cf4 )}{\cf4 ,} bauer{\cf4 .}{\cf23 y}{\cf4 )}{\cf4 )}{\cf4 ;} {\cf5\i //Kann er nach unten ziehen\par
+}        {\cf4 \}}\par
+        {\cf8\b if} {\cf4 (}bauer{\cf4 .}{\cf23 y} {\cf4 !}{\cf4 =} {\cf4 7}{\cf4 )} {\cf4 \{} {\cf5\i //Befindet er sich nicht am oberen Rand\par
+}            ergebnis{\cf4 .}{\cf23 add}{\cf4 (}{\cf8\b new} Punkt{\cf4 (}bauer{\cf4 .}{\cf23 x}{\cf4 ,} {\cf4 (}{\cf18 byte}{\cf4 )} {\cf4 (}bauer{\cf4 .}{\cf23 y} {\cf4 +} {\cf4 1}{\cf4 )}{\cf4 )}{\cf4 )}{\cf4 ;} {\cf5\i //Kann er nach oben ziehen\par
+}        {\cf4 \}}\par
+        Punktmenge feld {\cf4 =} {\cf8\b new} Punktmenge{\cf4 (}ergebnis{\cf4 )}{\cf4 ;}\par
+        Punktmenge felder {\cf4 =} feld{\cf4 .}{\cf23 nund}{\cf4 (}bauern{\cf4 )}{\cf4 ;} {\cf5\i //Alle Bewegungsm{\u246}glichkeiten, wo sich anderer Bauer befindet, entfernen\par
+}        {\cf8\b return} felder{\cf4 .}{\cf23 punkte}{\cf4 ;}\par
+    {\cf4 \}}\par
+\par
+    {\cf8\b public} {\cf8\b static} Punktmenge {\cf19 bestimmeFelder}{\cf4 (}Punktmenge bauern{\cf4 )} {\cf4 \{} {\cf5\i //Bestimmt alle Felder, die von allen "bauern" zusammen innerhalb eines Zuges erreicht werden k{\u246}nnen\par
+}        ArrayList{\cf4 <}Punkt{\cf4 >} insgesamt {\cf4 =} {\cf8\b new} ArrayList{\cf4 (}{\cf4 )}{\cf4 ;} {\cf5\i //Ergebnis\par
+}        {\cf8\b for} {\cf4 (}Punkt bauer {\cf4 :} bauern{\cf4 .}{\cf23 punkte}{\cf4 )} {\cf4 \{}\par
+            insgesamt{\cf4 .}{\cf23 addAll}{\cf4 (}bestimmeFelder{\cf4 (}bauern{\cf4 ,} bauer{\cf4 )}{\cf4 )}{\cf4 ;} {\cf5\i //Alle Zugm{\u246}glichkeiten jedes Bauern zum Ergebnis hinzuf{\u252}gen\par
+}        {\cf4 \}}\par
+        {\cf8\b return} {\cf8\b new} Punktmenge{\cf4 (}{\cf8\b new} Punktmenge{\cf4 (}insgesamt{\cf4 )}{\cf4 .}{\cf23 raster}{\cf4 )}{\cf4 ;} {\cf5\i //(1) Gibt das Ergebnis als Punktmenge zur{\u252}ck, und (2) entfernt doppelt vorkommende Punkte \par
+}    {\cf4 \}}\par
+\par
+    {\cf8\b public} {\cf8\b static} {\cf18 byte}{\cf4 [}{\cf4 ]}{\cf4 [}{\cf4 ]} {\cf19 bestimmeFelder}{\cf4 (}Punktmenge bauern{\cf4 ,} {\cf18 byte} zuege{\cf4 )} {\cf4 \{} {\cf5\i //Bestimmt alle Felder, die von allen "bauern" zusammen innerhalb von "zuege" Z{\u252}gen erreicht werden k{\u246}nnen\par
+}        {\cf18 byte}{\cf4 [}{\cf4 ]}{\cf4 [}{\cf4 ]} ergebnis {\cf4 =} {\cf8\b new} {\cf18 byte}{\cf4 [}{\cf4 8}{\cf4 ]}{\cf4 [}{\cf4 8}{\cf4 ]}{\cf4 ;} {\cf5\i //Ergebnis als Spielfeld. Jedes Feld speichert eine Nummer, die angibt, wie viele Z{\u252}ge die Bauern brauchen, um das Feld zu erreichen\par
+}        ArrayList{\cf4 <}Punkt{\cf4 >} neu_checken{\cf4 ;} {\cf5\i //Punkte, die danach neu hinzukommen, und gepr{\u252}ft werden sollen\par
+}        ArrayList{\cf4 <}Punkt{\cf4 >} checken {\cf4 =} {\cf8\b new} ArrayList{\cf4 (}{\cf4 )}{\cf4 ;} {\cf5\i //Punkte, f{\u252}r die ermittelt werden soll, welche Felder die Bauern von ihnen aus erreichen k{\u246}nnen\par
+}        checken{\cf4 .}{\cf23 addAll}{\cf4 (}bauern{\cf4 .}{\cf23 punkte}{\cf4 )}{\cf4 ;} {\cf5\i //Es f{\u228}ngt bei den Bauern an\par
+}        {\cf18 byte} durchlauf {\cf4 =} {\cf4 1}{\cf4 ;} {\cf5\i //Gibt an, der wievielte Zug momentan simuliert wird\par
+}        {\cf8\b while} {\cf4 (}{\cf8\b true}{\cf4 )} {\cf4 \{}\par
+            {\cf8\b if} {\cf4 (}checken{\cf4 .}{\cf23 isEmpty}{\cf4 (}{\cf4 )} {\cf4 |}{\cf4 |} durchlauf {\cf4 >} zuege{\cf4 )} {\cf4 \{} {\cf5\i //Wenn es keine weitere von den Bauern erreichbare Felder gibt, oder schon genug Z{\u252}ge simuliert worden sind\par
+}                {\cf8\b break}{\cf4 ;} {\cf5\i //Dann sind wir fertig\par
+}            {\cf4 \}}\par
+            neu_checken {\cf4 =} {\cf8\b new} ArrayList{\cf4 (}{\cf4 )}{\cf4 ;}\par
+            {\cf8\b for} {\cf4 (}Punkt p {\cf4 :} checken{\cf4 )} {\cf4 \{} {\cf5\i //F{\u252}r alle zu pr{\u252}fenden Punkte\par
+}                ArrayList{\cf4 <}Punkt{\cf4 >} vpe {\cf4 =} bestimmeFelder{\cf4 (}{\cf8\b new} Punktmenge{\cf4 (}{\cf4 )}{\cf4 ,} p{\cf4 )}{\cf4 ;} {\cf5\i //Die von ihnen aus erreichbaren Punkte bestimmen\par
+}                {\cf8\b for} {\cf4 (}Punkt q {\cf4 :} vpe{\cf4 )} {\cf4 \{} {\cf5\i //Von den erreichbaren Punkten\par
+}                    {\cf8\b if} {\cf4 (}ergebnis{\cf4 [}q{\cf4 .}{\cf23 x}{\cf4 ]}{\cf4 [}q{\cf4 .}{\cf23 y}{\cf4 ]} {\cf4 =}{\cf4 =} {\cf4 0} {\cf4 &}{\cf4 &} {\cf4 !}bauern{\cf4 .}{\cf23 raster}{\cf4 [}q{\cf4 .}{\cf23 x}{\cf4 ]}{\cf4 [}q{\cf4 .}{\cf23 y}{\cf4 ]}{\cf4 )} {\cf4 \{} {\cf5\i //Wenn der Punkt nicht schon erreicht wurde, und dort kein Bauer ist\par
+}                        ergebnis{\cf4 [}q{\cf4 .}{\cf23 x}{\cf4 ]}{\cf4 [}q{\cf4 .}{\cf23 y}{\cf4 ]} {\cf4 =} {\cf4 (}{\cf18 byte}{\cf4 )} {\cf4 (}durchlauf{\cf4 )}{\cf4 ;} {\cf5\i //Dann speichern wir, das er im Zug "durchlauf" erreicht werden kann\par
+}                        neu_checken{\cf4 .}{\cf23 add}{\cf4 (}q{\cf4 )}{\cf4 ;} {\cf5\i //F{\u252}r diesen Punkt soll dann im n{\u228}chsten Durchlauf gepr{\u252}ft werden, welche Felder von ihm aus erreichbar sind\par
+}                    {\cf4 \}}\par
+                {\cf4 \}}\par
+            {\cf4 \}}\par
+            {\cf5\i //Im n{\u228}chsten Durchlauf sollen die Punkte gepr{\u252}ft werden, die im jetztigen Durchlauf als "im n{\u228}chsten Durchlauf zu pr{\u252}fen" deklariert wurden\par
+}            checken {\cf4 =} {\cf8\b new} ArrayList{\cf4 (}{\cf4 )}{\cf4 ;}\par
+            {\cf8\b for} {\cf4 (}Punkt k {\cf4 :} neu_checken{\cf4 )} {\cf4 \{}\par
+                checken{\cf4 .}{\cf23 add}{\cf4 (}k{\cf4 )}{\cf4 ;}\par
+            {\cf4 \}}\par
+            durchlauf{\cf4 +}{\cf4 +}{\cf4 ;} {\cf5\i //N{\u228}chster Durchlauf !\par
+}        {\cf4 \}}\par
+        {\cf8\b return} ergebnis{\cf4 ;}\par
+    {\cf4 \}}\par
+\par
+    {\cf8\b public} {\cf8\b static} Punkt{\cf4 [}{\cf4 ]} {\cf19 zieheBauern}{\cf4 (}Punktmenge bauern{\cf4 ,} Punkt turm{\cf4 )} {\cf4 \{} {\cf5\i //Gibt ein Punkt-Array zur{\u252}ck. Der erste Punkt gibt den gew{\u228}hlten Bauern an, der zweite den Punkt, wo dieser hinzieht\par
+}        {\cf18 byte}{\cf4 [}{\cf4 ]}{\cf4 [}{\cf4 ]} schlagbar {\cf4 =} BauernAL{\cf4 .}{\cf23 bestimmeFelder}{\cf4 (}bauern{\cf4 ,} Bauernopfer{\cf4 .}{\cf23 bleibende_zuege}{\cf4 )}{\cf4 ;} {\cf5\i //Bestimmt alle Felder, die von allen Bauern zusammen innerhalb von den bleibenden Z{\u252}gen erreicht werden k{\u246}nnen\par
+}        {\cf18 byte} bester_bauer {\cf4 =} {\cf4 0}{\cf4 ;}\par
+        {\cf18 byte} beste_zugzahl {\cf4 =} Byte{\cf4 .}{\cf23 MAX_VALUE}{\cf4 ;}\par
+        {\cf8\b if} {\cf4 (}schlagbar{\cf4 [}turm{\cf4 .}{\cf23 x}{\cf4 ]}{\cf4 [}turm{\cf4 .}{\cf23 y}{\cf4 ]} {\cf4 !}{\cf4 =} {\cf4 0}{\cf4 )} {\cf4 \{} {\cf5\i //Sollte der Turm mithilfe der {\u252}brig bleibenden Z{\u252}ge erreichbar sein, wird zum Turm hin gezogen\par
+}            {\cf5\i //So ermitteln wir zuerst den Bauern, der am n{\u228}chsten am Turm liegt\par
+}            {\cf8\b for} {\cf4 (}{\cf18 byte} i {\cf4 =} {\cf4 0}{\cf4 ;} i {\cf4 <} bauern{\cf4 .}{\cf23 punkte}{\cf4 .}{\cf23 size}{\cf4 (}{\cf4 )}{\cf4 ;} i{\cf4 +}{\cf4 +}{\cf4 )} {\cf4 \{}\par
+                Punkt d {\cf4 =} turm{\cf4 .}{\cf23 minus}{\cf4 (}bauern{\cf4 .}{\cf23 punkte}{\cf4 .}{\cf23 get}{\cf4 (}i{\cf4 )}{\cf4 )}{\cf4 ;} {\cf5\i //Abstand in x und y Richtung zum Turm\par
+}                {\cf18 byte} f {\cf4 =} {\cf4 (}{\cf18 byte}{\cf4 )} {\cf4 (}Math{\cf4 .}{\cf23 abs}{\cf4 (}d{\cf4 .}{\cf23 x}{\cf4 )} {\cf4 +} Math{\cf4 .}{\cf23 abs}{\cf4 (}d{\cf4 .}{\cf23 y}{\cf4 )}{\cf4 )}{\cf4 ;} {\cf5\i //Ben{\u246}tigte Z{\u252}ge\par
+}                {\cf8\b if} {\cf4 (}f {\cf4 <} beste_zugzahl{\cf4 )} {\cf4 \{} {\cf5\i //Wenn dieser Bauer weniger Z{\u252}ge ben{\u246}tigen w{\u252}rde\par
+}                    beste_zugzahl {\cf4 =} f{\cf4 ;} {\cf5\i //Die beste Zugzahl ist dann f\par
+}                    bester_bauer {\cf4 =} i{\cf4 ;} {\cf5\i //Der beste Bauer ist dann dieser\par
+}                {\cf4 \}}\par
+            {\cf4 \}}\par
+            Punkt d {\cf4 =} turm{\cf4 .}{\cf23 minus}{\cf4 (}bauern{\cf4 .}{\cf23 punkte}{\cf4 .}{\cf23 get}{\cf4 (}bester_bauer{\cf4 )}{\cf4 )}{\cf4 ;} {\cf5\i //Weg, der zum Turm gegangen werden muss\par
+}            {\cf18 byte} r{\cf4 ;}\par
+            {\cf8\b if} {\cf4 (}d{\cf4 .}{\cf23 x} {\cf4 !}{\cf4 =} {\cf4 0}{\cf4 )} {\cf4 \{} {\cf5\i //Ist der noch nicht auf der gleichen x-Koordinate wie der Turm\par
+}                {\cf5\i //Dann muss er da erstmal hin gehen\par
+}                {\cf8\b if} {\cf4 (}d{\cf4 .}{\cf23 x} {\cf4 <} {\cf4 0}{\cf4 )} {\cf4 \{} {\cf5\i //Ist er rechts vom Turm\par
+}                    r {\cf4 =} {\cf4 2}{\cf4 ;} {\cf5\i //Muss er nach links gehen\par
+}                {\cf4 \}} {\cf8\b else} {\cf4 \{}\par
+                    r {\cf4 =} {\cf4 3}{\cf4 ;} {\cf5\i //Sonst nach rechts\par
+}                {\cf4 \}}\par
+            {\cf4 \}} {\cf8\b else} {\cf8\b if} {\cf4 (}d{\cf4 .}{\cf23 y} {\cf4 <} {\cf4 0}{\cf4 )} {\cf4 \{} {\cf5\i //Ansonsten ist er auf der gleichen x-Koordinate wie der Turm, in diesem Fall unter ihm\par
+}                r {\cf4 =} {\cf4 0}{\cf4 ;} {\cf5\i //Dann muss er nach oben gehen\par
+}            {\cf4 \}} {\cf8\b else} {\cf4 \{}\par
+                r {\cf4 =} {\cf4 1}{\cf4 ;} {\cf5\i //Ansonsten geht's nach unten\par
+}            {\cf4 \}}\par
+            {\cf8\b return} {\cf8\b new} Punkt{\cf4 [}{\cf4 ]} {\cf4 \{}bauern{\cf4 .}{\cf23 punkte}{\cf4 .}{\cf23 get}{\cf4 (}bester_bauer{\cf4 )}{\cf4 ,} bauern{\cf4 .}{\cf23 punkte}{\cf4 .}{\cf23 get}{\cf4 (}bester_bauer{\cf4 )}{\cf4 .}{\cf23 plus}{\cf4 (}RICHTUNGEN{\cf4 [}r{\cf4 ]}{\cf4 )}{\cf4 \}}{\cf4 ;} {\cf5\i //Geben wir zur{\u252}ck : Der n{\u228}chste Bauer in die bestimmte Richtung\par
+}        {\cf4 \}}\par
+        {\cf18 short} beste_gewichtung {\cf4 =} Short{\cf4 .}{\cf23 MAX_VALUE}{\cf4 ;}\par
+        {\cf18 byte} meiste_erreichbare_felder {\cf4 =} Byte{\cf4 .}{\cf23 MAX_VALUE}{\cf4 ;}\par
+        {\cf18 double} beste_entfernung {\cf4 =} Double{\cf4 .}{\cf23 MAX_VALUE}{\cf4 ;}\par
+        {\cf18 byte} richtung {\cf4 =} {\cf4 0}{\cf4 ;}\par
+        {\cf5\i //Brute-Force ! Wir ermitteln, welcher Zug sich aus Sicht der Bauern am meisten lohnt\par
+}        {\cf8\b for} {\cf4 (}{\cf18 byte} i {\cf4 =} {\cf4 0}{\cf4 ;} i {\cf4 <} bauern{\cf4 .}{\cf23 punkte}{\cf4 .}{\cf23 size}{\cf4 (}{\cf4 )}{\cf4 ;} i{\cf4 +}{\cf4 +}{\cf4 )} {\cf4 \{} {\cf5\i //Alle Bauern durchgehen\par
+}            {\cf8\b for} {\cf4 (}{\cf18 byte} r {\cf4 =} {\cf4 0}{\cf4 ;} r {\cf4 <} {\cf4 4}{\cf4 ;} r{\cf4 +}{\cf4 +}{\cf4 )} {\cf4 \{} {\cf5\i //Alle m{\u246}glichen 4 Bewegungsrichtungen f{\u252}r jeden durchgehen\par
+}                Punkt bauer {\cf4 =} bauern{\cf4 .}{\cf23 punkte}{\cf4 .}{\cf23 get}{\cf4 (}i{\cf4 )}{\cf4 ;}\par
+                Punkt neue_position {\cf4 =} bauer{\cf4 .}{\cf23 plus}{\cf4 (}RICHTUNGEN{\cf4 [}r{\cf4 ]}{\cf4 )}{\cf4 ;} {\cf5\i //Position des Bauern nach ziehen in die Richtung r\par
+}                {\cf8\b if} {\cf4 (}{\cf4 !}BauernAL{\cf4 .}{\cf23 imFeld}{\cf4 (}neue_position{\cf4 )} {\cf4 |}{\cf4 |} bauern{\cf4 .}{\cf23 raster}{\cf4 [}neue_position{\cf4 .}{\cf23 x}{\cf4 ]}{\cf4 [}neue_position{\cf4 .}{\cf23 y}{\cf4 ]}{\cf4 )} {\cf4 \{}\par
+                    {\cf8\b continue}{\cf4 ;} {\cf5\i //Dann simulieren wir hier nicht weiter\par
+}                {\cf4 \}}\par
+                {\cf5\i //Wir simulieren nun\par
+}                Punktmenge bauern_moved {\cf4 =} {\cf8\b new} Punktmenge{\cf4 (}bauern{\cf4 .}{\cf23 raster}{\cf4 )}{\cf4 ;} {\cf5\i //Die Bauern, nach dem Zug\par
+}                bauern_moved{\cf4 .}{\cf23 raster}{\cf4 [}bauer{\cf4 .}{\cf23 x}{\cf4 ]}{\cf4 [}bauer{\cf4 .}{\cf23 y}{\cf4 ]} {\cf4 =} {\cf8\b false}{\cf4 ;} {\cf5\i //Der Bauer wird an der alten Stelle gel{\u246}scht\par
+}                bauern_moved{\cf4 .}{\cf23 raster}{\cf4 [}neue_position{\cf4 .}{\cf23 x}{\cf4 ]}{\cf4 [}neue_position{\cf4 .}{\cf23 y}{\cf4 ]} {\cf4 =} {\cf8\b true}{\cf4 ;} {\cf5\i //Und an der neuen gesetzt\par
+}                bauern_moved {\cf4 =} {\cf8\b new} Punktmenge{\cf4 (}bauern_moved{\cf4 .}{\cf23 raster}{\cf4 )}{\cf4 ;} {\cf5\i //Punktmenge aktualisieren\par
+}                {\cf18 byte}{\cf4 [}{\cf4 ]}{\cf4 [}{\cf4 ]} gewichtungen {\cf4 =} TurmAL{\cf4 .}{\cf23 gewichteteFelder}{\cf4 (}bauern_moved{\cf4 ,} turm{\cf4 )}{\cf4 ;} {\cf5\i //Spielbrett, auf dem eingetragen ist, 4-wieviele Z{\u252}ge der Turm br{\u228}uchte, um das jeweilige Feld zu erreichen, also die "Gewichtungen". Felder, die er nicht erreichen kann, sind 0.\par
+}                Punktmenge p {\cf4 =} {\cf8\b new} Punktmenge{\cf4 (}gewichtungen{\cf4 )}{\cf4 ;} {\cf5\i //Punktmenge, repr{\u228}sentiert erreichbare Felder\par
+}                {\cf18 byte} e {\cf4 =} {\cf4 (}{\cf18 byte}{\cf4 )} p{\cf4 .}{\cf23 punkte}{\cf4 .}{\cf23 size}{\cf4 (}{\cf4 )}{\cf4 ;} {\cf5\i //Wie viele Felder sind {\u252}berhaupt erreichbar ?\par
+}                {\cf18 short} g {\cf4 =} {\cf4 0}{\cf4 ;} {\cf5\i //Insgesamt-Gewichtung\par
+}                {\cf8\b for} {\cf4 (}{\cf18 byte}{\cf4 [}{\cf4 ]} spalte {\cf4 :} gewichtungen{\cf4 )} {\cf4 \{}\par
+                    {\cf8\b for} {\cf4 (}{\cf18 byte} zeile {\cf4 :} spalte{\cf4 )} {\cf4 \{}\par
+                        g {\cf4 +}{\cf4 =} zeile{\cf4 ;} {\cf5\i //Von jedem Feld die Gewichtung hinzuf{\u252}gen\par
+}                    {\cf4 \}}\par
+                {\cf4 \}}\par
+                {\cf18 double} entfernung {\cf4 =} TurmAL{\cf4 .}{\cf23 bestimmeEntfernung}{\cf4 (}bauern_moved{\cf4 ,} turm{\cf4 )}{\cf4 ;} {\cf5\i //Insgesamt-Entfernung der Bauern zum Turm\par
+}                {\cf8\b if} {\cf4 (}e {\cf4 <} meiste_erreichbare_felder{\cf4 )} {\cf4 \{} {\cf5\i //W{\u252}rde dieser Zug dem Turm mehr Freiheiten wegnehmen ?\par
+}                    {\cf5\i //Alle "Rekord-Variablen" auf den Stand vom jetzigen Rekordhalter setzen, und speichern, das diesen Bauer in diese Richtung zu ziehen die beste Wahl ist\par
+}                    richtung {\cf4 =} r{\cf4 ;}\par
+                    bester_bauer {\cf4 =} i{\cf4 ;}\par
+                    meiste_erreichbare_felder {\cf4 =} e{\cf4 ;}\par
+                    beste_entfernung {\cf4 =} entfernung{\cf4 ;}\par
+                    beste_gewichtung {\cf4 =} g{\cf4 ;}\par
+                {\cf4 \}} {\cf8\b else} {\cf8\b if} {\cf4 (}e {\cf4 =}{\cf4 =} meiste_erreichbare_felder{\cf4 )} {\cf4 \{} {\cf5\i //W{\u228}re dieser Zug in Hinsicht auf die erreichbaren Felder equivalent zum jetzigen Rekordhalter ?\par
+}                    {\cf8\b if} {\cf4 (}g {\cf4 <} beste_gewichtung{\cf4 )} {\cf4 \{} {\cf5\i //W{\u252}rde dieser Zug im Vergleich zum jetzigen Rekordhalter dem Turm "wertvollere" Freiheiten wegnehmen ?\par
+}                        {\cf5\i //Alle "Rekord-Variablen" auf den Stand vom jetzigen Rekordhalter setzen, und speichern, das diesen Bauer in diese Richtung zu ziehen die beste Wahl ist\par
+}                        beste_gewichtung {\cf4 =} g{\cf4 ;}\par
+                        richtung {\cf4 =} r{\cf4 ;}\par
+                        bester_bauer {\cf4 =} i{\cf4 ;}\par
+                        meiste_erreichbare_felder {\cf4 =} e{\cf4 ;}\par
+                        beste_entfernung {\cf4 =} entfernung{\cf4 ;}\par
+                    {\cf4 \}} {\cf8\b else} {\cf8\b if} {\cf4 (}g {\cf4 =}{\cf4 =} beste_gewichtung{\cf4 )} {\cf4 \{} {\cf5\i //W{\u228}re dieser Zug AUCH in Hinsicht auf die "wertvollen" Freiheiten equivalent zum jetzigen Rekordhalter ?\par
+}                        {\cf8\b if} {\cf4 (}entfernung {\cf4 <} beste_entfernung{\cf4 )} {\cf4 \{} {\cf5\i //Jedoch bei diesem Zug die Bauern n{\u228}her am Turm dran\par
+}                            {\cf5\i //Alle "Rekord-Variablen" auf den Stand vom jetzigen Rekordhalter setzen, und speichern, das diesen Bauer in diese Richtung zu ziehen die beste Wahl ist\par
+}                            beste_gewichtung {\cf4 =} g{\cf4 ;}\par
+                            richtung {\cf4 =} r{\cf4 ;}\par
+                            bester_bauer {\cf4 =} i{\cf4 ;}\par
+                            meiste_erreichbare_felder {\cf4 =} e{\cf4 ;}\par
+                            beste_entfernung {\cf4 =} entfernung{\cf4 ;}\par
+                        {\cf4 \}}\par
+                    {\cf4 \}}\par
+                {\cf4 \}}\par
+            {\cf4 \}}\par
+        {\cf4 \}}\par
+        {\cf8\b return} {\cf8\b new} Punkt{\cf4 [}{\cf4 ]} {\cf4 \{}bauern{\cf4 .}{\cf23 punkte}{\cf4 .}{\cf23 get}{\cf4 (}bester_bauer{\cf4 )}{\cf4 ,} bauern{\cf4 .}{\cf23 punkte}{\cf4 .}{\cf23 get}{\cf4 (}bester_bauer{\cf4 )}{\cf4 .}{\cf23 plus}{\cf4 (}RICHTUNGEN{\cf4 [}richtung{\cf4 ]}{\cf4 )}{\cf4 \}}{\cf4 ;} {\cf5\i //Am Ende geben wir den nach den Prinzipien gefundenen besten Zug zur{\u252}ck\par
+}    {\cf4 \}}\par
+{\cf4 \}}\par
+}

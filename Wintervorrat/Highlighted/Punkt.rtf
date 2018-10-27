@@ -1,0 +1,30 @@
+{\rtf1\ansi\uc0\deff0{\fonttbl{\f0\fmodern\fprq1\fcharset0;}}{\colortbl;\red136\green136\blue136;\red186\green33\blue33;\red0\green68\blue221;\red102\green102\blue102;\red64\green128\blue128;\red160\green160\blue0;\red25\green23\blue124;\red0\green128\blue0;\red187\green102\blue136;\red187\green102\blue34;\red136\green0\blue0;\red170\green34\blue255;\red153\green153\blue153;\red0\green160\blue0;\red160\green0\blue0;\red255\green0\blue0;\red128\green0\blue128;\red176\green0\blue64;\red0\green0\blue255;\red187\green187\blue187;\red188\green122\blue0;\red0\green0\blue128;\red125\green144\blue41;\red210\green65\blue58;}\f0 {\cf5\i /*\par
+ * To change this license header, choose License Headers in Project Properties.\par
+ * To change this template file, choose Tools | Templates\par
+ * and open the template in the editor.\par
+ */}\par
+{\cf8\b package} {\cf19\b wintervorrat}{\cf4 ;}\par
+\par
+{\cf5\i /**\par
+ *\par
+ * @author lars\par
+ */}\par
+{\cf8\b public} {\cf8\b class} {\cf19\b Punkt} {\cf4 \{} {\cf5\i //Speichert eine 2D-Koordinate\par
+}\par
+    {\cf8\b public} {\cf18 int} x{\cf4 ;} {\cf5\i //X\par
+}    {\cf8\b public} {\cf18 int} y{\cf4 ;} {\cf5\i //Y\par
+}\par
+    {\cf8\b public} {\cf19 Punkt}{\cf4 (}{\cf18 int} x{\cf4 ,} {\cf18 int} y{\cf4 )} {\cf4 \{} {\cf5\i //X und Y werden vorgegeben\par
+}        {\cf8\b this}{\cf4 .}{\cf23 x} {\cf4 =} x{\cf4 ;}\par
+        {\cf8\b this}{\cf4 .}{\cf23 y} {\cf4 =} y{\cf4 ;}\par
+    {\cf4 \}}\par
+\par
+    {\cf8\b public} Punkt {\cf19 subtract}{\cf4 (}Punkt p{\cf4 )} {\cf4 \{} {\cf5\i //Erzeugt einen neuen Punkt von diesem Punkt minus einen Punkt einen Punkt p\par
+}        {\cf8\b return} {\cf8\b new} Punkt{\cf4 (}x {\cf4 -} p{\cf4 .}{\cf23 x}{\cf4 ,} y {\cf4 -} p{\cf4 .}{\cf23 y}{\cf4 )}{\cf4 ;}\par
+    {\cf4 \}}\par
+\par
+    {\cf8\b public} Punkt {\cf19 add}{\cf4 (}Punkt p{\cf4 )} {\cf4 \{} {\cf5\i //Erzeugt einen neuen Punkt von diesem Punkt plus einen Punkt einen Punkt p\par
+}        {\cf8\b return} {\cf8\b new} Punkt{\cf4 (}x {\cf4 +} p{\cf4 .}{\cf23 x}{\cf4 ,} y {\cf4 +} p{\cf4 .}{\cf23 y}{\cf4 )}{\cf4 ;}\par
+    {\cf4 \}}\par
+{\cf4 \}}\par
+}

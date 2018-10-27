@@ -1,0 +1,129 @@
+{\rtf1\ansi\uc0\deff0{\fonttbl{\f0\fmodern\fprq1\fcharset0;}}{\colortbl;\red136\green136\blue136;\red186\green33\blue33;\red0\green68\blue221;\red102\green102\blue102;\red64\green128\blue128;\red160\green160\blue0;\red25\green23\blue124;\red0\green128\blue0;\red187\green102\blue136;\red187\green102\blue34;\red136\green0\blue0;\red170\green34\blue255;\red153\green153\blue153;\red0\green160\blue0;\red160\green0\blue0;\red255\green0\blue0;\red128\green0\blue128;\red176\green0\blue64;\red0\green0\blue255;\red187\green187\blue187;\red188\green122\blue0;\red0\green0\blue128;\red125\green144\blue41;\red210\green65\blue58;}\f0 {\cf5\i /*\par
+ * To change this license header, choose License Headers in Project Properties.\par
+ * To change this template file, choose Tools | Templates\par
+ * and open the template in the editor.\par
+ */}\par
+{\cf8\b package} {\cf19\b bauernopfer}{\cf4 ;}\par
+\par
+{\cf8\b import} {\cf19\b java.awt.Color}{\cf4 ;}\par
+{\cf8\b import} {\cf19\b java.awt.Graphics}{\cf4 ;}\par
+{\cf8\b import} {\cf19\b java.awt.Graphics2D}{\cf4 ;}\par
+{\cf8\b import} {\cf19\b java.awt.image.BufferedImage}{\cf4 ;}\par
+{\cf8\b import} {\cf19\b java.io.File}{\cf4 ;}\par
+{\cf8\b import} {\cf19\b javax.imageio.ImageIO}{\cf4 ;}\par
+{\cf8\b import} {\cf19\b javax.swing.JPanel}{\cf4 ;}\par
+\par
+{\cf5\i /**\par
+ *\par
+ * @author lars\par
+ */}\par
+{\cf8\b public} {\cf8\b class} {\cf19\b Brett} {\cf8\b extends} JPanel {\cf4 \{}\par
+    {\cf8\b public} {\cf8\b static} {\cf8\b final} BufferedImage SCHACHBRETT{\cf4 ;}\par
+    {\cf8\b public} {\cf8\b static} {\cf8\b final} BufferedImage BAUER_BILD{\cf4 =}ladeBild{\cf4 (}{\cf2 "res/bauer.png"}{\cf4 ,} Color{\cf4 .}{\cf23 WHITE}{\cf4 )}{\cf4 ;} {\cf5\i //Bild eines Bauern\par
+}    {\cf8\b public} {\cf8\b static} {\cf8\b final} BufferedImage TURM_BILD{\cf4 ;} {\cf5\i //Bild des Turmes/der Dame\par
+}    {\cf8\b static} {\cf4 \{}\par
+        {\cf5\i //Bild der Dame/des Turmes laden\par
+}        {\cf8\b if} {\cf4 (}{\cf4 !}Bauernopfer{\cf4 .}{\cf23 dame}{\cf4 )} {\cf4 \{}\par
+            TURM_BILD{\cf4 =}ladeBild{\cf4 (}{\cf2 "res/turm.png"}{\cf4 ,} Color{\cf4 .}{\cf23 BLACK}{\cf4 )}{\cf4 ;} {\cf5\i //Bild des Turmes\par
+}        {\cf4 \}}\par
+        {\cf8\b else} {\cf4 \{}\par
+            TURM_BILD{\cf4 =}ladeBild{\cf4 (}{\cf2 "res/dame.png"}{\cf4 ,} Color{\cf4 .}{\cf23 BLACK}{\cf4 )}{\cf4 ;} {\cf5\i //Bild der Dame\par
+}        {\cf4 \}}\par
+        {\cf5\i //Schachbrett zeichnen\par
+}        SCHACHBRETT{\cf4 =}{\cf8\b new} BufferedImage{\cf4 (}{\cf4 400}{\cf4 ,}{\cf4 400}{\cf4 ,} BufferedImage{\cf4 .}{\cf23 TYPE_INT_RGB}{\cf4 )}{\cf4 ;}\par
+        Graphics2D g{\cf4 =}SCHACHBRETT{\cf4 .}{\cf23 createGraphics}{\cf4 (}{\cf4 )}{\cf4 ;}\par
+        {\cf5\i //Hintergrund hellbraun f{\u252}llen\par
+}        g{\cf4 .}{\cf23 setColor}{\cf4 (}{\cf8\b new} Color{\cf4 (}{\cf4 139}{\cf4 ,} {\cf4 69}{\cf4 ,} {\cf4 19}{\cf4 )}{\cf4 )}{\cf4 ;}\par
+        g{\cf4 .}{\cf23 fillRect}{\cf4 (}{\cf4 0}{\cf4 ,}{\cf4 0}{\cf4 ,}{\cf4 400}{\cf4 ,}{\cf4 400}{\cf4 )}{\cf4 ;}\par
+        {\cf8\b for} {\cf4 (}{\cf18 int} i {\cf4 =} {\cf4 0}{\cf4 ;} i {\cf4 <} {\cf4 8}{\cf4 ;} i{\cf4 +}{\cf4 +}{\cf4 )} {\cf4 \{}\par
+            {\cf8\b for} {\cf4 (}{\cf18 int} j {\cf4 =} {\cf4 0}{\cf4 ;} j {\cf4 <} {\cf4 8}{\cf4 ;} j{\cf4 +}{\cf4 +}{\cf4 )} {\cf4 \{}\par
+                {\cf5\i //Jedes 2. Feld dunkelbraun f{\u252}llen\par
+}                {\cf8\b if} {\cf4 (}{\cf4 (}i {\cf4 +} j{\cf4 )} {\cf4 %} {\cf4 2} {\cf4 =}{\cf4 =} {\cf4 0}{\cf4 )} {\cf4 \{}\par
+                    g{\cf4 .}{\cf23 setColor}{\cf4 (}{\cf8\b new} Color{\cf4 (}{\cf4 69}{\cf4 ,} {\cf4 35}{\cf4 ,} {\cf4 10}{\cf4 )}{\cf4 )}{\cf4 ;}\par
+                    g{\cf4 .}{\cf23 fillRect}{\cf4 (}i {\cf4 *} {\cf4 50}{\cf4 ,} j {\cf4 *} {\cf4 50}{\cf4 ,} {\cf4 50}{\cf4 ,} {\cf4 50}{\cf4 )}{\cf4 ;}\par
+                {\cf4 \}}\par
+            {\cf4 \}}\par
+        {\cf4 \}}\par
+    {\cf4 \}}\par
+    {\cf8\b public} Punktmenge bauern{\cf4 ;} {\cf5\i //Speichert die Positionen aller Bauern\par
+}    {\cf8\b public} Punkt turm{\cf4 ;} {\cf5\i //Speichert die Position des Turms/der Dame\par
+}\par
+    {\cf8\b public} {\cf18 void} {\cf19 platziereTurm}{\cf4 (}Punkt position{\cf4 )} {\cf4 \{} {\cf5\i //Platziert den Turm an gegebener Position\par
+}        turm{\cf4 =}position{\cf4 ;}\par
+    {\cf4 \}}\par
+\par
+    {\cf8\b public} {\cf18 void} {\cf19 platziereBauern}{\cf4 (}Punktmenge positionen{\cf4 )} {\cf4 \{} {\cf5\i //Platziert alle Bauern an gegebenen Positionen\par
+}        bauern{\cf4 =}positionen{\cf4 ;}\par
+    {\cf4 \}}\par
+\par
+    {\cf8\b public} {\cf18 void} {\cf19 bewegeTurm}{\cf4 (}Punkt position{\cf4 )} {\cf4 \{} {\cf5\i //Bewegt den Turm zu einer gegebenen Position\par
+}        turm{\cf4 =}position{\cf4 ;}\par
+    {\cf4 \}}\par
+\par
+    {\cf8\b public} {\cf18 void} {\cf19 bewegeBauern}{\cf4 (}Punkt bauer{\cf4 ,} Punkt position{\cf4 )} {\cf4 \{} {\cf5\i //Bewegt den Bauern am Punkt "bauer" zu dem Punkt "position"\par
+}        bauern{\cf4 .}{\cf23 raster}{\cf4 [}bauer{\cf4 .}{\cf23 x}{\cf4 ]}{\cf4 [}bauer{\cf4 .}{\cf23 y}{\cf4 ]}{\cf4 =}{\cf8\b false}{\cf4 ;} {\cf5\i //Den Bauern an alter Stelle l{\u246}schen\par
+}        bauern{\cf4 .}{\cf23 raster}{\cf4 [}position{\cf4 .}{\cf23 x}{\cf4 ]}{\cf4 [}position{\cf4 .}{\cf23 y}{\cf4 ]}{\cf4 =}{\cf8\b true}{\cf4 ;} {\cf5\i //Und an neuer platzieren\par
+}        {\cf8\b if} {\cf4 (}position{\cf4 .}{\cf23 x} {\cf4 =}{\cf4 =} turm{\cf4 .}{\cf23 x} {\cf4 &}{\cf4 &} position{\cf4 .}{\cf23 y} {\cf4 =}{\cf4 =} turm{\cf4 .}{\cf23 y}{\cf4 )} {\cf4 \{} {\cf5\i //Konnte die Dame/der Turm geschlagen werden\par
+}            System{\cf4 .}{\cf23 out}{\cf4 .}{\cf23 println}{\cf4 (}{\cf2 "Die Bauern haben gewonnen ! "}{\cf4 )}{\cf4 ;}\par
+            System{\cf4 .}{\cf23 exit}{\cf4 (}{\cf4 0}{\cf4 )}{\cf4 ;} {\cf5\i //Programm beenden\par
+}        {\cf4 \}}\par
+        bauern{\cf4 =}{\cf8\b new} Punktmenge{\cf4 (}bauern{\cf4 .}{\cf23 raster}{\cf4 )}{\cf4 ;} {\cf5\i //Bauern aktualisieren\par
+}    {\cf4 \}}\par
+\par
+    {\cf8\b public} {\cf8\b static} BufferedImage {\cf19 ladeBild}{\cf4 (}String pfad{\cf4 ,} Color farbe{\cf4 )} {\cf4 \{}\par
+        {\cf8\b try} {\cf4 \{}\par
+            {\cf8\b return} ImageIO{\cf4 .}{\cf23 read}{\cf4 (}{\cf8\b new} File{\cf4 (}pfad{\cf4 )}{\cf4 )}{\cf4 ;} {\cf5\i //Versuche, das Bild zu laden\par
+}        {\cf4 \}} {\cf8\b catch} {\cf4 (}Exception fehler{\cf4 )} {\cf4 \{}\par
+            {\cf5\i //Ansonsten wird ein farbiger Kreis als Ersatz benutzt\par
+}            BufferedImage ziel {\cf4 =} {\cf8\b new} BufferedImage{\cf4 (}{\cf4 50}{\cf4 ,} {\cf4 50}{\cf4 ,} BufferedImage{\cf4 .}{\cf23 TYPE_INT_ARGB}{\cf4 )}{\cf4 ;}\par
+            Graphics2D zielg {\cf4 =} ziel{\cf4 .}{\cf23 createGraphics}{\cf4 (}{\cf4 )}{\cf4 ;}\par
+            zielg{\cf4 .}{\cf23 setBackground}{\cf4 (}{\cf8\b new} Color{\cf4 (}{\cf4 0}{\cf4 ,} {\cf4 0}{\cf4 ,} {\cf4 0}{\cf4 ,} {\cf4 0}{\cf4 )}{\cf4 )}{\cf4 ;}\par
+            zielg{\cf4 .}{\cf23 setColor}{\cf4 (}farbe{\cf4 )}{\cf4 ;}\par
+            zielg{\cf4 .}{\cf23 fillOval}{\cf4 (}{\cf4 5}{\cf4 ,} {\cf4 5}{\cf4 ,} {\cf4 40}{\cf4 ,} {\cf4 40}{\cf4 )}{\cf4 ;}\par
+            {\cf8\b return} ziel{\cf4 ;}\par
+        {\cf4 \}}\par
+    {\cf4 \}}\par
+\par
+    {\cf8\b public} {\cf19 Brett}{\cf4 (}{\cf4 )} {\cf4 \{} {\cf5\i //Konstruktor - noch nichts vorgegeben\par
+}        bauern{\cf4 =}{\cf8\b new} Punktmenge{\cf4 (}{\cf4 )}{\cf4 ;}\par
+        turm{\cf4 =}{\cf8\b null}{\cf4 ;}\par
+    {\cf4 \}}\par
+\par
+    {\cf12 @Override}\par
+    {\cf8\b public} {\cf18 void} {\cf19 paintComponent}{\cf4 (}Graphics g{\cf4 )} {\cf4 \{} {\cf5\i //Brett "zeichnen"\par
+}        g{\cf4 .}{\cf23 drawImage}{\cf4 (}SCHACHBRETT{\cf4 ,}{\cf4 0}{\cf4 ,}{\cf4 0}{\cf4 ,}{\cf8\b null}{\cf4 )}{\cf4 ;}\par
+        {\cf8\b if} {\cf4 (}Bauernopfer{\cf4 .}{\cf23 bauern_dran}{\cf4 )} {\cf4 \{}\par
+            {\cf18 byte}{\cf4 [}{\cf4 ]}{\cf4 [}{\cf4 ]} erreichbar{\cf4 =}BauernAL{\cf4 .}{\cf23 bestimmeFelder}{\cf4 (}bauern{\cf4 ,}Bauernopfer{\cf4 .}{\cf23 zuege}{\cf4 )}{\cf4 ;} {\cf5\i //Alle Felder, die von den Bauern erreichbar sind\par
+}            {\cf8\b for} {\cf4 (}{\cf18 int} i {\cf4 =} {\cf4 0}{\cf4 ;} i {\cf4 <} {\cf4 8}{\cf4 ;} i{\cf4 +}{\cf4 +}{\cf4 )} {\cf4 \{}\par
+                {\cf8\b for} {\cf4 (}{\cf18 int} j {\cf4 =} {\cf4 0}{\cf4 ;} j {\cf4 <} {\cf4 8}{\cf4 ;} j{\cf4 +}{\cf4 +}{\cf4 )} {\cf4 \{}\par
+                    {\cf8\b if} {\cf4 (}erreichbar{\cf4 [}i{\cf4 ]}{\cf4 [}j{\cf4 ]} {\cf4 >} {\cf4 0}{\cf4 )} {\cf4 \{} {\cf5\i //Wenn das Feld erreichbar ist\par
+}                        g{\cf4 .}{\cf23 setColor}{\cf4 (}{\cf8\b new} Color{\cf4 (}Math{\cf4 .}{\cf23 min}{\cf4 (}{\cf4 255}{\cf4 ,}{\cf4 30}{\cf4 *}erreichbar{\cf4 [}i{\cf4 ]}{\cf4 [}j{\cf4 ]}{\cf4 )}{\cf4 ,}Math{\cf4 .}{\cf23 max}{\cf4 (}{\cf4 0}{\cf4 ,}{\cf4 255}{\cf4 -}{\cf4 (}{\cf4 85}{\cf4 *}erreichbar{\cf4 [}i{\cf4 ]}{\cf4 [}j{\cf4 ]}{\cf4 )}{\cf4 )}{\cf4 ,}{\cf4 255}{\cf4 -}Math{\cf4 .}{\cf23 min}{\cf4 (}{\cf4 255}{\cf4 ,}{\cf4 30}{\cf4 *}erreichbar{\cf4 [}i{\cf4 ]}{\cf4 [}j{\cf4 ]}{\cf4 )}{\cf4 )}{\cf4 )}{\cf4 ;} {\cf5\i //Jenachdem, wie viele Z{\u252}ge die Bauern minimal zum Erreichen eines Feldes ben{\u246}tigen, f{\u228}rben wir dies ein\par
+}                        g{\cf4 .}{\cf23 fillRect}{\cf4 (}i {\cf4 *} {\cf4 50}{\cf4 +}{\cf4 5}{\cf4 ,} j {\cf4 *} {\cf4 50}{\cf4 +}{\cf4 5}{\cf4 ,} {\cf4 40}{\cf4 ,} {\cf4 40}{\cf4 )}{\cf4 ;}\par
+                    {\cf4 \}}\par
+                {\cf4 \}}\par
+            {\cf4 \}}\par
+        {\cf4 \}} {\cf8\b else} {\cf4 \{}\par
+            {\cf18 byte}{\cf4 [}{\cf4 ]}{\cf4 [}{\cf4 ]} erreichbar{\cf4 =}TurmAL{\cf4 .}{\cf23 gewichteteFelder}{\cf4 (}bauern{\cf4 ,} turm{\cf4 )}{\cf4 ;} {\cf5\i //Alle Felder, die vom Turm erreichbar sind\par
+}            {\cf8\b for} {\cf4 (}{\cf18 int} i {\cf4 =} {\cf4 0}{\cf4 ;} i {\cf4 <} {\cf4 8}{\cf4 ;} i{\cf4 +}{\cf4 +}{\cf4 )} {\cf4 \{}\par
+                {\cf8\b for} {\cf4 (}{\cf18 int} j {\cf4 =} {\cf4 0}{\cf4 ;} j {\cf4 <} {\cf4 8}{\cf4 ;} j{\cf4 +}{\cf4 +}{\cf4 )} {\cf4 \{}\par
+                    {\cf8\b if} {\cf4 (}erreichbar{\cf4 [}i{\cf4 ]}{\cf4 [}j{\cf4 ]} {\cf4 >} {\cf4 0}{\cf4 )} {\cf4 \{}\par
+                        g{\cf4 .}{\cf23 setColor}{\cf4 (}{\cf8\b new} Color{\cf4 (}Math{\cf4 .}{\cf23 min}{\cf4 (}{\cf4 255}{\cf4 ,}{\cf4 30}{\cf4 *}erreichbar{\cf4 [}i{\cf4 ]}{\cf4 [}j{\cf4 ]}{\cf4 )}{\cf4 ,}Math{\cf4 .}{\cf23 max}{\cf4 (}{\cf4 0}{\cf4 ,}{\cf4 255}{\cf4 -}{\cf4 (}{\cf4 85}{\cf4 *}erreichbar{\cf4 [}i{\cf4 ]}{\cf4 [}j{\cf4 ]}{\cf4 )}{\cf4 )}{\cf4 ,}{\cf4 255}{\cf4 -}Math{\cf4 .}{\cf23 min}{\cf4 (}{\cf4 255}{\cf4 ,}{\cf4 30}{\cf4 *}erreichbar{\cf4 [}i{\cf4 ]}{\cf4 [}j{\cf4 ]}{\cf4 )}{\cf4 )}{\cf4 )}{\cf4 ;} {\cf5\i //Jenachdem, wie viele Z{\u252}ge der Turm/die Dame minimal zum Erreichen eines Feldes ben{\u246}tigen, f{\u228}rben wir dies ein\par
+}                        g{\cf4 .}{\cf23 fillRect}{\cf4 (}i {\cf4 *} {\cf4 50}{\cf4 +}{\cf4 5}{\cf4 ,} j {\cf4 *} {\cf4 50}{\cf4 +}{\cf4 5}{\cf4 ,} {\cf4 40}{\cf4 ,} {\cf4 40}{\cf4 )}{\cf4 ;}\par
+                    {\cf4 \}}\par
+                {\cf4 \}}\par
+            {\cf4 \}}\par
+            {\cf8\b for} {\cf4 (}Punkt p {\cf4 :} TurmAL{\cf4 .}{\cf23 smarteFelder}{\cf4 (}bauern{\cf4 ,} turm{\cf4 )}{\cf4 .}{\cf23 punkte}{\cf4 )} {\cf4 \{} {\cf5\i //Felder, welche von der TurmAL als M{\u246}glichkeiten, wo der Turm/die Dame hingehen sollte, betrachtet werden, \par
+}                {\cf5\i //Werden rot eingef{\u228}rbt\par
+}                g{\cf4 .}{\cf23 setColor}{\cf4 (}Color{\cf4 .}{\cf23 RED}{\cf4 )}{\cf4 ;}\par
+                g{\cf4 .}{\cf23 fillRect}{\cf4 (}p{\cf4 .}{\cf23 x} {\cf4 *} {\cf4 50} {\cf4 +} {\cf4 10}{\cf4 ,} p{\cf4 .}{\cf23 y} {\cf4 *} {\cf4 50} {\cf4 +} {\cf4 10}{\cf4 ,} {\cf4 30}{\cf4 ,} {\cf4 30}{\cf4 )}{\cf4 ;}\par
+            {\cf4 \}}\par
+        {\cf4 \}}\par
+        {\cf8\b if} {\cf4 (}turm {\cf4 !}{\cf4 =} {\cf8\b null}{\cf4 )} {\cf4 \{} {\cf5\i //Wenn der Turm schon platziert wurde, \par
+}            g{\cf4 .}{\cf23 drawImage}{\cf4 (}TURM_BILD{\cf4 ,} turm{\cf4 .}{\cf23 x} {\cf4 *} {\cf4 50}{\cf4 ,} turm{\cf4 .}{\cf23 y} {\cf4 *} {\cf4 50}{\cf4 ,} {\cf8\b this}{\cf4 )}{\cf4 ;} {\cf5\i //Dann k{\u246}nnen wir ihn auch anzeigen lassen\par
+}        {\cf4 \}}\par
+        {\cf8\b for} {\cf4 (}Punkt bauer {\cf4 :} bauern{\cf4 .}{\cf23 punkte}{\cf4 )} {\cf4 \{}\par
+            g{\cf4 .}{\cf23 drawImage}{\cf4 (}BAUER_BILD{\cf4 ,} bauer{\cf4 .}{\cf23 x} {\cf4 *} {\cf4 50}{\cf4 ,} bauer{\cf4 .}{\cf23 y} {\cf4 *} {\cf4 50}{\cf4 ,} {\cf8\b this}{\cf4 )}{\cf4 ;} {\cf5\i //Alle schon platzierten Bauern k{\u246}nnen wir auch anzeigen lassen\par
+}        {\cf4 \}}\par
+    {\cf4 \}}\par
+{\cf4 \}}\par
+}

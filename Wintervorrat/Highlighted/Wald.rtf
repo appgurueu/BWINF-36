@@ -1,0 +1,254 @@
+{\rtf1\ansi\uc0\deff0{\fonttbl{\f0\fmodern\fprq1\fcharset0;}}{\colortbl;\red136\green136\blue136;\red186\green33\blue33;\red0\green68\blue221;\red102\green102\blue102;\red64\green128\blue128;\red160\green160\blue0;\red25\green23\blue124;\red0\green128\blue0;\red187\green102\blue136;\red187\green102\blue34;\red136\green0\blue0;\red170\green34\blue255;\red153\green153\blue153;\red0\green160\blue0;\red160\green0\blue0;\red255\green0\blue0;\red128\green0\blue128;\red176\green0\blue64;\red0\green0\blue255;\red187\green187\blue187;\red188\green122\blue0;\red0\green0\blue128;\red125\green144\blue41;\red210\green65\blue58;}\f0 {\cf5\i /*\par
+ * To change this license header, choose License Headers in Project Properties.\par
+ * To change this template file, choose Tools | Templates\par
+ * and open the template in the editor.\par
+ */}\par
+{\cf8\b package} {\cf19\b wintervorrat}{\cf4 ;}\par
+\par
+{\cf8\b import} {\cf19\b java.awt.Color}{\cf4 ;}\par
+{\cf8\b import} {\cf19\b java.awt.Font}{\cf4 ;}\par
+{\cf8\b import} {\cf19\b java.awt.Graphics2D}{\cf4 ;}\par
+{\cf8\b import} {\cf19\b java.awt.image.BufferedImage}{\cf4 ;}\par
+{\cf8\b import} {\cf19\b java.io.BufferedWriter}{\cf4 ;}\par
+{\cf8\b import} {\cf19\b java.io.File}{\cf4 ;}\par
+{\cf8\b import} {\cf19\b java.io.FileWriter}{\cf4 ;}\par
+{\cf8\b import} {\cf19\b java.io.IOException}{\cf4 ;}\par
+{\cf8\b import} {\cf19\b javax.imageio.ImageIO}{\cf4 ;}\par
+\par
+{\cf5\i /**\par
+ *\par
+ * @author lars\par
+ */}\par
+{\cf8\b public} {\cf8\b class} {\cf19\b Wald} {\cf4 \{} {\cf5\i //Der Rechteckwald\par
+}\par
+    {\cf8\b public} {\cf8\b static} {\cf8\b final} {\cf18 short} DAY {\cf4 =} {\cf4 60} {\cf4 *} {\cf4 12}{\cf4 ;} {\cf5\i //Ein Tag ist 12 Stunden(60 Minuten) lang\par
+}    {\cf8\b public} Adler{\cf4 [}{\cf4 ]} adler{\cf4 ;} {\cf5\i //Liste der Adler\par
+}    {\cf8\b public} Feld{\cf4 [}{\cf4 ]}{\cf4 [}{\cf4 ]} felder{\cf4 ;} {\cf5\i //Tabelle mit Feldern\par
+}    {\cf8\b public} String name{\cf4 ;} {\cf5\i //Speichername f{\u252}r Dateien\par
+}    {\cf8\b public} BufferedImage hintergrund{\cf4 ;} {\cf5\i //Das Feld : gr{\u252}n - total sicher rot - nicht total sicher\par
+}    {\cf8\b public} String svg{\cf4 ;} {\cf5\i //Als Vektorgrafik : Header und das Feld als Vektorgrafik : gr{\u252}n - total sicher rot - nicht total sicher\par
+}    {\cf8\b public} {\cf18 boolean} svg_erstellen{\cf4 ,} jpg_erstellen{\cf4 ;} {\cf5\i //Sollen Vektorgrafiken und Bilder als Ausgabe erzeugt werden ?\par
+}    {\cf8\b public} {\cf8\b static} {\cf8\b final} Punkt{\cf4 [}{\cf4 ]} ADLER_SVG {\cf4 =} {\cf8\b new} Punkt{\cf4 [}{\cf4 ]}{\cf4 \{}{\cf8\b new} Punkt{\cf4 (}{\cf4 0}{\cf4 ,} {\cf4 0}{\cf4 )}{\cf4 ,} {\cf8\b new} Punkt{\cf4 (}{\cf4 40}{\cf4 ,} {\cf4 20}{\cf4 )}{\cf4 ,} {\cf8\b new} Punkt{\cf4 (}{\cf4 0}{\cf4 ,} {\cf4 40}{\cf4 )}{\cf4 ,} {\cf8\b new} Punkt{\cf4 (}{\cf4 10}{\cf4 ,} {\cf4 20}{\cf4 )}{\cf4 \}}{\cf4 ;} {\cf5\i //Ein Adler(Pfeil) als Punktmenge f{\u252}r die SVG-Darstellung\par
+}\par
+    {\cf8\b public} {\cf19 Wald}{\cf4 (}String name{\cf4 ,} {\cf18 int} x{\cf4 ,} {\cf18 int} y{\cf4 ,} Adler{\cf4 [}{\cf4 ]} adler{\cf4 ,} {\cf18 boolean} erstelle_svg{\cf4 ,} {\cf18 boolean} erstelle_jpg{\cf4 )} {\cf4 \{}\par
+        {\cf8\b this}{\cf4 .}{\cf23 svg_erstellen} {\cf4 =} erstelle_svg{\cf4 ;}\par
+        {\cf8\b this}{\cf4 .}{\cf23 jpg_erstellen} {\cf4 =} erstelle_jpg{\cf4 ;}\par
+        {\cf8\b if} {\cf4 (}erstelle_svg{\cf4 )} {\cf4 \{} {\cf5\i //Falls SVGs erzeugt werden sollen\par
+}            {\cf8\b this}{\cf4 .}{\cf23 svg} {\cf4 =} {\cf2 "<?xml version=\\"1.0\\" encoding=\\"UTF-8\\" standalone=\\"no\\" ?>\\n"} {\cf5\i //SVG Header\par
+}                    {\cf4 +} {\cf2 "<!DOCTYPE svg PUBLIC \\"-//W3C//DTD SVG 20010904//EN\\"\\n"}\par
+                    {\cf4 +} {\cf2 "\\"http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd\\">"}\par
+                    {\cf4 +} {\cf2 "<svg xmlns=\\"http://www.w3.org/2000/svg\\"\\n"}\par
+                    {\cf4 +} {\cf2 "    xmlns:xlink=\\"http://www.w3.org/1999/xlink\\"\\n"}\par
+                    {\cf4 +} {\cf2 "    version=\\"1.1\\" baseProfile=\\"full\\"\\n"}\par
+                    {\cf4 +} String{\cf4 .}{\cf23 format}{\cf4 (}{\cf2 "    width=\\"%dpx\\" height=\\"%dpx\\"\\n"}{\cf4 ,} x {\cf4 *} {\cf4 40}{\cf4 ,} y {\cf4 *} {\cf4 40}{\cf4 )} {\cf5\i //Breite, H{\u246}he\par
+}                    {\cf4 +} String{\cf4 .}{\cf23 format}{\cf4 (}{\cf2 "    viewBox=\\"0 0 %d %d\\">\\n"}{\cf4 ,} x {\cf4 *} {\cf4 40}{\cf4 ,} y {\cf4 *} {\cf4 40}{\cf4 )}{\cf4 ;} {\cf5\i //Angezeigter Bereich\par
+}            svg {\cf4 +}{\cf4 =} String{\cf4 .}{\cf23 format}{\cf4 (}{\cf2 "    <rect x=\\"0\\" y=\\"0\\" width=\\"%d\\" height=\\"%d\\" fill=\\"rgb(0,255,0)\\" />\\n"}{\cf4 ,} x {\cf4 *} {\cf4 40}{\cf4 ,} y {\cf4 *} {\cf4 40}{\cf4 )}{\cf4 ;} {\cf5\i //Hintergrund gr{\u252}n f{\u228}rben\par
+}        {\cf4 \}}\par
+        Graphics2D hg {\cf4 =} {\cf8\b null}{\cf4 ;}\par
+        {\cf8\b if} {\cf4 (}erstelle_jpg{\cf4 )} {\cf4 \{} {\cf5\i //Falls JPGs erzeugt werden sollen\par
+}            hintergrund {\cf4 =} {\cf8\b new} BufferedImage{\cf4 (}x {\cf4 *} {\cf4 40}{\cf4 ,} y {\cf4 *} {\cf4 40}{\cf4 ,} BufferedImage{\cf4 .}{\cf23 TYPE_INT_RGB}{\cf4 )}{\cf4 ;} {\cf5\i //Hintergrundbild erstellen\par
+}            hg {\cf4 =} hintergrund{\cf4 .}{\cf23 createGraphics}{\cf4 (}{\cf4 )}{\cf4 ;}\par
+            {\cf5\i //Hintergrund gr{\u252}n f{\u252}llen\par
+}            hg{\cf4 .}{\cf23 setColor}{\cf4 (}Color{\cf4 .}{\cf23 GREEN}{\cf4 )}{\cf4 ;}\par
+            hg{\cf4 .}{\cf23 fillRect}{\cf4 (}{\cf4 0}{\cf4 ,} {\cf4 0}{\cf4 ,} hintergrund{\cf4 .}{\cf23 getWidth}{\cf4 (}{\cf4 )}{\cf4 ,} hintergrund{\cf4 .}{\cf23 getHeight}{\cf4 (}{\cf4 )}{\cf4 )}{\cf4 ;}\par
+        {\cf4 \}}\par
+        {\cf8\b this}{\cf4 .}{\cf23 name} {\cf4 =} name{\cf4 ;} {\cf5\i //Name, um die Dateien zu speichern\par
+}        {\cf8\b this}{\cf4 .}{\cf23 felder} {\cf4 =} {\cf8\b new} Feld{\cf4 [}x{\cf4 ]}{\cf4 [}y{\cf4 ]}{\cf4 ;} {\cf5\i //Speichert den alle Felder\par
+}        {\cf8\b for} {\cf4 (}{\cf18 int} xw {\cf4 =} {\cf4 0}{\cf4 ;} xw {\cf4 <} x{\cf4 ;} xw{\cf4 +}{\cf4 +}{\cf4 )} {\cf4 \{}\par
+            {\cf8\b for} {\cf4 (}{\cf18 int} yw {\cf4 =} {\cf4 0}{\cf4 ;} yw {\cf4 <} y{\cf4 ;} yw{\cf4 +}{\cf4 +}{\cf4 )} {\cf4 \{}\par
+                felder{\cf4 [}xw{\cf4 ]}{\cf4 [}yw{\cf4 ]} {\cf4 =} {\cf8\b new} Feld{\cf4 (}{\cf8\b true}{\cf4 )}{\cf4 ;} {\cf5\i //Wir gehen erstmal davon aus, dass jedes Feld total sicher ist\par
+}            {\cf4 \}}\par
+        {\cf4 \}}\par
+        {\cf8\b this}{\cf4 .}{\cf23 adler} {\cf4 =} adler{\cf4 ;} {\cf5\i //Adler werden vorgegeben\par
+}        {\cf8\b for} {\cf4 (}Adler a {\cf4 :} adler{\cf4 )} {\cf4 \{} {\cf5\i //Adler durchgehen, um nicht vollkommen sichere Felder zu ermitteln\par
+}            {\cf8\b if} {\cf4 (}a{\cf4 .}{\cf23 flugrichtung}{\cf4 .}{\cf23 x} {\cf4 =}{\cf4 =} {\cf4 0}{\cf4 )} {\cf4 \{} {\cf5\i //Sollte er in y-Richtung fliegen(Norden-S{\u252}den)\par
+}                {\cf8\b for} {\cf4 (}{\cf18 int} yw {\cf4 =} {\cf4 0}{\cf4 ;} yw {\cf4 <} y{\cf4 ;} yw{\cf4 +}{\cf4 +}{\cf4 )} {\cf4 \{} {\cf5\i //So sind alle auf seiner Linie liegenden Felder...\par
+}                    {\cf18 int} xw {\cf4 =} a{\cf4 .}{\cf23 position}{\cf4 .}{\cf23 x}{\cf4 ;}\par
+                    felder{\cf4 [}xw{\cf4 ]}{\cf4 [}yw{\cf4 ]}{\cf4 .}{\cf23 totalSicher} {\cf4 =} {\cf8\b false}{\cf4 ;} {\cf5\i //...nicht total sicher\par
+}                    {\cf8\b if} {\cf4 (}erstelle_jpg{\cf4 )} {\cf4 \{} {\cf5\i //Und werden dementsprechend rot markiert, falls erw{\u252}nscht, hier im Bild...\par
+}                        hg{\cf4 .}{\cf23 setColor}{\cf4 (}Color{\cf4 .}{\cf23 RED}{\cf4 )}{\cf4 ;}\par
+                        hg{\cf4 .}{\cf23 fillRect}{\cf4 (}xw {\cf4 *} {\cf4 40}{\cf4 ,} yw {\cf4 *} {\cf4 40}{\cf4 ,} {\cf4 40}{\cf4 ,} {\cf4 40}{\cf4 )}{\cf4 ;}\par
+                    {\cf4 \}}\par
+                    {\cf8\b if} {\cf4 (}erstelle_svg{\cf4 )} {\cf4 \{} {\cf5\i //...und hier in der Vektorgrafik, falls erw{\u252}nscht\par
+}                        svg {\cf4 +}{\cf4 =} String{\cf4 .}{\cf23 format}{\cf4 (}{\cf2 "    <rect x=\\"%d\\" y=\\"%d\\" width=\\"40\\" height=\\"40\\" fill=\\"rgb(255,0,0)\\" />\\n"}{\cf4 ,} xw {\cf4 *} {\cf4 40}{\cf4 ,} yw {\cf4 *} {\cf4 40}{\cf4 )}{\cf4 ;}\par
+                    {\cf4 \}}\par
+                {\cf4 \}}\par
+            {\cf4 \}} {\cf8\b else} {\cf4 \{} {\cf5\i //Sollte er in x-Richtung fliegen(Osten-Westen)\par
+}                {\cf8\b for} {\cf4 (}{\cf18 int} xw {\cf4 =} {\cf4 0}{\cf4 ;} xw {\cf4 <} x{\cf4 ;} xw{\cf4 +}{\cf4 +}{\cf4 )} {\cf4 \{} {\cf5\i //So sind alle auf seiner Linie liegenden Felder...\par
+}                    {\cf18 int} yw {\cf4 =} a{\cf4 .}{\cf23 position}{\cf4 .}{\cf23 y}{\cf4 ;}\par
+                    felder{\cf4 [}xw{\cf4 ]}{\cf4 [}yw{\cf4 ]}{\cf4 .}{\cf23 totalSicher} {\cf4 =} {\cf8\b false}{\cf4 ;} {\cf5\i //...nicht total sicher\par
+}                    {\cf8\b if} {\cf4 (}erstelle_jpg{\cf4 )} {\cf4 \{} {\cf5\i //Und werden dementsprechend rot markiert, falls erw{\u252}nscht, hier im Bild...\par
+}                        hg{\cf4 .}{\cf23 setColor}{\cf4 (}Color{\cf4 .}{\cf23 RED}{\cf4 )}{\cf4 ;}\par
+                        hg{\cf4 .}{\cf23 fillRect}{\cf4 (}xw {\cf4 *} {\cf4 40}{\cf4 ,} yw {\cf4 *} {\cf4 40}{\cf4 ,} {\cf4 40}{\cf4 ,} {\cf4 40}{\cf4 )}{\cf4 ;}\par
+                    {\cf4 \}}\par
+                    {\cf8\b if} {\cf4 (}erstelle_svg{\cf4 )} {\cf4 \{} {\cf5\i //...und hier in der Vektorgrafik, falls erw{\u252}nscht\par
+}                        svg {\cf4 +}{\cf4 =} String{\cf4 .}{\cf23 format}{\cf4 (}{\cf2 "    <rect x=\\"%d\\" y=\\"%d\\" width=\\"40\\" height=\\"40\\" fill=\\"rgb(255,0,0)\\" />\\n"}{\cf4 ,} xw {\cf4 *} {\cf4 40}{\cf4 ,} yw {\cf4 *} {\cf4 40}{\cf4 )}{\cf4 ;}\par
+                    {\cf4 \}}\par
+                {\cf4 \}}\par
+            {\cf4 \}}\par
+        {\cf4 \}}\par
+    {\cf4 \}}\par
+\par
+    {\cf8\b public} {\cf18 void} {\cf19 simulieren}{\cf4 (}{\cf4 )} {\cf8\b throws} IOException {\cf4 \{}\par
+        {\cf8\b for} {\cf4 (}{\cf18 int} x {\cf4 =} {\cf4 0}{\cf4 ;} x {\cf4 <} felder{\cf4 .}{\cf23 length}{\cf4 ;} x{\cf4 +}{\cf4 +}{\cf4 )} {\cf4 \{}\par
+            {\cf8\b for} {\cf4 (}{\cf18 int} y {\cf4 =} {\cf4 0}{\cf4 ;} y {\cf4 <} felder{\cf4 [}{\cf4 0}{\cf4 ]}{\cf4 .}{\cf23 length}{\cf4 ;} y{\cf4 +}{\cf4 +}{\cf4 )} {\cf4 \{}\par
+                felder{\cf4 [}x{\cf4 ]}{\cf4 [}y{\cf4 ]}{\cf4 .}{\cf23 anfangSichererZeitraum} {\cf4 =} {\cf4 1}{\cf4 ;}\par
+            {\cf4 \}}\par
+        {\cf4 \}}\par
+        {\cf8\b for} {\cf4 (}{\cf18 short} m {\cf4 =} {\cf4 1}{\cf4 ;} m {\cf4 <}{\cf4 =} DAY{\cf4 ;} m{\cf4 +}{\cf4 +}{\cf4 )} {\cf4 \{} {\cf5\i //Alle Minuten durchsimulieren\par
+}            Graphics2D grafik {\cf4 =} {\cf8\b null}{\cf4 ;}\par
+            BufferedImage img {\cf4 =} {\cf8\b null}{\cf4 ;}\par
+            {\cf8\b if} {\cf4 (}jpg_erstellen{\cf4 )} {\cf4 \{} {\cf5\i //Falls Erstellung von Bildern gew{\u252}nscht ist, Kopie des Hintergrunds erstellen\par
+}                img {\cf4 =} {\cf8\b new} BufferedImage{\cf4 (}felder{\cf4 .}{\cf23 length} {\cf4 *} {\cf4 40}{\cf4 ,} felder{\cf4 [}{\cf4 0}{\cf4 ]}{\cf4 .}{\cf23 length} {\cf4 *} {\cf4 40}{\cf4 ,} BufferedImage{\cf4 .}{\cf23 TYPE_INT_RGB}{\cf4 )}{\cf4 ;}\par
+                grafik {\cf4 =} img{\cf4 .}{\cf23 createGraphics}{\cf4 (}{\cf4 )}{\cf4 ;}\par
+                grafik{\cf4 .}{\cf23 drawImage}{\cf4 (}hintergrund{\cf4 ,} {\cf4 0}{\cf4 ,} {\cf4 0}{\cf4 ,} {\cf8\b null}{\cf4 )}{\cf4 ;}\par
+            {\cf4 \}}\par
+            String svg_to_save {\cf4 =} {\cf2 ""}{\cf4 ;}\par
+            {\cf8\b if} {\cf4 (}svg_erstellen{\cf4 )} {\cf4 \{} {\cf5\i //Falls ein SVG gew{\u252}nscht ist, Kopie des Headers + des Hintergrundes als Vektorgrafik erstellen\par
+}                svg_to_save {\cf4 =} svg{\cf4 ;}\par
+            {\cf4 \}}\par
+            {\cf8\b for} {\cf4 (}Adler a {\cf4 :} adler{\cf4 )} {\cf4 \{} {\cf5\i //Alle Adler durchgehen\par
+}                {\cf8\b if} {\cf4 (}m {\cf4 >}{\cf4 =} a{\cf4 .}{\cf23 startminute}{\cf4 )} {\cf4 \{} {\cf5\i //Davon sind nur die, die schon gestartet sind, relevant\par
+}                    {\cf8\b if} {\cf4 (}svg_erstellen {\cf4 |}{\cf4 |} jpg_erstellen{\cf4 )} {\cf4 \{} {\cf5\i //Falls eine grafische Darstellung gefordert ist...\par
+}                        {\cf18 int} xw {\cf4 =} a{\cf4 .}{\cf23 position}{\cf4 .}{\cf23 x} {\cf4 *} {\cf4 40} {\cf4 +} {\cf4 5}{\cf4 ;}\par
+                        {\cf18 int} yw {\cf4 =} a{\cf4 .}{\cf23 position}{\cf4 .}{\cf23 y} {\cf4 *} {\cf4 40} {\cf4 +} {\cf4 5}{\cf4 ;}\par
+                        {\cf8\b if} {\cf4 (}jpg_erstellen{\cf4 )} {\cf4 \{}\par
+                            {\cf5\i //Adler als wei{\u223}e Kreise anzeigen, Radius 30\par
+}                            grafik{\cf4 .}{\cf23 setColor}{\cf4 (}Color{\cf4 .}{\cf23 WHITE}{\cf4 )}{\cf4 ;}\par
+                            grafik{\cf4 .}{\cf23 fillOval}{\cf4 (}xw{\cf4 ,} yw{\cf4 ,} {\cf4 30}{\cf4 ,} {\cf4 30}{\cf4 )}{\cf4 ;}\par
+                        {\cf4 \}}\par
+                        {\cf8\b if} {\cf4 (}svg_erstellen{\cf4 )} {\cf4 \{}\par
+                            {\cf5\i //Adler als festgelegten Pfeil anzeigen\par
+}                            {\cf5\i //Adler richtig drehen\par
+}                            String t {\cf4 =} {\cf2 "rotate("}{\cf4 ;}\par
+                            {\cf8\b if} {\cf4 (}a{\cf4 .}{\cf23 flugrichtung}{\cf4 .}{\cf23 x} {\cf4 !}{\cf4 =} {\cf4 0}{\cf4 )} {\cf4 \{}\par
+                                {\cf8\b if} {\cf4 (}a{\cf4 .}{\cf23 flugrichtung}{\cf4 .}{\cf23 x} {\cf4 <} {\cf4 0}{\cf4 )} {\cf4 \{}\par
+                                    t {\cf4 +}{\cf4 =} {\cf2 "180"}{\cf4 ;}\par
+                                {\cf4 \}} {\cf8\b else} {\cf4 \{}\par
+                                    t {\cf4 +}{\cf4 =} {\cf2 "0"}{\cf4 ;}\par
+                                {\cf4 \}}\par
+                            {\cf4 \}} {\cf8\b else} {\cf8\b if} {\cf4 (}a{\cf4 .}{\cf23 flugrichtung}{\cf4 .}{\cf23 y} {\cf4 <} {\cf4 0}{\cf4 )} {\cf4 \{}\par
+                                t {\cf4 +}{\cf4 =} {\cf2 "270"}{\cf4 ;}\par
+                            {\cf4 \}} {\cf8\b else} {\cf4 \{}\par
+                                t {\cf4 +}{\cf4 =} {\cf2 "90"}{\cf4 ;}\par
+                            {\cf4 \}}\par
+                            t {\cf4 +}{\cf4 =} {\cf2 " "}{\cf4 ;}\par
+                            t {\cf4 +}{\cf4 =} Integer{\cf4 .}{\cf23 toString}{\cf4 (}xw {\cf4 +} {\cf4 15}{\cf4 )}{\cf4 ;} {\cf5\i //Drehungsmittelpunkt X\par
+}                            t {\cf4 +}{\cf4 =} {\cf2 " "}{\cf4 ;}\par
+                            t {\cf4 +}{\cf4 =} Integer{\cf4 .}{\cf23 toString}{\cf4 (}yw {\cf4 +} {\cf4 15}{\cf4 )}{\cf4 ;} {\cf5\i //Drehungsmittelpunkt Y\par
+}                            t {\cf4 +}{\cf4 =} {\cf2 ")"}{\cf4 ;}\par
+                            {\cf5\i //Koordinaten des Pfeils versetzen\par
+}                            String ps {\cf4 =} {\cf2 ""}{\cf4 ;}\par
+                            {\cf8\b for} {\cf4 (}{\cf18 int} p {\cf4 =} {\cf4 0}{\cf4 ;} p {\cf4 <} ADLER_SVG{\cf4 .}{\cf23 length}{\cf4 ;} p{\cf4 +}{\cf4 +}{\cf4 )} {\cf4 \{}\par
+                                ps {\cf4 +}{\cf4 =} Integer{\cf4 .}{\cf23 toString}{\cf4 (}xw {\cf4 -} {\cf4 5} {\cf4 +} ADLER_SVG{\cf4 [}p{\cf4 ]}{\cf4 .}{\cf23 x}{\cf4 )}{\cf4 ;}\par
+                                ps {\cf4 +}{\cf4 =} {\cf2 ","}{\cf4 ;}\par
+                                ps {\cf4 +}{\cf4 =} Integer{\cf4 .}{\cf23 toString}{\cf4 (}yw {\cf4 -} {\cf4 5} {\cf4 +} ADLER_SVG{\cf4 [}p{\cf4 ]}{\cf4 .}{\cf23 y}{\cf4 )}{\cf4 ;}\par
+                                {\cf8\b if} {\cf4 (}p {\cf4 !}{\cf4 =} ADLER_SVG{\cf4 .}{\cf23 length} {\cf4 -} {\cf4 1}{\cf4 )} {\cf4 \{}\par
+                                    ps {\cf4 +}{\cf4 =} {\cf2 " "}{\cf4 ;}\par
+                                {\cf4 \}}\par
+                            {\cf4 \}}\par
+                            svg_to_save {\cf4 +}{\cf4 =} {\cf2 "    <polygon points=\\""} {\cf4 +} ps {\cf4 +} {\cf2 "\\" style=\\"fill:rgb(255,255,255); fill-opacity:0.75; stroke:rgb(255,165,0); stroke-width:0.5px\\" transform=\\""} {\cf4 +} t {\cf4 +} {\cf2 "\\"/>\\n"}{\cf4 ;} {\cf5\i //Adler(Pfeil) versetzt zum SVG, mit gegebener Richtung(Drehung), hinzuf{\u252}gen, ebnfalls in wei{\u223}, nun aber auch teilweise durchsichtig \par
+}                        {\cf4 \}}\par
+                    {\cf4 \}}\par
+                    {\cf8\b if} {\cf4 (}a{\cf4 .}{\cf23 flugrichtung}{\cf4 .}{\cf23 x} {\cf4 !}{\cf4 =} {\cf4 0}{\cf4 )} {\cf4 \{} {\cf5\i //Sollte der Adler in x-Richtung fliegen(Westen-Osten)\par
+}                        {\cf8\b if} {\cf4 (}a{\cf4 .}{\cf23 position}{\cf4 .}{\cf23 x} {\cf4 +} a{\cf4 .}{\cf23 flugrichtung}{\cf4 .}{\cf23 x} {\cf4 <} {\cf4 0} {\cf4 |}{\cf4 |} a{\cf4 .}{\cf23 position}{\cf4 .}{\cf23 x} {\cf4 +} a{\cf4 .}{\cf23 flugrichtung}{\cf4 .}{\cf23 x} {\cf4 >} felder{\cf4 .}{\cf23 length} {\cf4 -} {\cf4 1}{\cf4 )} {\cf4 \{} {\cf5\i //W{\u252}rde er {\u252}ber den Rechteckwald hinausfliegen...\par
+}                            a{\cf4 .}{\cf23 flugrichtung}{\cf4 .}{\cf23 x} {\cf4 =} {\cf4 -}a{\cf4 .}{\cf23 flugrichtung}{\cf4 .}{\cf23 x}{\cf4 ;} {\cf5\i //...fliegt er wieder zur{\u252}ck, ab jetzt also in umgekehrter Richtung\par
+}                        {\cf4 \}}\par
+                    {\cf4 \}} {\cf8\b else} {\cf8\b if} {\cf4 (}a{\cf4 .}{\cf23 position}{\cf4 .}{\cf23 y} {\cf4 +} a{\cf4 .}{\cf23 flugrichtung}{\cf4 .}{\cf23 y} {\cf4 <} {\cf4 0} {\cf4 |}{\cf4 |} a{\cf4 .}{\cf23 position}{\cf4 .}{\cf23 y} {\cf4 +} a{\cf4 .}{\cf23 flugrichtung}{\cf4 .}{\cf23 y} {\cf4 >} felder{\cf4 [}{\cf4 0}{\cf4 ]}{\cf4 .}{\cf23 length} {\cf4 -} {\cf4 1}{\cf4 )} {\cf4 \{} {\cf5\i //Sollte der Adler in y-Richtung fliegen(Norden-S{\u252}den), und w{\u252}rde er {\u252}ber den Rechteckwald hinausfliegen...\par
+}                        a{\cf4 .}{\cf23 flugrichtung}{\cf4 .}{\cf23 y} {\cf4 =} {\cf4 -}a{\cf4 .}{\cf23 flugrichtung}{\cf4 .}{\cf23 y}{\cf4 ;} {\cf5\i //...fliegt er wieder zur{\u252}ck, ab jetzt also in umgekehrter Richtung\par
+}                    {\cf4 \}}\par
+                    Feld f {\cf4 =} felder{\cf4 [}a{\cf4 .}{\cf23 position}{\cf4 .}{\cf23 x}{\cf4 ]}{\cf4 [}a{\cf4 .}{\cf23 position}{\cf4 .}{\cf23 y}{\cf4 ]}{\cf4 ;} {\cf5\i //Das Feld, {\u252}ber dem er sich jetzt befindet\par
+}                    {\cf8\b if} {\cf4 (}m {\cf4 -} f{\cf4 .}{\cf23 anfangSichererZeitraum} {\cf4 >}{\cf4 =} {\cf4 30}{\cf4 )} {\cf4 \{} {\cf5\i //Sollte dieses mindestens satte 30 Minuten sicher gewesen sein : \par
+}                        felder{\cf4 [}a{\cf4 .}{\cf23 position}{\cf4 .}{\cf23 x}{\cf4 ]}{\cf4 [}a{\cf4 .}{\cf23 position}{\cf4 .}{\cf23 y}{\cf4 ]}{\cf4 .}{\cf23 add}{\cf4 (}{\cf8\b new} Zeitraum{\cf4 (}f{\cf4 .}{\cf23 anfangSichererZeitraum}{\cf4 ,} m{\cf4 )}{\cf4 )}{\cf4 ;} {\cf5\i //Zeitraum zu sicheren Zeitr{\u228}umen des Feldes hinzuf{\u252}gen\par
+}                    {\cf4 \}}\par
+                    felder{\cf4 [}a{\cf4 .}{\cf23 position}{\cf4 .}{\cf23 x}{\cf4 ]}{\cf4 [}a{\cf4 .}{\cf23 position}{\cf4 .}{\cf23 y}{\cf4 ]}{\cf4 .}{\cf23 anfangSichererZeitraum} {\cf4 =} {\cf4 (}{\cf18 short}{\cf4 )} {\cf4 (}m {\cf4 +} {\cf4 1}{\cf4 )}{\cf4 ;} {\cf5\i //Nach {\u220}berflug ist das Feld wieder sicher\par
+}                    a{\cf4 .}{\cf23 position} {\cf4 =} a{\cf4 .}{\cf23 position}{\cf4 .}{\cf23 add}{\cf4 (}a{\cf4 .}{\cf23 flugrichtung}{\cf4 )}{\cf4 ;} {\cf5\i //Weiterfliegen !\par
+}                {\cf4 \}}\par
+            {\cf4 \}}\par
+            {\cf8\b if} {\cf4 (}svg_erstellen {\cf4 |}{\cf4 |} jpg_erstellen{\cf4 )} {\cf4 \{} {\cf5\i //F{\u252}r eine eventuell gew{\u252}nschte Darstellung : \par
+}                {\cf8\b for} {\cf4 (}{\cf18 int} x {\cf4 =} {\cf4 0}{\cf4 ;} x {\cf4 <} felder{\cf4 .}{\cf23 length}{\cf4 ;} x{\cf4 +}{\cf4 +}{\cf4 )} {\cf4 \{}\par
+                    {\cf8\b for} {\cf4 (}{\cf18 int} y {\cf4 =} {\cf4 0}{\cf4 ;} y {\cf4 <} felder{\cf4 [}{\cf4 0}{\cf4 ]}{\cf4 .}{\cf23 length}{\cf4 ;} y{\cf4 +}{\cf4 +}{\cf4 )} {\cf4 \{}\par
+                        {\cf8\b if} {\cf4 (}{\cf4 !}felder{\cf4 [}x{\cf4 ]}{\cf4 [}y{\cf4 ]}{\cf4 .}{\cf23 totalSicher}{\cf4 )} {\cf4 \{} {\cf5\i //Ist das Feld nicht total sicher\par
+}                            {\cf8\b if} {\cf4 (}m {\cf4 -} felder{\cf4 [}x{\cf4 ]}{\cf4 [}y{\cf4 ]}{\cf4 .}{\cf23 anfangSichererZeitraum} {\cf4 >}{\cf4 =} {\cf4 30}{\cf4 )} {\cf4 \{} {\cf5\i //Sichere Felder einf{\u228}rben, solange sie einen sicheren Zeitraum durchlaufen\par
+}                                {\cf18 int} xw {\cf4 =} x {\cf4 *} {\cf4 40} {\cf4 +} {\cf4 5}{\cf4 ;}\par
+                                {\cf18 int} yw {\cf4 =} y {\cf4 *} {\cf4 40} {\cf4 +} {\cf4 5}{\cf4 ;}\par
+                                {\cf8\b if} {\cf4 (}jpg_erstellen{\cf4 )} {\cf4 \{}\par
+                                    {\cf5\i //Im Bild als blaue Quadrate darstellen\par
+}                                    grafik{\cf4 .}{\cf23 setColor}{\cf4 (}Color{\cf4 .}{\cf23 BLUE}{\cf4 )}{\cf4 ;}\par
+                                    grafik{\cf4 .}{\cf23 fillRect}{\cf4 (}xw{\cf4 ,} yw{\cf4 ,} {\cf4 30}{\cf4 ,} {\cf4 30}{\cf4 )}{\cf4 ;}\par
+                                {\cf4 \}}\par
+                                {\cf8\b if} {\cf4 (}svg_erstellen{\cf4 )} {\cf4 \{}\par
+                                    {\cf5\i //Genauso im SVG\par
+}                                    svg_to_save {\cf4 +}{\cf4 =} String{\cf4 .}{\cf23 format}{\cf4 (}{\cf2 "    <rect x=\\"%d\\" y=\\"%d\\" width=\\"30\\" height=\\"30\\" fill=\\"rgb(0,0,255)\\" />\\n"}{\cf4 ,} xw{\cf4 ,} yw{\cf4 )}{\cf4 ;}\par
+                                {\cf4 \}}\par
+                            {\cf4 \}}\par
+                        {\cf4 \}}\par
+                    {\cf4 \}}\par
+                {\cf4 \}}\par
+            {\cf4 \}}\par
+            {\cf5\i //Simultaionsminute in die Darstellung/en einf{\u252}gen und diese dann speichern\par
+}            {\cf8\b if} {\cf4 (}jpg_erstellen{\cf4 )} {\cf4 \{}\par
+                {\cf5\i //Simulationsminute einf{\u252}gen, schwarz, Schriftgr{\u246}{\u223}e 24\par
+}                grafik{\cf4 .}{\cf23 setColor}{\cf4 (}Color{\cf4 .}{\cf23 BLACK}{\cf4 )}{\cf4 ;}\par
+                grafik{\cf4 .}{\cf23 setFont}{\cf4 (}{\cf8\b new} Font{\cf4 (}{\cf2 "sans"}{\cf4 ,} Font{\cf4 .}{\cf23 PLAIN}{\cf4 ,} {\cf4 24}{\cf4 )}{\cf4 )}{\cf4 ;}\par
+                grafik{\cf4 .}{\cf23 drawString}{\cf4 (}Short{\cf4 .}{\cf23 toString}{\cf4 (}m{\cf4 )}{\cf4 ,} {\cf4 0}{\cf4 ,} {\cf4 24}{\cf4 )}{\cf4 ;}\par
+                File ausgabe {\cf4 =} {\cf8\b new} File{\cf4 (}name {\cf4 +} Short{\cf4 .}{\cf23 toString}{\cf4 (}m{\cf4 )} {\cf4 +} {\cf2 ".jpg"}{\cf4 )}{\cf4 ;} {\cf5\i //Ausgabe : name+minute+".jpg"\par
+}                ImageIO{\cf4 .}{\cf23 write}{\cf4 (}img{\cf4 ,} {\cf2 "JPG"}{\cf4 ,} ausgabe{\cf4 )}{\cf4 ;} {\cf5\i //Bild als JPG speichern\par
+}            {\cf4 \}}\par
+            {\cf8\b if} {\cf4 (}svg_erstellen{\cf4 )} {\cf4 \{}\par
+                {\cf5\i //Simulationsminute einf{\u252}gen, schwarz, Schriftgr{\u246}{\u223}e 24\par
+}                svg_to_save {\cf4 +}{\cf4 =} String{\cf4 .}{\cf23 format}{\cf4 (}{\cf2 "<text x=\\"0\\" y=\\"24\\" fill=\\"black\\" style=\\"font-size:24px\\">%s</text>"}{\cf4 ,} Short{\cf4 .}{\cf23 toString}{\cf4 (}m{\cf4 )}{\cf4 )}{\cf4 ;}\par
+                svg_to_save {\cf4 +}{\cf4 =} {\cf2 "\\n</svg>"}{\cf4 ;}\par
+                File svg_ausgabe {\cf4 =} {\cf8\b new} File{\cf4 (}name {\cf4 +} Short{\cf4 .}{\cf23 toString}{\cf4 (}m{\cf4 )} {\cf4 +} {\cf2 ".svg"}{\cf4 )}{\cf4 ;}\par
+                {\cf8\b if} {\cf4 (}svg_ausgabe{\cf4 .}{\cf23 exists}{\cf4 (}{\cf4 )}{\cf4 )} {\cf4 \{} {\cf5\i //Existiert die Datei schon\par
+}                    svg_ausgabe{\cf4 .}{\cf23 delete}{\cf4 (}{\cf4 )}{\cf4 ;} {\cf5\i //So wollen wir diese komplett l{\u246}schen\par
+}                {\cf4 \}}\par
+                svg_ausgabe{\cf4 .}{\cf23 createNewFile}{\cf4 (}{\cf4 )}{\cf4 ;} {\cf5\i //Wir erzeugen die Ausgabedatei\par
+}                {\cf5\i //SVG speichern\par
+}                BufferedWriter w {\cf4 =} {\cf8\b new} BufferedWriter{\cf4 (}{\cf8\b new} FileWriter{\cf4 (}svg_ausgabe{\cf4 )}{\cf4 )}{\cf4 ;}\par
+                w{\cf4 .}{\cf23 write}{\cf4 (}svg_to_save{\cf4 )}{\cf4 ;}\par
+                w{\cf4 .}{\cf23 close}{\cf4 (}{\cf4 )}{\cf4 ;}\par
+            {\cf4 \}}\par
+            System{\cf4 .}{\cf23 gc}{\cf4 (}{\cf4 )}{\cf4 ;} {\cf5\i //Speicher freigeben\par
+}        {\cf4 \}}\par
+        {\cf8\b for} {\cf4 (}{\cf18 int} x {\cf4 =} {\cf4 0}{\cf4 ;} x {\cf4 <} felder{\cf4 .}{\cf23 length}{\cf4 ;} x{\cf4 +}{\cf4 +}{\cf4 )} {\cf4 \{}\par
+            {\cf8\b for} {\cf4 (}{\cf18 int} y {\cf4 =} {\cf4 0}{\cf4 ;} y {\cf4 <} felder{\cf4 [}{\cf4 0}{\cf4 ]}{\cf4 .}{\cf23 length}{\cf4 ;} y{\cf4 +}{\cf4 +}{\cf4 )} {\cf4 \{}\par
+                {\cf8\b if} {\cf4 (}{\cf4 !}felder{\cf4 [}x{\cf4 ]}{\cf4 [}y{\cf4 ]}{\cf4 .}{\cf23 totalSicher}{\cf4 )} {\cf4 \{} {\cf5\i //Alle nicht total sicheren Felder\par
+}                    {\cf8\b if} {\cf4 (}DAY {\cf4 -} felder{\cf4 [}x{\cf4 ]}{\cf4 [}y{\cf4 ]}{\cf4 .}{\cf23 anfangSichererZeitraum} {\cf4 >}{\cf4 =} {\cf4 30}{\cf4 )} {\cf4 \{} {\cf5\i //"Alles muss raus"-Felder, die vor Ende des Tages nur einmal {\u252}berflogen wurden, was jetzt schon mehr als eine 1/2 h her ist\par
+}                        felder{\cf4 [}x{\cf4 ]}{\cf4 [}y{\cf4 ]}{\cf4 .}{\cf23 add}{\cf4 (}{\cf8\b new} Zeitraum{\cf4 (}felder{\cf4 [}x{\cf4 ]}{\cf4 [}y{\cf4 ]}{\cf4 .}{\cf23 anfangSichererZeitraum}{\cf4 ,} DAY{\cf4 )}{\cf4 )}{\cf4 ;} {\cf5\i //Zeitraum zu sicheren Zeitr{\u228}umen des Feldes hinzuf{\u252}gen\par
+}                    {\cf4 \}}\par
+                    {\cf5\i //Alle sicheren Zeitr{\u228}ume des Feldes ausgeben\par
+}                    {\cf8\b if} {\cf4 (}{\cf4 !}felder{\cf4 [}x{\cf4 ]}{\cf4 [}y{\cf4 ]}{\cf4 .}{\cf23 isEmpty}{\cf4 (}{\cf4 )}{\cf4 )} {\cf4 \{} {\cf5\i //Gibt es bei diesem Feld sichere Zeitr{\u228}ume\par
+}                        System{\cf4 .}{\cf23 out}{\cf4 .}{\cf23 print}{\cf4 (}{\cf2 "X="} {\cf4 +} Integer{\cf4 .}{\cf23 toString}{\cf4 (}x{\cf4 )} {\cf4 +} {\cf2 " Y="} {\cf4 +} Integer{\cf4 .}{\cf23 toString}{\cf4 (}y{\cf4 )}{\cf4 )}{\cf4 ;}\par
+                        {\cf8\b for} {\cf4 (}Zeitraum z {\cf4 :} felder{\cf4 [}x{\cf4 ]}{\cf4 [}y{\cf4 ]}{\cf4 )} {\cf4 \{}\par
+                            System{\cf4 .}{\cf23 out}{\cf4 .}{\cf23 print}{\cf4 (}{\cf2 " SM="} {\cf4 +} Short{\cf4 .}{\cf23 toString}{\cf4 (}z{\cf4 .}{\cf23 anfangSichererZeitraum}{\cf4 )} {\cf4 +} {\cf2 " EM="} {\cf4 +} Short{\cf4 .}{\cf23 toString}{\cf4 (}z{\cf4 .}{\cf23 endeSichererZeitraum}{\cf4 )}{\cf4 )}{\cf4 ;}\par
+                        {\cf4 \}}\par
+                        System{\cf4 .}{\cf23 out}{\cf4 .}{\cf23 println}{\cf4 (}{\cf4 )}{\cf4 ;}\par
+                    {\cf4 \}}\par
+                {\cf4 \}}\par
+            {\cf4 \}}\par
+        {\cf4 \}}\par
+    {\cf4 \}}\par
+\par
+    {\cf12 @Override}\par
+    {\cf8\b public} String {\cf19 toString}{\cf4 (}{\cf4 )} {\cf4 \{} {\cf5\i //Sicherheiten der Felder angeben\par
+}        String s {\cf4 =} {\cf2 ""}{\cf4 ;}\par
+        {\cf8\b for} {\cf4 (}{\cf18 int} y {\cf4 =} felder{\cf4 [}{\cf4 0}{\cf4 ]}{\cf4 .}{\cf23 length} {\cf4 -} {\cf4 1}{\cf4 ;} y {\cf4 >} {\cf4 -}{\cf4 1}{\cf4 ;} y{\cf4 -}{\cf4 -}{\cf4 )} {\cf4 \{} {\cf5\i //Y-Achse umdrehen\par
+}            {\cf8\b for} {\cf4 (}{\cf18 int} x {\cf4 =} {\cf4 0}{\cf4 ;} x {\cf4 <} felder{\cf4 .}{\cf23 length}{\cf4 ;} x{\cf4 +}{\cf4 +}{\cf4 )} {\cf4 \{}\par
+                {\cf8\b if} {\cf4 (}felder{\cf4 [}x{\cf4 ]}{\cf4 [}y{\cf4 ]}{\cf4 .}{\cf23 totalSicher}{\cf4 )} {\cf4 \{} {\cf5\i //Ist das Feld total sicher, 2 ausgeben an der Stelle\par
+}                    s {\cf4 +}{\cf4 =} {\cf2 "2"}{\cf4 ;}\par
+                {\cf4 \}} {\cf8\b else} {\cf8\b if} {\cf4 (}felder{\cf4 [}x{\cf4 ]}{\cf4 [}y{\cf4 ]}{\cf4 .}{\cf23 isEmpty}{\cf4 (}{\cf4 )}{\cf4 )} {\cf4 \{} {\cf5\i //Gibt es keine sicheren Zeitr{\u228}ume f{\u252}r das Feld\par
+}                    s {\cf4 +}{\cf4 =} {\cf2 "0"}{\cf4 ;} {\cf5\i //0 ausgeben\par
+}                {\cf4 \}} {\cf8\b else} {\cf4 \{} {\cf5\i //Ansonsten gibt es Sichere\par
+}                    s {\cf4 +}{\cf4 =} {\cf2 "1"}{\cf4 ;} {\cf5\i //1 ausgeben\par
+}                {\cf4 \}}\par
+                {\cf8\b if} {\cf4 (}x {\cf4 !}{\cf4 =} felder{\cf4 .}{\cf23 length} {\cf4 -} {\cf4 1}{\cf4 )} {\cf4 \{}\par
+                    s {\cf4 +}{\cf4 =} {\cf2 " "}{\cf4 ;}\par
+                {\cf4 \}}\par
+            {\cf4 \}}\par
+            s {\cf4 +}{\cf4 =} {\cf2 "\\n"}{\cf4 ;}\par
+        {\cf4 \}}\par
+        {\cf8\b return} s{\cf4 ;} {\cf5\i //Textdarstellung zur{\u252}ckgeben\par
+}    {\cf4 \}}\par
+{\cf4 \}}\par
+}

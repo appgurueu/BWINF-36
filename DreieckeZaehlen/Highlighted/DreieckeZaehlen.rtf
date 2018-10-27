@@ -1,0 +1,178 @@
+{\rtf1\ansi\uc0\deff0{\fonttbl{\f0\fmodern\fprq1\fcharset0;}}{\colortbl;\red136\green136\blue136;\red186\green33\blue33;\red0\green68\blue221;\red102\green102\blue102;\red64\green128\blue128;\red160\green160\blue0;\red25\green23\blue124;\red0\green128\blue0;\red187\green102\blue136;\red187\green102\blue34;\red136\green0\blue0;\red170\green34\blue255;\red153\green153\blue153;\red0\green160\blue0;\red160\green0\blue0;\red255\green0\blue0;\red128\green0\blue128;\red176\green0\blue64;\red0\green0\blue255;\red187\green187\blue187;\red188\green122\blue0;\red0\green0\blue128;\red125\green144\blue41;\red210\green65\blue58;}\f0 {\cf8\b package} {\cf19\b dreieckezaehlen}{\cf4 ;}\par
+\par
+{\cf5\i //Dateien & Ordner\par
+}{\cf8\b import} {\cf19\b java.io.BufferedWriter}{\cf4 ;} {\cf5\i //Dateien schreiben\par
+}{\cf8\b import} {\cf19\b java.io.File}{\cf4 ;}  {\cf5\i //Dateien & Ordner\par
+}{\cf8\b import} {\cf19\b java.io.FileNotFoundException}{\cf4 ;} {\cf5\i //Datei-nicht-gefunden-Fehler\par
+}{\cf8\b import} {\cf19\b java.io.FileReader}{\cf4 ;} {\cf5\i //Dateien lesen\par
+}{\cf8\b import} {\cf19\b java.io.FileWriter}{\cf4 ;} {\cf5\i //Dateien schreiben\par
+}{\cf8\b import} {\cf19\b java.io.IOException}{\cf4 ;} {\cf5\i //Eingabe/Ausgabe-Fehler\par
+}{\cf8\b import} {\cf19\b java.util.Scanner}{\cf4 ;} {\cf5\i //Benutzereingabe\par
+}\par
+{\cf8\b public} {\cf8\b class} {\cf19\b DreieckeZaehlen} {\cf4 \{}\par
+\par
+    {\cf8\b public} {\cf8\b static} {\cf8\b final} Scanner EINGABE{\cf4 =}{\cf8\b new} Scanner{\cf4 (}System{\cf4 .}{\cf23 in}{\cf4 )}{\cf4 ;} {\cf5\i //Benutzereingabe\par
+}    {\cf8\b public} {\cf8\b static} Strecke{\cf4 [}{\cf4 ]} strecken{\cf4 ;} {\cf5\i //Alle Strecken\par
+}\par
+    {\cf8\b public} {\cf8\b static} String {\cf19 leseDatei}{\cf4 (}File pfad_zur_datei{\cf4 )} {\cf8\b throws} FileNotFoundException{\cf4 ,} IOException {\cf4 \{} {\cf5\i //Liest eine Datei ein, und gibt Text zur{\u252}ck\par
+}        FileReader datei {\cf4 =} {\cf8\b new} FileReader{\cf4 (}pfad_zur_datei{\cf4 )}{\cf4 ;}\par
+        String r {\cf4 =} {\cf2 ""}{\cf4 ;}\par
+        {\cf18 int} i {\cf4 =} datei{\cf4 .}{\cf23 read}{\cf4 (}{\cf4 )}{\cf4 ;}\par
+        {\cf8\b while} {\cf4 (}i {\cf4 !}{\cf4 =} {\cf4 -}{\cf4 1}{\cf4 )} {\cf4 \{}\par
+            r {\cf4 +}{\cf4 =} {\cf4 (}{\cf18 char}{\cf4 )} i{\cf4 ;}\par
+            i {\cf4 =} datei{\cf4 .}{\cf23 read}{\cf4 (}{\cf4 )}{\cf4 ;}\par
+        {\cf4 \}}\par
+        {\cf8\b return} r{\cf4 ;}\par
+    {\cf4 \}}\par
+\par
+    {\cf8\b public} {\cf8\b static} File {\cf19 dateiFrage}{\cf4 (}String frage{\cf4 )} {\cf4 \{} {\cf5\i //Fragt nach einem Pfad und pr{\u252}ft, ob dieser existiert\par
+}        {\cf8\b while} {\cf4 (}{\cf8\b true}{\cf4 )} {\cf4 \{}\par
+            System{\cf4 .}{\cf23 out}{\cf4 .}{\cf23 println}{\cf4 (}frage {\cf4 +} {\cf2 "(Pfad zu .txt Datei) ? "}{\cf4 )}{\cf4 ;}\par
+            String s {\cf4 =} EINGABE{\cf4 .}{\cf23 nextLine}{\cf4 (}{\cf4 )}{\cf4 ;}\par
+            File f {\cf4 =} {\cf8\b new} File{\cf4 (}s{\cf4 )}{\cf4 ;}\par
+            {\cf8\b if} {\cf4 (}f{\cf4 .}{\cf23 exists}{\cf4 (}{\cf4 )} {\cf4 &}{\cf4 &} {\cf4 !}f{\cf4 .}{\cf23 isDirectory}{\cf4 (}{\cf4 )} {\cf4 &}{\cf4 &} f{\cf4 .}{\cf23 canRead}{\cf4 (}{\cf4 )}{\cf4 )} {\cf4 \{} {\cf5\i //Pr{\u252}fe, ob : - existiert die Datei - ist es kein Ordner - ist sie lesbar\par
+}                {\cf8\b return} f{\cf4 ;} {\cf5\i //Gebe Pfad zur{\u252}ck\par
+}            {\cf4 \}}\par
+            System{\cf4 .}{\cf23 out}{\cf4 .}{\cf23 println}{\cf4 (}{\cf2 "Bitte antworten sie mit einem vorhandenen Pfad einer .txt Datei. Versuchen sie es erneut."}{\cf4 )}{\cf4 ;}\par
+        {\cf4 \}}\par
+    {\cf4 \}}\par
+\par
+    {\cf8\b public} {\cf8\b static} String {\cf19 textFrage}{\cf4 (}String frage{\cf4 )} {\cf4 \{} {\cf5\i //Fragt nach einer Zeichenkette\par
+}        System{\cf4 .}{\cf23 out}{\cf4 .}{\cf23 println}{\cf4 (}frage {\cf4 +} {\cf2 "(Zeichenkette) ? "}{\cf4 )}{\cf4 ;}\par
+        String s {\cf4 =} EINGABE{\cf4 .}{\cf23 nextLine}{\cf4 (}{\cf4 )}{\cf4 ;}\par
+        {\cf8\b return} s{\cf4 ;}\par
+    {\cf4 \}}\par
+\par
+    {\cf8\b public} {\cf8\b static} Schnittpunkt {\cf19 holeSchnittpunkt}{\cf4 (}Strecke e{\cf4 ,} Strecke f{\cf4 )} {\cf4 \{} {\cf5\i //Gibt den Schnittpunkt zweier Strecken zur{\u252}ck\par
+}        Schnittpunkt c {\cf4 =} e{\cf4 .}{\cf23 schnitte}{\cf4 .}{\cf23 get}{\cf4 (}f{\cf4 )}{\cf4 ;} {\cf5\i //Ist der Schnittpunkt gespeichert\par
+}        {\cf8\b if} {\cf4 (}c {\cf4 =}{\cf4 =} {\cf8\b null}{\cf4 )} {\cf4 \{} {\cf5\i //Falls leider nicht, m{\u252}ssen wir ihn ermitteln\par
+}            c {\cf4 =} f{\cf4 .}{\cf23 schnittPunkt}{\cf4 (}e{\cf4 )}{\cf4 ;} {\cf5\i //Ermittelt den Schnittpunkt\par
+}            {\cf5\i //Den Schnitt einspeichern\par
+}            e{\cf4 .}{\cf23 schnitte}{\cf4 .}{\cf23 put}{\cf4 (}f{\cf4 ,} c{\cf4 )}{\cf4 ;}\par
+            f{\cf4 .}{\cf23 schnitte}{\cf4 .}{\cf23 put}{\cf4 (}e{\cf4 ,} c{\cf4 )}{\cf4 ;}\par
+        {\cf4 \}}\par
+        {\cf8\b return} c{\cf4 ;} {\cf5\i //Schnittpunkt zur{\u252}ckgeben\par
+}    {\cf4 \}}\par
+\par
+    {\cf8\b public} {\cf8\b static} {\cf18 void} {\cf19 main}{\cf4 (}String{\cf4 [}{\cf4 ]} args{\cf4 )} {\cf8\b throws} IOException {\cf4 \{}\par
+        String{\cf4 [}{\cf4 ]} aufgabe {\cf4 =} leseDatei{\cf4 (}dateiFrage{\cf4 (}{\cf2 "Wo befindet sich die Aufgabe"}{\cf4 )}{\cf4 )}{\cf4 .}{\cf23 split}{\cf4 (}{\cf2 "\\n"}{\cf4 )}{\cf4 ;}\par
+        String ausgabe {\cf4 =} textFrage{\cf4 (}{\cf2 "Wo soll das Ausgabebild gespeichert werden(Pfad zu .svg)"}{\cf4 )}{\cf4 ;}\par
+        {\cf18 int} d {\cf4 =} {\cf4 0}{\cf4 ;} {\cf5\i //Noch wurden 0 Dreiecke gez{\u228}hlt\par
+}        strecken {\cf4 =} {\cf8\b new} Strecke{\cf4 [}aufgabe{\cf4 .}{\cf23 length} {\cf4 -} {\cf4 1}{\cf4 ]}{\cf4 ;} {\cf5\i //Es gibt so viele Strecken, wie die Aufgabe Zeilen hat abz{\u252}glich 1, wegen der obersten Zeile\par
+}        {\cf8\b for} {\cf4 (}{\cf18 int} i {\cf4 =} {\cf4 1}{\cf4 ;} i {\cf4 <} aufgabe{\cf4 .}{\cf23 length}{\cf4 ;} i{\cf4 +}{\cf4 +}{\cf4 )} {\cf4 \{} {\cf5\i //Alle Strecken von Textform in Streckenform umwandeln\par
+}            String s {\cf4 =} aufgabe{\cf4 [}i{\cf4 ]}{\cf4 ;}\par
+            String{\cf4 [}{\cf4 ]} p {\cf4 =} s{\cf4 .}{\cf23 split}{\cf4 (}{\cf2 " "}{\cf4 )}{\cf4 ;}\par
+            Punkt a {\cf4 =} {\cf8\b new} Punkt{\cf4 (}{\cf8\b new} Dezimalzahl{\cf4 (}Double{\cf4 .}{\cf23 parseDouble}{\cf4 (}p{\cf4 [}{\cf4 0}{\cf4 ]}{\cf4 )}{\cf4 )}{\cf4 ,} {\cf8\b new} Dezimalzahl{\cf4 (}Double{\cf4 .}{\cf23 parseDouble}{\cf4 (}p{\cf4 [}{\cf4 1}{\cf4 ]}{\cf4 )}{\cf4 )}{\cf4 )}{\cf4 ;} {\cf5\i //Punkt a lesen\par
+}            Punkt b {\cf4 =} {\cf8\b new} Punkt{\cf4 (}{\cf8\b new} Dezimalzahl{\cf4 (}Double{\cf4 .}{\cf23 parseDouble}{\cf4 (}p{\cf4 [}{\cf4 2}{\cf4 ]}{\cf4 )}{\cf4 )}{\cf4 ,} {\cf8\b new} Dezimalzahl{\cf4 (}Double{\cf4 .}{\cf23 parseDouble}{\cf4 (}p{\cf4 [}{\cf4 3}{\cf4 ]}{\cf4 )}{\cf4 )}{\cf4 )}{\cf4 ;} {\cf5\i //Punkt b lesen\par
+}            strecken{\cf4 [}i {\cf4 -} {\cf4 1}{\cf4 ]} {\cf4 =} {\cf8\b new} Strecke{\cf4 (}a{\cf4 ,} b{\cf4 )}{\cf4 ;} {\cf5\i //Strecke speichern\par
+}        {\cf4 \}}\par
+        {\cf18 double} minx {\cf4 =} Double{\cf4 .}{\cf23 MAX_VALUE}{\cf4 ;} {\cf5\i //Kleinster X-Wert von allen Strecken\par
+}        {\cf18 double} miny {\cf4 =} Double{\cf4 .}{\cf23 MAX_VALUE}{\cf4 ;} {\cf5\i //Kleinster Y-Wert von allen Strecken\par
+}        {\cf18 double} maxx {\cf4 =} Double{\cf4 .}{\cf23 MIN_VALUE}{\cf4 ;} {\cf5\i //Gr{\u246}{\u223}ter X-Wert von allen Strecken\par
+}        {\cf18 double} maxy {\cf4 =} Double{\cf4 .}{\cf23 MIN_VALUE}{\cf4 ;} {\cf5\i //Gr{\u246}{\u223}ter Y-Wert von allen Strecken\par
+}        {\cf8\b for} {\cf4 (}Strecke s {\cf4 :} strecken{\cf4 )} {\cf4 \{} {\cf5\i //Ermittelt die dar{\u252}ber aufgef{\u252}hrten Werte\par
+}            {\cf18 double} ax {\cf4 =} s{\cf4 .}{\cf23 a}{\cf4 .}{\cf23 x}{\cf4 .}{\cf23 wert}{\cf4 (}{\cf4 )}{\cf4 ;}\par
+            {\cf18 double} ay {\cf4 =} s{\cf4 .}{\cf23 a}{\cf4 .}{\cf23 y}{\cf4 .}{\cf23 wert}{\cf4 (}{\cf4 )}{\cf4 ;}\par
+            {\cf18 double} bx {\cf4 =} s{\cf4 .}{\cf23 b}{\cf4 .}{\cf23 x}{\cf4 .}{\cf23 wert}{\cf4 (}{\cf4 )}{\cf4 ;}\par
+            {\cf18 double} by {\cf4 =} s{\cf4 .}{\cf23 b}{\cf4 .}{\cf23 y}{\cf4 .}{\cf23 wert}{\cf4 (}{\cf4 )}{\cf4 ;}\par
+            {\cf8\b if} {\cf4 (}ax {\cf4 >} maxx{\cf4 )} {\cf4 \{}\par
+                maxx {\cf4 =} ax{\cf4 ;}\par
+            {\cf4 \}}\par
+            {\cf8\b if} {\cf4 (}ax {\cf4 <} minx{\cf4 )} {\cf4 \{}\par
+                minx {\cf4 =} ax{\cf4 ;}\par
+            {\cf4 \}}\par
+            {\cf8\b if} {\cf4 (}ay {\cf4 >} maxy{\cf4 )} {\cf4 \{}\par
+                maxy {\cf4 =} ay{\cf4 ;}\par
+            {\cf4 \}}\par
+            {\cf8\b if} {\cf4 (}ay {\cf4 <} miny{\cf4 )} {\cf4 \{}\par
+                miny {\cf4 =} ay{\cf4 ;}\par
+            {\cf4 \}}\par
+            {\cf8\b if} {\cf4 (}bx {\cf4 >} maxx{\cf4 )} {\cf4 \{}\par
+                maxx {\cf4 =} bx{\cf4 ;}\par
+            {\cf4 \}}\par
+            {\cf8\b if} {\cf4 (}bx {\cf4 <} minx{\cf4 )} {\cf4 \{}\par
+                minx {\cf4 =} bx{\cf4 ;}\par
+            {\cf4 \}}\par
+            {\cf8\b if} {\cf4 (}by {\cf4 >} maxy{\cf4 )} {\cf4 \{}\par
+                maxy {\cf4 =} by{\cf4 ;}\par
+            {\cf4 \}}\par
+            {\cf8\b if} {\cf4 (}by {\cf4 <} miny{\cf4 )} {\cf4 \{}\par
+                miny {\cf4 =} by{\cf4 ;}\par
+            {\cf4 \}}\par
+        {\cf4 \}}\par
+        {\cf18 double} dimx {\cf4 =} Math{\cf4 .}{\cf23 abs}{\cf4 (}maxx {\cf4 -} minx{\cf4 )}{\cf4 ;} {\cf5\i //Breite des Bildes\par
+}        {\cf18 double} dimy {\cf4 =} Math{\cf4 .}{\cf23 abs}{\cf4 (}maxy {\cf4 -} miny{\cf4 )}{\cf4 ;} {\cf5\i //H{\u246}he des Bildes\par
+}        {\cf5\i //SVG Header\par
+}        String svg {\cf4 =} {\cf2 "<?xml version=\\"1.0\\" encoding=\\"UTF-8\\" standalone=\\"no\\" ?>\\n"}\par
+                {\cf4 +} {\cf2 "<!DOCTYPE svg PUBLIC \\"-//W3C//DTD SVG 20010904//EN\\"\\n"}\par
+                {\cf4 +} {\cf2 "\\"http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd\\">"}\par
+                {\cf4 +} {\cf2 "<svg xmlns=\\"http://www.w3.org/2000/svg\\"\\n"}\par
+                {\cf4 +} {\cf2 "    xmlns:xlink=\\"http://www.w3.org/1999/xlink\\"\\n"}\par
+                {\cf4 +} {\cf2 "    version=\\"1.1\\" baseProfile=\\"full\\"\\n"}\par
+                {\cf4 +} String{\cf4 .}{\cf23 format}{\cf4 (}{\cf2 "    width=\\"%fpx\\" height=\\"%fpx\\"\\n"}{\cf4 ,} dimx{\cf4 ,} dimy{\cf4 )}\par
+                {\cf4 +} String{\cf4 .}{\cf23 format}{\cf4 (}{\cf2 "    viewBox=\\"%f %f %f %f\\">\\n"}{\cf4 ,} minx{\cf4 ,} miny{\cf4 ,} maxx{\cf4 ,} maxy{\cf4 )}{\cf4 ;}\par
+        String lines {\cf4 =} {\cf2 ""}{\cf4 ;} {\cf5\i //Linien als SVG-Elemente\par
+}        String triangles {\cf4 =} {\cf2 ""}{\cf4 ;} {\cf5\i //Dreiecke als SVG-Elemente\par
+}        {\cf8\b for} {\cf4 (}{\cf18 int} i {\cf4 =} {\cf4 0}{\cf4 ;} i {\cf4 <} strecken{\cf4 .}{\cf23 length}{\cf4 ;} i{\cf4 +}{\cf4 +}{\cf4 )} {\cf4 \{} {\cf5\i //Alle Strecken durchgehen\par
+}            Strecke a {\cf4 =} strecken{\cf4 [}i{\cf4 ]}{\cf4 ;}\par
+            {\cf5\i //Strecke in der Vektorgrafik darstellen\par
+}            {\cf18 double}{\cf4 [}{\cf4 ]} xl {\cf4 =} {\cf8\b new} {\cf18 double}{\cf4 [}{\cf4 ]}{\cf4 \{}a{\cf4 .}{\cf23 a}{\cf4 .}{\cf23 x}{\cf4 .}{\cf23 wert}{\cf4 (}{\cf4 )}{\cf4 ,} a{\cf4 .}{\cf23 b}{\cf4 .}{\cf23 x}{\cf4 .}{\cf23 wert}{\cf4 (}{\cf4 )}{\cf4 \}}{\cf4 ;} {\cf5\i //Punkte a und b der Strecke, X-Koordinaten\par
+}            {\cf18 double}{\cf4 [}{\cf4 ]} yl {\cf4 =} {\cf8\b new} {\cf18 double}{\cf4 [}{\cf4 ]}{\cf4 \{}dimy {\cf4 -} a{\cf4 .}{\cf23 a}{\cf4 .}{\cf23 y}{\cf4 .}{\cf23 wert}{\cf4 (}{\cf4 )}{\cf4 ,} dimy {\cf4 -} a{\cf4 .}{\cf23 b}{\cf4 .}{\cf23 y}{\cf4 .}{\cf23 wert}{\cf4 (}{\cf4 )}{\cf4 \}}{\cf4 ;} {\cf5\i //Punkte a und b der Strecke, Y-Koordinaten, gespiegelt\par
+}            {\cf5\i //Koordinaten in SVG-gerechten Text umwandeln\par
+}            String ls {\cf4 =} {\cf2 ""}{\cf4 ;} {\cf5\i //Koordinaten als Text\par
+}            {\cf8\b for} {\cf4 (}{\cf18 int} l {\cf4 =} {\cf4 0}{\cf4 ;} l {\cf4 <} {\cf4 2}{\cf4 ;} l{\cf4 +}{\cf4 +}{\cf4 )} {\cf4 \{}\par
+                ls {\cf4 +}{\cf4 =} Double{\cf4 .}{\cf23 toString}{\cf4 (}xl{\cf4 [}l{\cf4 ]}{\cf4 )}{\cf4 ;}\par
+                ls {\cf4 +}{\cf4 =} {\cf2 ","}{\cf4 ;} {\cf5\i //Immer ein Kommata zwischen ein Koordinatenpaar\par
+}                ls {\cf4 +}{\cf4 =} Double{\cf4 .}{\cf23 toString}{\cf4 (}yl{\cf4 [}l{\cf4 ]}{\cf4 )}{\cf4 ;}\par
+                {\cf8\b if} {\cf4 (}l {\cf4 !}{\cf4 =} {\cf4 1}{\cf4 )} {\cf4 \{}\par
+                    ls {\cf4 +}{\cf4 =} {\cf2 " "}{\cf4 ;}\par
+                {\cf4 \}}\par
+            {\cf4 \}}\par
+            lines {\cf4 +}{\cf4 =} {\cf2 "\\n    <polyline points=\\""} {\cf4 +} ls {\cf4 +} {\cf2 "\\" style=\\"fill:rgb(0,0,0); stroke:rgb(0,0,0); stroke-width:2px\\" />"}{\cf4 ;} {\cf5\i //Linie im SVG speichern\par
+}            {\cf8\b for} {\cf4 (}{\cf18 int} j {\cf4 =} i {\cf4 +} {\cf4 1}{\cf4 ;} j {\cf4 <} strecken{\cf4 .}{\cf23 length}{\cf4 ;} j{\cf4 +}{\cf4 +}{\cf4 )} {\cf4 \{} {\cf5\i //Alle Strecken durchgehen, von i ausgehend, da i Strecken alle schon "benutzt" worden sind\par
+}                Strecke b {\cf4 =} strecken{\cf4 [}j{\cf4 ]}{\cf4 ;}\par
+                Schnittpunkt A {\cf4 =} holeSchnittpunkt{\cf4 (}a{\cf4 ,} b{\cf4 )}{\cf4 ;} {\cf5\i //Schnittpunkt zwischen a und b ermitteln...\par
+}                {\cf8\b if} {\cf4 (}A{\cf4 .}{\cf23 schnitt}{\cf4 )} {\cf4 \{} {\cf5\i //...schneiden die sich {\u252}berhaupt ?\par
+}                    {\cf8\b for} {\cf4 (}{\cf18 int} k {\cf4 =} j {\cf4 +} {\cf4 1}{\cf4 ;} k {\cf4 <} strecken{\cf4 .}{\cf23 length}{\cf4 ;} k{\cf4 +}{\cf4 +}{\cf4 )} {\cf4 \{} {\cf5\i //Falls ja, kann Ausschau nach einer Strecke c, die das Dreieck vervollst{\u228}ndigt, gehalten werden, von j ausgehend, da f{\u252}r dieses Element j Strecken alle schon "benutzt" worden sind, Die benutzten i Strecken sind schon enthalten\par
+}                        Strecke c {\cf4 =} strecken{\cf4 [}k{\cf4 ]}{\cf4 ;}\par
+                        Schnittpunkt B {\cf4 =} holeSchnittpunkt{\cf4 (}c{\cf4 ,} b{\cf4 )}{\cf4 ;} {\cf5\i //Schnittpunkt zwischen b und c ermitteln...\par
+}                        {\cf8\b if} {\cf4 (}B{\cf4 .}{\cf23 schnitt} {\cf4 &}{\cf4 &} {\cf4 !}A{\cf4 .}{\cf23 e}{\cf4 (}B{\cf4 )}{\cf4 )} {\cf4 \{} {\cf5\i //...schneiden die sich {\u252}berhaupt, und : sind A und B verschiedene Punkte ?\par
+}                            Schnittpunkt C {\cf4 =} holeSchnittpunkt{\cf4 (}c{\cf4 ,} a{\cf4 )}{\cf4 ;} {\cf5\i //Schnittpunkt C-A : N{\u246}tig, damit das Dreieck geschlossen ist\par
+}                            {\cf8\b if} {\cf4 (}C{\cf4 .}{\cf23 schnitt} {\cf4 &}{\cf4 &} {\cf4 !}A{\cf4 .}{\cf23 e}{\cf4 (}C{\cf4 )} {\cf4 &}{\cf4 &} {\cf4 !}B{\cf4 .}{\cf23 e}{\cf4 (}C{\cf4 )}{\cf4 )} {\cf4 \{} {\cf5\i //...ist es das {\u252}berhaupt, und : sind A und C bzw. B und C verschiedene Punkte ?\par
+}                                {\cf5\i //Dreieck im SVG speichern\par
+}                                {\cf18 double}{\cf4 [}{\cf4 ]} x {\cf4 =} {\cf8\b new} {\cf18 double}{\cf4 [}{\cf4 ]}{\cf4 \{}A{\cf4 .}{\cf23 x}{\cf4 .}{\cf23 wert}{\cf4 (}{\cf4 )}{\cf4 ,} C{\cf4 .}{\cf23 x}{\cf4 .}{\cf23 wert}{\cf4 (}{\cf4 )}{\cf4 ,} B{\cf4 .}{\cf23 x}{\cf4 .}{\cf23 wert}{\cf4 (}{\cf4 )}{\cf4 \}}{\cf4 ;} {\cf5\i //Eckpunkte des Dreiecks, X-Koordinaten\par
+}                                {\cf18 double}{\cf4 [}{\cf4 ]} y {\cf4 =} {\cf8\b new} {\cf18 double}{\cf4 [}{\cf4 ]}{\cf4 \{}dimy {\cf4 -} A{\cf4 .}{\cf23 y}{\cf4 .}{\cf23 wert}{\cf4 (}{\cf4 )}{\cf4 ,} dimy {\cf4 -} C{\cf4 .}{\cf23 y}{\cf4 .}{\cf23 wert}{\cf4 (}{\cf4 )}{\cf4 ,} dimy {\cf4 -} B{\cf4 .}{\cf23 y}{\cf4 .}{\cf23 wert}{\cf4 (}{\cf4 )}{\cf4 \}}{\cf4 ;} {\cf5\i //Eckpunkte des Dreiecks, Y-Koordinaten, gespiegelt\par
+}                                {\cf5\i //Koordinaten in SVG-gerechten Text umwandeln\par
+}                                String ps {\cf4 =} {\cf2 ""}{\cf4 ;} {\cf5\i //Koordinaten als Text\par
+}                                {\cf8\b for} {\cf4 (}{\cf18 int} l {\cf4 =} {\cf4 0}{\cf4 ;} l {\cf4 <} {\cf4 3}{\cf4 ;} l{\cf4 +}{\cf4 +}{\cf4 )} {\cf4 \{}\par
+                                    ps {\cf4 +}{\cf4 =} Double{\cf4 .}{\cf23 toString}{\cf4 (}x{\cf4 [}l{\cf4 ]}{\cf4 )}{\cf4 ;}\par
+                                    ps {\cf4 +}{\cf4 =} {\cf2 ","}{\cf4 ;} {\cf5\i //Immer ein Kommata zwischen ein Koordinatenpaar\par
+}                                    ps {\cf4 +}{\cf4 =} Double{\cf4 .}{\cf23 toString}{\cf4 (}y{\cf4 [}l{\cf4 ]}{\cf4 )}{\cf4 ;}\par
+                                    {\cf8\b if} {\cf4 (}l {\cf4 !}{\cf4 =} {\cf4 2}{\cf4 )} {\cf4 \{}\par
+                                        ps {\cf4 +}{\cf4 =} {\cf2 " "}{\cf4 ;}\par
+                                    {\cf4 \}}\par
+                                {\cf4 \}}\par
+                                String color {\cf4 =} String{\cf4 .}{\cf23 format}{\cf4 (}{\cf2 "rgb(%s,%s,%s)"}{\cf4 ,} {\cf4 (}{\cf18 int}{\cf4 )} {\cf4 (}Math{\cf4 .}{\cf23 random}{\cf4 (}{\cf4 )} {\cf4 *} {\cf4 255}{\cf4 )}{\cf4 ,} {\cf4 (}{\cf18 int}{\cf4 )} {\cf4 (}Math{\cf4 .}{\cf23 random}{\cf4 (}{\cf4 )} {\cf4 *} {\cf4 255}{\cf4 )}{\cf4 ,} {\cf4 (}{\cf18 int}{\cf4 )} {\cf4 (}Math{\cf4 .}{\cf23 random}{\cf4 (}{\cf4 )} {\cf4 *} {\cf4 255}{\cf4 )}{\cf4 )}{\cf4 ;} {\cf5\i //Zuf{\u228}llige Farbe\par
+}                                triangles {\cf4 +}{\cf4 =} {\cf2 "\\n    <polygon points=\\""} {\cf4 +} ps {\cf4 +} {\cf2 "\\" style=\\"fill:"} {\cf4 +} color {\cf4 +} {\cf2 "; fill-opacity:0.5; stroke:rgb(255,165,0); stroke-width:0.5px\\" />"}{\cf4 ;} {\cf5\i //Dreieck im SVG speichern\par
+}                                System{\cf4 .}{\cf23 out}{\cf4 .}{\cf23 println}{\cf4 (}{\cf2 "Neues Dreieck : A="} {\cf4 +} A{\cf4 .}{\cf23 toString}{\cf4 (}{\cf4 )} {\cf4 +} {\cf2 ", B="} {\cf4 +} B{\cf4 .}{\cf23 toString}{\cf4 (}{\cf4 )} {\cf4 +} {\cf2 ", C="} {\cf4 +} C{\cf4 .}{\cf23 toString}{\cf4 (}{\cf4 )}{\cf4 )}{\cf4 ;} {\cf5\i //Dreieck(dessen Eckpunkte) ausgeben\par
+}                                d{\cf4 +}{\cf4 +}{\cf4 ;} {\cf5\i //Ein weiteres Dreieck !\par
+}                            {\cf4 \}}\par
+                        {\cf4 \}}\par
+                    {\cf4 \}}\par
+                {\cf4 \}}\par
+            {\cf4 \}}\par
+        {\cf4 \}}\par
+        svg {\cf4 +}{\cf4 =} lines{\cf4 ;} {\cf5\i //Linien im SVG speichern\par
+}        svg {\cf4 +}{\cf4 =} triangles{\cf4 ;} {\cf5\i //Dreiecke im SVG speichern\par
+}        svg {\cf4 +}{\cf4 =} {\cf2 "\\n</svg>"}{\cf4 ;}\par
+        {\cf5\i //Neue Datei erzeugen\par
+}        File f {\cf4 =} {\cf8\b new} File{\cf4 (}ausgabe{\cf4 )}{\cf4 ;}\par
+        f{\cf4 .}{\cf23 createNewFile}{\cf4 (}{\cf4 )}{\cf4 ;}\par
+        {\cf5\i //SVG speichern\par
+}        BufferedWriter w {\cf4 =} {\cf8\b new} BufferedWriter{\cf4 (}{\cf8\b new} FileWriter{\cf4 (}f{\cf4 )}{\cf4 )}{\cf4 ;}\par
+        w{\cf4 .}{\cf23 write}{\cf4 (}svg{\cf4 )}{\cf4 ;}\par
+        w{\cf4 .}{\cf23 close}{\cf4 (}{\cf4 )}{\cf4 ;}\par
+        System{\cf4 .}{\cf23 out}{\cf4 .}{\cf23 println}{\cf4 (}{\cf2 "Es konnten "} {\cf4 +} Integer{\cf4 .}{\cf23 toString}{\cf4 (}d{\cf4 )} {\cf4 +} {\cf2 " Dreiecke gefunden werden."}{\cf4 )}{\cf4 ;} {\cf5\i //Anzahl der gefundenen Dreiecke ausgeben\par
+}    {\cf4 \}}\par
+{\cf4 \}}\par
+}

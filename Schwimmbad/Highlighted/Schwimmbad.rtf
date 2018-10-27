@@ -1,0 +1,310 @@
+{\rtf1\ansi\uc0\deff0{\fonttbl{\f0\fmodern\fprq1\fcharset0;}}{\colortbl;\red136\green136\blue136;\red186\green33\blue33;\red0\green68\blue221;\red102\green102\blue102;\red64\green128\blue128;\red160\green160\blue0;\red25\green23\blue124;\red0\green128\blue0;\red187\green102\blue136;\red187\green102\blue34;\red136\green0\blue0;\red170\green34\blue255;\red153\green153\blue153;\red0\green160\blue0;\red160\green0\blue0;\red255\green0\blue0;\red128\green0\blue128;\red176\green0\blue64;\red0\green0\blue255;\red187\green187\blue187;\red188\green122\blue0;\red0\green0\blue128;\red125\green144\blue41;\red210\green65\blue58;}\f0 {\cf5\i /*\par
+ * To change this license header, choose License Headers in Project Properties.\par
+ * To change this template file, choose Tools | Templates\par
+ * and open the template in the editor.\par
+ */}\par
+{\cf8\b package} {\cf19\b schwimmbad}{\cf4 ;}\par
+\par
+{\cf8\b import} {\cf19\b java.util.Scanner}{\cf4 ;} {\cf5\i //Benutzereingabe\par
+}\par
+{\cf5\i /**\par
+ *\par
+ * @author lars\par
+ */}\par
+{\cf8\b public} {\cf8\b class} {\cf19\b Schwimmbad} {\cf4 \{}\par
+\par
+    {\cf8\b public} {\cf8\b static} {\cf8\b final} Scanner EINGABE {\cf4 =} {\cf8\b new} Scanner{\cf4 (}System{\cf4 .}{\cf23 in}{\cf4 )}{\cf4 ;} {\cf5\i //Benutzereingabe\par
+}    {\cf8\b public} {\cf8\b static} {\cf18 boolean} wochentag{\cf4 ;} {\cf5\i //Wochentag ?\par
+}    {\cf8\b public} {\cf8\b static} {\cf18 boolean} schultag{\cf4 ;} {\cf5\i //Schultag ?\par
+}    {\cf8\b public} {\cf8\b static} {\cf18 int} personen{\cf4 ;} {\cf5\i //Anzahl Personen, exklusive Kleinkinder\par
+}    {\cf8\b public} {\cf8\b static} {\cf18 int} erwachsene{\cf4 ;} {\cf5\i //Anzahl Erwachsene\par
+}    {\cf8\b public} {\cf8\b static} {\cf18 int} kinder{\cf4 ;} {\cf5\i //Anzahl Kinder, exklusive Kleinkinder\par
+}    {\cf8\b public} {\cf8\b static} {\cf18 int} gutscheine{\cf4 ;} {\cf5\i //Gutscheine, 0 wenn es kein Schultag ist, oder es einfach keine gibt\par
+}    {\cf8\b public} {\cf8\b static} Besuch bester_besuch{\cf4 ;} {\cf5\i //Billigste M{\u246}glichkeit, Karten zu kaufen, f{\u252}r die gegeben Infos(Gutscheine, E, K, Schul-/Wochentag, etc.)\par
+}\par
+    {\cf8\b public} {\cf8\b static} {\cf18 int}{\cf4 [}{\cf4 ]} {\cf19 familienKarten}{\cf4 (}{\cf18 int} t1{\cf4 ,} {\cf18 int} t2{\cf4 ,} {\cf18 int} erwachsene{\cf4 ,} {\cf18 int} kinder{\cf4 )} {\cf4 \{} {\cf5\i //Versucht f{\u252}r Erwachsene und Kinder t1 FKs Typ 1, sowie t2 FKs Typ 2 zu organisieren. Mit Priorit{\u228}t werden hierbei Typ 1 FKs erzeugt.\par
+}        {\cf5\i //Konzept identisch zu imperfekteFamilienkarten, nur eben mit normalen FKs\par
+}        {\cf18 int} e {\cf4 =} erwachsene{\cf4 ;}\par
+        {\cf18 int} k {\cf4 =} kinder{\cf4 ;}\par
+        {\cf18 int} f1{\cf4 ,} f2{\cf4 ;}\par
+        f1 {\cf4 =} {\cf4 0}{\cf4 ;}\par
+        f2 {\cf4 =} {\cf4 0}{\cf4 ;}\par
+        {\cf5\i //Zuerst Typ 1 Familienkarten erzeugen, da diese mehr Ersparnis bringen, solange es geht\par
+}        {\cf8\b for} {\cf4 (}{\cf18 int} i {\cf4 =} {\cf4 0}{\cf4 ;} i {\cf4 <} t1{\cf4 ;} i{\cf4 +}{\cf4 +}{\cf4 )} {\cf4 \{}\par
+            {\cf8\b if} {\cf4 (}e {\cf4 <} {\cf4 2} {\cf4 |}{\cf4 |} k {\cf4 <} {\cf4 2}{\cf4 )} {\cf4 \{}\par
+                {\cf8\b break}{\cf4 ;}\par
+            {\cf4 \}}\par
+            e {\cf4 -}{\cf4 =} {\cf4 2}{\cf4 ;}\par
+            k {\cf4 -}{\cf4 =} {\cf4 2}{\cf4 ;}\par
+            f1{\cf4 +}{\cf4 +}{\cf4 ;}\par
+        {\cf4 \}}\par
+        {\cf5\i //Danach Typ 2 erzeugen, solange dass gut geht\par
+}        {\cf8\b for} {\cf4 (}{\cf18 int} i {\cf4 =} {\cf4 0}{\cf4 ;} i {\cf4 <} t2{\cf4 ;} i{\cf4 +}{\cf4 +}{\cf4 )} {\cf4 \{}\par
+            {\cf8\b if} {\cf4 (}e {\cf4 <} {\cf4 1} {\cf4 |}{\cf4 |} k {\cf4 <} {\cf4 3}{\cf4 )} {\cf4 \{}\par
+                {\cf8\b break}{\cf4 ;}\par
+            {\cf4 \}}\par
+            e{\cf4 -}{\cf4 -}{\cf4 ;}\par
+            k {\cf4 -}{\cf4 =} {\cf4 3}{\cf4 ;}\par
+            f2{\cf4 +}{\cf4 +}{\cf4 ;}\par
+        {\cf4 \}}\par
+        {\cf8\b return} {\cf8\b new} {\cf18 int}{\cf4 [}{\cf4 ]}{\cf4 \{}f1{\cf4 ,} f2{\cf4 ,} e{\cf4 ,} k{\cf4 \}}{\cf4 ;}\par
+    {\cf4 \}}\par
+\par
+    {\cf8\b public} {\cf8\b static} {\cf18 int}{\cf4 [}{\cf4 ]} {\cf19 illegaleFamilienKarten}{\cf4 (}{\cf18 int} t1{\cf4 ,} {\cf18 int} t2{\cf4 ,} {\cf18 int} erwachsene{\cf4 ,} {\cf18 int} kinder{\cf4 )} {\cf4 \{}\par
+        {\cf5\i //Konzept identisch zu familienkarten, nur eben mit "nicht-vollen" aka "illegalen/imperfekten" FKs. Diese sind : Typ 1 : 2 E, 1 K, sowie 1 E, 2 K\par
+}        {\cf18 int} e {\cf4 =} erwachsene{\cf4 ;}\par
+        {\cf18 int} k {\cf4 =} kinder{\cf4 ;}\par
+        {\cf18 int} f1{\cf4 ,} f2{\cf4 ;}\par
+        f1 {\cf4 =} {\cf4 0}{\cf4 ;}\par
+        f2 {\cf4 =} {\cf4 0}{\cf4 ;}\par
+        {\cf8\b for} {\cf4 (}{\cf18 int} i {\cf4 =} {\cf4 0}{\cf4 ;} i {\cf4 <} t1{\cf4 ;} i{\cf4 +}{\cf4 +}{\cf4 )} {\cf4 \{}\par
+            {\cf8\b if} {\cf4 (}e {\cf4 <} {\cf4 2} {\cf4 |}{\cf4 |} k {\cf4 <} {\cf4 1}{\cf4 )} {\cf4 \{}\par
+                {\cf8\b break}{\cf4 ;}\par
+            {\cf4 \}}\par
+            e {\cf4 -}{\cf4 =} {\cf4 2}{\cf4 ;}\par
+            k{\cf4 -}{\cf4 -}{\cf4 ;}\par
+            f1{\cf4 +}{\cf4 +}{\cf4 ;}\par
+        {\cf4 \}}\par
+        {\cf8\b for} {\cf4 (}{\cf18 int} i {\cf4 =} {\cf4 0}{\cf4 ;} i {\cf4 <} t2{\cf4 ;} i{\cf4 +}{\cf4 +}{\cf4 )} {\cf4 \{}\par
+            {\cf8\b if} {\cf4 (}e {\cf4 <} {\cf4 1} {\cf4 |}{\cf4 |} k {\cf4 <} {\cf4 2}{\cf4 )} {\cf4 \{}\par
+                {\cf8\b break}{\cf4 ;}\par
+            {\cf4 \}}\par
+            e{\cf4 -}{\cf4 -}{\cf4 ;}\par
+            k {\cf4 -}{\cf4 =} {\cf4 2}{\cf4 ;}\par
+            f2{\cf4 +}{\cf4 +}{\cf4 ;}\par
+        {\cf4 \}}\par
+        {\cf8\b return} {\cf8\b new} {\cf18 int}{\cf4 [}{\cf4 ]}{\cf4 \{}f1{\cf4 ,} f2{\cf4 ,} e{\cf4 ,} k{\cf4 \}}{\cf4 ;}\par
+    {\cf4 \}}\par
+\par
+    {\cf8\b public} {\cf8\b static} {\cf18 int}{\cf4 [}{\cf4 ]} {\cf19 fuelleFamilienkarten}{\cf4 (}{\cf18 int} b{\cf4 ,} {\cf18 int} erwachsene{\cf4 ,} {\cf18 int} kinder{\cf4 )} {\cf4 \{}\par
+        {\cf5\i //Konzept identisch zu f{\u252}lleImperfekteFamilienkarten, nur eben mit "normalen" Familienkarten\par
+}        {\cf5\i //Generiert alle M{\u246}glichkeiten, "b" FKs zu erzeugen. Die M{\u246}glichkeit, bei der der Rest am billigsten w{\u228}re, wird zur{\u252}ckgegeben.\par
+}        {\cf5\i //Achtung : 20 % Erm{\u228}ssigung sind hierbei egal, da das Verh{\u228}ltnis wichtig ist\par
+}        {\cf18 int}{\cf4 [}{\cf4 ]} best_combo {\cf4 =} {\cf8\b new} {\cf18 int}{\cf4 [}{\cf4 4}{\cf4 ]}{\cf4 ;}\par
+        {\cf18 int} min_rest {\cf4 =} Integer{\cf4 .}{\cf23 MAX_VALUE}{\cf4 ;}\par
+        {\cf18 float} min_preis {\cf4 =} Float{\cf4 .}{\cf23 MAX_VALUE}{\cf4 ;}\par
+        {\cf8\b for} {\cf4 (}{\cf18 int} i {\cf4 =} {\cf4 0}{\cf4 ;} i {\cf4 <}{\cf4 =} b{\cf4 ;} i{\cf4 +}{\cf4 +}{\cf4 )} {\cf4 \{}\par
+            {\cf18 int} j {\cf4 =} {\cf4 (}b {\cf4 -} i{\cf4 )}{\cf4 ;}\par
+            {\cf18 int}{\cf4 [}{\cf4 ]} combo {\cf4 =} familienKarten{\cf4 (}i{\cf4 ,} j{\cf4 ,} erwachsene{\cf4 ,} kinder{\cf4 )}{\cf4 ;} {\cf5\i //Familienkarten, soviel es geht, nach dieser Kombi erzeugen\par
+}            {\cf8\b if} {\cf4 (}combo{\cf4 [}{\cf4 2}{\cf4 ]} {\cf4 +} combo{\cf4 [}{\cf4 3}{\cf4 ]} {\cf4 <} min_rest{\cf4 )} {\cf4 \{}\par
+                System{\cf4 .}{\cf23 arraycopy}{\cf4 (}combo{\cf4 ,} {\cf4 0}{\cf4 ,} best_combo{\cf4 ,} {\cf4 0}{\cf4 ,} {\cf4 4}{\cf4 )}{\cf4 ;}\par
+                min_rest {\cf4 =} {\cf4 (}combo{\cf4 [}{\cf4 2}{\cf4 ]} {\cf4 +} combo{\cf4 [}{\cf4 3}{\cf4 ]}{\cf4 )}{\cf4 ;}\par
+                min_preis {\cf4 =} combo{\cf4 [}{\cf4 2}{\cf4 ]} {\cf4 *} {\cf4 3.50f} {\cf4 +} combo{\cf4 [}{\cf4 3}{\cf4 ]} {\cf4 *} {\cf4 2.50f}{\cf4 ;}\par
+            {\cf4 \}} {\cf8\b else} {\cf8\b if} {\cf4 (}combo{\cf4 [}{\cf4 2}{\cf4 ]} {\cf4 +} combo{\cf4 [}{\cf4 3}{\cf4 ]} {\cf4 =}{\cf4 =} min_rest{\cf4 )} {\cf4 \{}\par
+                {\cf18 float} preis {\cf4 =} combo{\cf4 [}{\cf4 2}{\cf4 ]} {\cf4 *} {\cf4 3.50f} {\cf4 +} combo{\cf4 [}{\cf4 3}{\cf4 ]} {\cf4 *} {\cf4 2.50f}{\cf4 ;}\par
+                {\cf8\b if} {\cf4 (}preis {\cf4 <} min_preis{\cf4 )} {\cf4 \{} {\cf5\i //W{\u228}re der Preis des Restes "geringer" ?\par
+}                    {\cf5\i //Gilt dies nun als die beste Kombi !\par
+}                    System{\cf4 .}{\cf23 arraycopy}{\cf4 (}combo{\cf4 ,} {\cf4 0}{\cf4 ,} best_combo{\cf4 ,} {\cf4 0}{\cf4 ,} {\cf4 4}{\cf4 )}{\cf4 ;}\par
+                    min_preis {\cf4 =} combo{\cf4 [}{\cf4 2}{\cf4 ]} {\cf4 *} {\cf4 3.50f} {\cf4 +} combo{\cf4 [}{\cf4 3}{\cf4 ]} {\cf4 *} {\cf4 2.50f}{\cf4 ;}\par
+                {\cf4 \}}\par
+            {\cf4 \}}\par
+        {\cf4 \}}\par
+        {\cf8\b return} best_combo{\cf4 ;}\par
+    {\cf4 \}}\par
+\par
+    {\cf8\b public} {\cf8\b static} {\cf18 int}{\cf4 [}{\cf4 ]} {\cf19 fuelleImperfekteFamilienkarten}{\cf4 (}{\cf18 int} karten{\cf4 ,} {\cf18 int} e{\cf4 ,} {\cf18 int} k{\cf4 )} {\cf4 \{}\par
+        {\cf5\i //Konzept identisch zu f{\u252}lleFamilienkarten, nur eben  mit "imperfekten/illegalen" Familienkarten\par
+}        {\cf5\i //Achtung : 20 % Erm{\u228}ssigung sind hierbei egal, da das Verh{\u228}ltnis wichtig ist\par
+}        {\cf18 int}{\cf4 [}{\cf4 ]} best_combo {\cf4 =} {\cf8\b new} {\cf18 int}{\cf4 [}{\cf4 4}{\cf4 ]}{\cf4 ;}\par
+        {\cf18 int} min_rest {\cf4 =} Integer{\cf4 .}{\cf23 MAX_VALUE}{\cf4 ;}\par
+        {\cf18 float} min_preis {\cf4 =} Float{\cf4 .}{\cf23 MAX_VALUE}{\cf4 ;}\par
+        {\cf8\b for} {\cf4 (}{\cf18 int} i {\cf4 =} {\cf4 0}{\cf4 ;} i {\cf4 <}{\cf4 =} karten{\cf4 ;} i{\cf4 +}{\cf4 +}{\cf4 )} {\cf4 \{}\par
+            {\cf18 int} j {\cf4 =} {\cf4 (}karten {\cf4 -} i{\cf4 )}{\cf4 ;}\par
+            {\cf18 int}{\cf4 [}{\cf4 ]} combo {\cf4 =} illegaleFamilienKarten{\cf4 (}i{\cf4 ,} j{\cf4 ,} e{\cf4 ,} k{\cf4 )}{\cf4 ;} {\cf5\i //Illegale Familienkarten, soviel es geht, nach dieser Kombi erzeugen\par
+}            {\cf8\b if} {\cf4 (}combo{\cf4 [}{\cf4 2}{\cf4 ]} {\cf4 +} combo{\cf4 [}{\cf4 3}{\cf4 ]} {\cf4 <} min_rest{\cf4 )} {\cf4 \{}\par
+                System{\cf4 .}{\cf23 arraycopy}{\cf4 (}combo{\cf4 ,} {\cf4 0}{\cf4 ,} best_combo{\cf4 ,} {\cf4 0}{\cf4 ,} {\cf4 4}{\cf4 )}{\cf4 ;}\par
+                min_rest {\cf4 =} {\cf4 (}combo{\cf4 [}{\cf4 2}{\cf4 ]} {\cf4 +} combo{\cf4 [}{\cf4 3}{\cf4 ]}{\cf4 )}{\cf4 ;}\par
+                min_preis {\cf4 =} combo{\cf4 [}{\cf4 2}{\cf4 ]} {\cf4 *} {\cf4 3.50f} {\cf4 +} combo{\cf4 [}{\cf4 3}{\cf4 ]} {\cf4 *} {\cf4 2.50f}{\cf4 ;}\par
+            {\cf4 \}} {\cf8\b else} {\cf8\b if} {\cf4 (}combo{\cf4 [}{\cf4 2}{\cf4 ]} {\cf4 +} combo{\cf4 [}{\cf4 3}{\cf4 ]} {\cf4 =}{\cf4 =} min_rest{\cf4 )} {\cf4 \{}\par
+                {\cf18 float} preis {\cf4 =} combo{\cf4 [}{\cf4 2}{\cf4 ]} {\cf4 *} {\cf4 3.50f} {\cf4 +} combo{\cf4 [}{\cf4 3}{\cf4 ]} {\cf4 *} {\cf4 2.50f}{\cf4 ;}\par
+                {\cf8\b if} {\cf4 (}preis {\cf4 <} min_preis{\cf4 )} {\cf4 \{}\par
+                    System{\cf4 .}{\cf23 arraycopy}{\cf4 (}combo{\cf4 ,} {\cf4 0}{\cf4 ,} best_combo{\cf4 ,} {\cf4 0}{\cf4 ,} {\cf4 4}{\cf4 )}{\cf4 ;}\par
+                    min_preis {\cf4 =} combo{\cf4 [}{\cf4 2}{\cf4 ]} {\cf4 *} {\cf4 3.50f} {\cf4 +} combo{\cf4 [}{\cf4 3}{\cf4 ]} {\cf4 *} {\cf4 2.50f}{\cf4 ;}\par
+                {\cf4 \}}\par
+            {\cf4 \}}\par
+        {\cf4 \}}\par
+        {\cf8\b return} best_combo{\cf4 ;}\par
+    {\cf4 \}}\par
+\par
+    {\cf8\b public} {\cf8\b static} {\cf18 int}{\cf4 [}{\cf4 ]} {\cf19 fuelleImperfekteFamilienkarten}{\cf4 (}{\cf18 int} e{\cf4 ,} {\cf18 int} k{\cf4 )} {\cf4 \{}\par
+        {\cf8\b return} fuelleImperfekteFamilienkarten{\cf4 (}{\cf4 (}e {\cf4 +} k{\cf4 )} {\cf4 /} {\cf4 3}{\cf4 ,} e{\cf4 ,} k{\cf4 )}{\cf4 ;} {\cf5\i //Imperfekte Familienkarten erzeugen, soviel es geht\par
+}    {\cf4 \}}\par
+\par
+    {\cf8\b public} {\cf8\b static} {\cf18 int}{\cf4 [}{\cf4 ]} {\cf19 fuelleTageskarten}{\cf4 (}{\cf18 int} b{\cf4 ,} {\cf18 int} erwachsene{\cf4 ,} {\cf18 int} kinder{\cf4 )} {\cf4 \{} {\cf5\i //Versucht, b Tageskarten zu erstellen. Gibt zur{\u252}ck, was {\u252}brig bleibt.\par
+}        {\cf18 int} e {\cf4 =} erwachsene{\cf4 ;}\par
+        {\cf18 int} k {\cf4 =} kinder{\cf4 ;}\par
+        {\cf8\b for} {\cf4 (}{\cf18 int} i {\cf4 =} {\cf4 0}{\cf4 ;} i {\cf4 <} b{\cf4 ;} i{\cf4 +}{\cf4 +}{\cf4 )} {\cf4 \{}\par
+            {\cf8\b for} {\cf4 (}{\cf18 int} j {\cf4 =} {\cf4 0}{\cf4 ;} j {\cf4 <} {\cf4 6}{\cf4 ;} j{\cf4 +}{\cf4 +}{\cf4 )} {\cf4 \{}\par
+                {\cf8\b if} {\cf4 (}e {\cf4 !}{\cf4 =} {\cf4 0}{\cf4 )} {\cf4 \{} {\cf5\i //Solange es noch Erwachsene gibt, diese in Tageskarten packen, da sie teurer sind\par
+}                    e{\cf4 -}{\cf4 -}{\cf4 ;}\par
+                {\cf4 \}} {\cf8\b else} {\cf8\b if} {\cf4 (}k {\cf4 !}{\cf4 =} {\cf4 0}{\cf4 )} {\cf4 \{}\par
+                    k{\cf4 -}{\cf4 -}{\cf4 ;} {\cf5\i //Ansonsten Kinder in Tageskarten packen\par
+}                {\cf4 \}} {\cf8\b else} {\cf4 \{} {\cf5\i //Es gibt keine Erwachsenen und keine Kinder mehr\par
+}                    {\cf8\b break}{\cf4 ;} {\cf5\i //Man kann aufh{\u246}ren\par
+}                {\cf4 \}}\par
+            {\cf4 \}}\par
+        {\cf4 \}}\par
+        {\cf8\b return} {\cf8\b new} {\cf18 int}{\cf4 [}{\cf4 ]}{\cf4 \{}e{\cf4 ,} k{\cf4 \}}{\cf4 ;}\par
+    {\cf4 \}}\par
+\par
+    {\cf8\b public} {\cf8\b static} {\cf18 void} {\cf19 kartenWochentag}{\cf4 (}{\cf4 )} {\cf4 \{} {\cf5\i //Kartenverteilung an einem Wochentag, Achtung : 20 % REDUKTION, also lohnen sich imperfekte Familienkarten nicht mehr !\par
+}        {\cf18 int}{\cf4 [}{\cf4 ]} result {\cf4 =} {\cf8\b new} {\cf18 int}{\cf4 [}{\cf4 3}{\cf4 ]}{\cf4 ;}\par
+        result{\cf4 [}{\cf4 0}{\cf4 ]} {\cf4 =} {\cf4 (}personen {\cf4 /} {\cf4 6}{\cf4 )}{\cf4 ;} {\cf5\i //Tageskarten, die verteilt werden werden\par
+}        {\cf18 int} rest {\cf4 =} personen {\cf4 -} {\cf4 (}result{\cf4 [}{\cf4 0}{\cf4 ]} {\cf4 *} {\cf4 6}{\cf4 )}{\cf4 ;} {\cf5\i //Zahl der Personen, die {\u252}brig bleiben werden\par
+}        {\cf8\b if} {\cf4 (}rest {\cf4 <}{\cf4 =} {\cf4 2}{\cf4 )} {\cf4 \{} {\cf5\i //Gibt es zwei, oder gar weniger als zwei Personen Rest\par
+}            {\cf18 int}{\cf4 [}{\cf4 ]} restliche_einzelkarten {\cf4 =} fuelleTageskarten{\cf4 (}result{\cf4 [}{\cf4 0}{\cf4 ]}{\cf4 ,} erwachsene{\cf4 ,} kinder{\cf4 )}{\cf4 ;} {\cf5\i //Tageskarten erstellen\par
+}            bester_besuch {\cf4 =} {\cf8\b new} Besuch{\cf4 (}restliche_einzelkarten{\cf4 [}{\cf4 0}{\cf4 ]} {\cf5\i /*Restliche Erwachsene*/}{\cf4 ,} restliche_einzelkarten{\cf4 [}{\cf4 1}{\cf4 ]} {\cf5\i /*Restliche Kinder*/}{\cf4 ,} {\cf8\b new} {\cf18 int}{\cf4 [}{\cf4 4}{\cf4 ]} {\cf5\i /*TKs*/}{\cf4 ,} result{\cf4 [}{\cf4 0}{\cf4 ]}{\cf4 )}{\cf4 ;} {\cf5\i //Ergebnis zur{\u252}ckgeben\par
+}        {\cf4 \}} {\cf8\b else} {\cf8\b if} {\cf4 (}rest {\cf4 =}{\cf4 =} {\cf4 3}{\cf4 )} {\cf4 \{} {\cf5\i //Gibt es 3 Personenen Rest\par
+}            {\cf18 int}{\cf4 [}{\cf4 ]} restliche_einzelkarten {\cf4 =} fuelleTageskarten{\cf4 (}result{\cf4 [}{\cf4 0}{\cf4 ]}{\cf4 ,} erwachsene{\cf4 ,} kinder{\cf4 )}{\cf4 ;} {\cf5\i //Tageskarten erstellen\par
+}            bester_besuch {\cf4 =} {\cf8\b new} Besuch{\cf4 (}restliche_einzelkarten{\cf4 [}{\cf4 0}{\cf4 ]}{\cf4 ,} restliche_einzelkarten{\cf4 [}{\cf4 1}{\cf4 ]}{\cf4 ,} {\cf8\b new} {\cf18 int}{\cf4 [}{\cf4 4}{\cf4 ]}{\cf4 ,} result{\cf4 [}{\cf4 0}{\cf4 ]}{\cf4 )}{\cf4 ;}\par
+        {\cf4 \}} {\cf8\b else} {\cf8\b if} {\cf4 (}rest {\cf4 =}{\cf4 =} {\cf4 4}{\cf4 )} {\cf4 \{} {\cf5\i //Gibt es 4 P Rest\par
+}            {\cf18 int}{\cf4 [}{\cf4 ]} restliche_personen {\cf4 =} fuelleFamilienkarten{\cf4 (}{\cf4 1}{\cf4 ,} erwachsene{\cf4 ,} kinder{\cf4 )}{\cf4 ;} {\cf5\i //Wir versuchen, eine Familienkarte unterzubringen\par
+}            {\cf8\b if} {\cf4 (}restliche_personen{\cf4 [}{\cf4 0}{\cf4 ]} {\cf4 +} restliche_personen{\cf4 [}{\cf4 1}{\cf4 ]} {\cf4 =}{\cf4 =} {\cf4 0}{\cf4 )} {\cf4 \{} {\cf5\i //Hat dies nicht geklappt\par
+}                {\cf8\b if} {\cf4 (}kinder {\cf4 =}{\cf4 =} {\cf4 0}{\cf4 )} {\cf4 \{} {\cf5\i //Worst case : Alle sind erwachsen\par
+}                    bester_besuch {\cf4 =} {\cf8\b new} Besuch{\cf4 (}{\cf4 0}{\cf4 ,} {\cf4 0}{\cf4 ,} {\cf8\b new} {\cf18 int}{\cf4 [}{\cf4 4}{\cf4 ]}{\cf4 ,} result{\cf4 [}{\cf4 0}{\cf4 ]} {\cf4 +} {\cf4 1}{\cf4 )}{\cf4 ;} {\cf5\i //Nur dann lohnt sich doch eine imperfekte Tageskarte !\par
+}                {\cf4 \}} {\cf8\b else} {\cf4 \{}\par
+                    {\cf18 int}{\cf4 [}{\cf4 ]} restliche_einzelkarten {\cf4 =} fuelleTageskarten{\cf4 (}result{\cf4 [}{\cf4 0}{\cf4 ]}{\cf4 ,} erwachsene{\cf4 ,} kinder{\cf4 )}{\cf4 ;} {\cf5\i //Ansonsten einfach billige, erm{\u228}ssigte Einzelkarten\par
+}                    bester_besuch {\cf4 =} {\cf8\b new} Besuch{\cf4 (}restliche_einzelkarten{\cf4 [}{\cf4 0}{\cf4 ]}{\cf4 ,} restliche_einzelkarten{\cf4 [}{\cf4 1}{\cf4 ]}{\cf4 ,} {\cf8\b new} {\cf18 int}{\cf4 [}{\cf4 4}{\cf4 ]}{\cf4 ,} result{\cf4 [}{\cf4 0}{\cf4 ]}{\cf4 )}{\cf4 ;} {\cf5\i //Ansonsten lohnen sich wohl doch die Einzelkarten am meisten !\par
+}                {\cf4 \}}\par
+            {\cf4 \}} {\cf8\b else} {\cf4 \{} {\cf5\i //Hat's geklappt\par
+}                bester_besuch {\cf4 =} {\cf8\b new} Besuch{\cf4 (}{\cf4 0}{\cf4 ,} {\cf4 0}{\cf4 ,} {\cf8\b new} {\cf18 int}{\cf4 [}{\cf4 ]}{\cf4 \{}restliche_personen{\cf4 [}{\cf4 0}{\cf4 ]}{\cf4 ,} restliche_personen{\cf4 [}{\cf4 1}{\cf4 ]}{\cf4 ,} {\cf4 0}{\cf4 ,} {\cf4 0}{\cf4 \}}{\cf4 ,} result{\cf4 [}{\cf4 0}{\cf4 ]}{\cf4 )}{\cf4 ;}\par
+            {\cf4 \}}\par
+        {\cf4 \}} {\cf8\b else} {\cf8\b if} {\cf4 (}rest {\cf4 =}{\cf4 =} {\cf4 5}{\cf4 )} {\cf4 \{} {\cf5\i //Gibt es 5 P Rest\par
+}            {\cf18 int}{\cf4 [}{\cf4 ]} restliche_personen {\cf4 =} fuelleFamilienkarten{\cf4 (}{\cf4 1}{\cf4 ,} erwachsene{\cf4 ,} kinder{\cf4 )}{\cf4 ;} {\cf5\i //Erstmal ermitteln wir, ob sich noch eine Familienkarte unterbringen lie{\u223}e\par
+}            {\cf8\b if} {\cf4 (}restliche_personen{\cf4 [}{\cf4 0}{\cf4 ]} {\cf4 +} restliche_personen{\cf4 [}{\cf4 1}{\cf4 ]} {\cf4 =}{\cf4 =} {\cf4 0}{\cf4 )} {\cf4 \{} {\cf5\i //Ist dies der Fall\par
+}                bester_besuch {\cf4 =} {\cf8\b new} Besuch{\cf4 (}restliche_personen{\cf4 [}{\cf4 2}{\cf4 ]}{\cf4 ,} restliche_personen{\cf4 [}{\cf4 3}{\cf4 ]}{\cf4 ,} {\cf8\b new} {\cf18 int}{\cf4 [}{\cf4 4}{\cf4 ]}{\cf4 ,} result{\cf4 [}{\cf4 0}{\cf4 ]} {\cf4 +} {\cf4 1}{\cf4 )}{\cf4 ;} {\cf5\i //Haben wir ein Ergebnis !\par
+}            {\cf4 \}} {\cf8\b else} {\cf8\b if} {\cf4 (}restliche_personen{\cf4 [}{\cf4 2}{\cf4 ]} {\cf4 >} {\cf4 1}{\cf4 )}{\cf4 \{} {\cf5\i //Ist dies nicht der Fall, gebe es aber mindestens zwei Erwachsene, lohnt sich eine imperfekte TK\par
+}                bester_besuch {\cf4 =} {\cf8\b new} Besuch{\cf4 (}{\cf4 0}{\cf4 ,} {\cf4 0}{\cf4 ,} {\cf8\b new} {\cf18 int}{\cf4 [}{\cf4 ]}{\cf4 \{}restliche_personen{\cf4 [}{\cf4 0}{\cf4 ]}{\cf4 ,} restliche_personen{\cf4 [}{\cf4 1}{\cf4 ]}{\cf4 ,} {\cf4 0}{\cf4 ,} {\cf4 0}{\cf4 \}}{\cf4 ,} result{\cf4 [}{\cf4 0}{\cf4 ]}{\cf4 )}{\cf4 ;}\par
+            {\cf4 \}}\par
+        {\cf4 \}}\par
+    {\cf4 \}}\par
+\par
+    {\cf8\b public} {\cf8\b static} {\cf18 void} {\cf19 kartenWochenende}{\cf4 (}{\cf4 )} {\cf4 \{} {\cf5\i //Kartenverteilung an keinem Wochentag : Keine Tageskarten\par
+}        {\cf18 int}{\cf4 [}{\cf4 ]} fakas {\cf4 =} fuelleFamilienkarten{\cf4 (}personen {\cf4 /} {\cf4 4}{\cf4 ,} erwachsene{\cf4 ,} kinder{\cf4 )}{\cf4 ;} {\cf5\i //Zuerst werden Familienkarten erstellt\par
+}        {\cf18 int} rest_fakas{\cf4 [}{\cf4 ]} {\cf4 =} fuelleImperfekteFamilienkarten{\cf4 (}fakas{\cf4 [}{\cf4 2}{\cf4 ]}{\cf4 ,} fakas{\cf4 [}{\cf4 3}{\cf4 ]}{\cf4 )}{\cf4 ;} {\cf5\i //Aus dem Rest werden imperfekte Familienkarten erstellt\par
+}        {\cf8\b if} {\cf4 (}rest_fakas{\cf4 [}{\cf4 2}{\cf4 ]} {\cf4 >} {\cf4 2}{\cf4 )} {\cf4 \{} {\cf5\i //Gibt es mindestens drei {\u252}brig bleibende Erwachsene\par
+}            {\cf8\b if} {\cf4 (}fakas{\cf4 [}{\cf4 1}{\cf4 ]} {\cf4 >} {\cf4 0}{\cf4 )} {\cf4 \{} {\cf5\i //Gibt es mindestens eine Familienkarte vom Typ 2, also 1 E, 3 K\par
+}                fakas{\cf4 [}{\cf4 1}{\cf4 ]}{\cf4 -}{\cf4 -}{\cf4 ;} {\cf5\i //Dann l{\u246}sen wir diese auf\par
+}                rest_fakas{\cf4 [}{\cf4 0}{\cf4 ]}{\cf4 +}{\cf4 +}{\cf4 ;} {\cf5\i //Und erstellen eine neue, imperfekte Familienkarte mit 2 Erwachsenen und einem Kind\par
+}                fakas{\cf4 [}{\cf4 0}{\cf4 ]}{\cf4 +}{\cf4 +}{\cf4 ;} {\cf5\i //Sowie eine mit 2 E, 2 K (Typ 1)\par
+}                rest_fakas{\cf4 [}{\cf4 2}{\cf4 ]} {\cf4 -}{\cf4 =} {\cf4 2}{\cf4 ;} {\cf5\i //Jetzt sind die Erwachsenen verplant\par
+}            {\cf4 \}}\par
+        {\cf4 \}}\par
+        fakas{\cf4 [}{\cf4 2}{\cf4 ]} {\cf4 =} rest_fakas{\cf4 [}{\cf4 0}{\cf4 ]}{\cf4 ;}\par
+        fakas{\cf4 [}{\cf4 3}{\cf4 ]} {\cf4 =} rest_fakas{\cf4 [}{\cf4 1}{\cf4 ]}{\cf4 ;}\par
+        bester_besuch {\cf4 =} {\cf8\b new} Besuch{\cf4 (}rest_fakas{\cf4 [}{\cf4 2}{\cf4 ]} {\cf5\i /*Erwachsene*/}{\cf4 ,} rest_fakas{\cf4 [}{\cf4 3}{\cf4 ]}{\cf5\i /*Kinder*/}{\cf4 ,} fakas {\cf5\i /*Familienkarten*/}{\cf4 ,} {\cf4 0} {\cf5\i /*Tageskarten*/}{\cf4 )}{\cf4 ;} {\cf5\i //Besuch einspeichern in globaler Variable\par
+}    {\cf4 \}}\par
+\par
+    {\cf8\b public} {\cf8\b static} {\cf18 boolean} {\cf19 jaNeinFrage}{\cf4 (}String frage{\cf4 )} {\cf4 \{} {\cf5\i //Stellt eine jaNeinFrage\par
+}        {\cf8\b while} {\cf4 (}{\cf8\b true}{\cf4 )} {\cf4 \{}\par
+            System{\cf4 .}{\cf23 out}{\cf4 .}{\cf23 println}{\cf4 (}frage {\cf4 +} {\cf2 "(j/n) ? "}{\cf4 )}{\cf4 ;}\par
+            String s {\cf4 =} EINGABE{\cf4 .}{\cf23 nextLine}{\cf4 (}{\cf4 )}{\cf4 .}{\cf23 toLowerCase}{\cf4 (}{\cf4 )}{\cf4 ;}\par
+            {\cf8\b if} {\cf4 (}s{\cf4 .}{\cf23 equals}{\cf4 (}{\cf2 "j"}{\cf4 )}{\cf4 )} {\cf4 \{}\par
+                {\cf8\b return} {\cf8\b true}{\cf4 ;}\par
+            {\cf4 \}} {\cf8\b else} {\cf8\b if} {\cf4 (}s{\cf4 .}{\cf23 equals}{\cf4 (}{\cf2 "n"}{\cf4 )}{\cf4 )} {\cf4 \{}\par
+                {\cf8\b return} {\cf8\b false}{\cf4 ;}\par
+            {\cf4 \}}\par
+            System{\cf4 .}{\cf23 out}{\cf4 .}{\cf23 println}{\cf4 (}{\cf2 "Bitte antworten sie mit j/n beziehungsweise J/N. Versuchen sie es erneut."}{\cf4 )}{\cf4 ;}\par
+        {\cf4 \}}\par
+    {\cf4 \}}\par
+\par
+    {\cf8\b public} {\cf8\b static} {\cf18 int} {\cf19 mengenFrage}{\cf4 (}String frage{\cf4 )} {\cf4 \{} {\cf5\i //Fragt nach einer ganzen Zahl > 0\par
+}        {\cf8\b while} {\cf4 (}{\cf8\b true}{\cf4 )} {\cf4 \{}\par
+            System{\cf4 .}{\cf23 out}{\cf4 .}{\cf23 println}{\cf4 (}frage {\cf4 +} {\cf2 "(Zahl) ? "}{\cf4 )}{\cf4 ;}\par
+            String s {\cf4 =} EINGABE{\cf4 .}{\cf23 nextLine}{\cf4 (}{\cf4 )}{\cf4 .}{\cf23 toLowerCase}{\cf4 (}{\cf4 )}{\cf4 ;}\par
+            {\cf8\b try} {\cf4 \{}\par
+                {\cf18 int} so {\cf4 =} Integer{\cf4 .}{\cf23 parseInt}{\cf4 (}s{\cf4 )}{\cf4 ;}\par
+                {\cf8\b if} {\cf4 (}so {\cf4 >}{\cf4 =} {\cf4 0}{\cf4 )} {\cf4 \{}\par
+                    {\cf8\b return} so{\cf4 ;}\par
+                {\cf4 \}}\par
+            {\cf4 \}} {\cf8\b catch} {\cf4 (}Exception e{\cf4 )} {\cf4 \{}\par
+\par
+            {\cf4 \}}\par
+            System{\cf4 .}{\cf23 out}{\cf4 .}{\cf23 println}{\cf4 (}{\cf2 "Bitte antworten sie mit einer ganzen Zahl > 0. Versuchen sie es erneut."}{\cf4 )}{\cf4 ;}\par
+        {\cf4 \}}\par
+    {\cf4 \}}\par
+\par
+    {\cf8\b public} {\cf8\b static} {\cf18 void} {\cf19 karten}{\cf4 (}{\cf4 )} {\cf4 \{} {\cf5\i //Verteilt Karten\par
+}        {\cf8\b if} {\cf4 (}wochentag{\cf4 )} {\cf4 \{} {\cf5\i //Ist Wochentag ?\par
+}            kartenWochentag{\cf4 (}{\cf4 )}{\cf4 ;}\par
+        {\cf4 \}} {\cf8\b else} {\cf4 \{} {\cf5\i //Ansonsten\par
+}            kartenWochenende{\cf4 (}{\cf4 )}{\cf4 ;}\par
+        {\cf4 \}}\par
+    {\cf4 \}}\par
+\par
+    {\cf8\b public} {\cf8\b static} {\cf18 void} {\cf19 main}{\cf4 (}String{\cf4 [}{\cf4 ]} args{\cf4 )} {\cf4 \{}\par
+        wochentag {\cf4 =} jaNeinFrage{\cf4 (}{\cf2 "Wochentag"}{\cf4 )}{\cf4 ;}\par
+        schultag {\cf4 =} jaNeinFrage{\cf4 (}{\cf2 "Schultag"}{\cf4 )}{\cf4 ;}\par
+        personen {\cf4 =} mengenFrage{\cf4 (}{\cf2 "Wie viele Personen"}{\cf4 )}{\cf4 ;}\par
+        {\cf8\b if} {\cf4 (}schultag{\cf4 )} {\cf4 \{} {\cf5\i //Nur an Schultagen\par
+}            gutscheine {\cf4 =} mengenFrage{\cf4 (}{\cf2 "Wie viele Gutscheine"}{\cf4 )}{\cf4 ;} {\cf5\i //Sind Gutscheine relevant\par
+}        {\cf4 \}}\par
+        kinder {\cf4 =} mengenFrage{\cf4 (}{\cf2 "Wie viele sind Kinder(unter 16)"}{\cf4 )}{\cf4 ;} {\cf5\i //Kleinkinder eingeschlossen\par
+}        {\cf18 int} kleinkinder {\cf4 =} mengenFrage{\cf4 (}{\cf2 "Wie viele davon sind Kleinkinder(unter 4)"}{\cf4 )}{\cf4 ;}\par
+        erwachsene {\cf4 =} personen {\cf4 -} kinder{\cf4 ;} {\cf5\i //Alle Personen, die keine Kinder(Kleinkinder inklusive) sind, sind erwachsen\par
+}        personen {\cf4 -}{\cf4 =} kleinkinder{\cf4 ;} {\cf5\i //Kleinkinder sind irrelevant\par
+}        kinder {\cf4 -}{\cf4 =} kleinkinder{\cf4 ;} {\cf5\i //Kleinkinder sind irrelevant\par
+}        {\cf8\b if} {\cf4 (}erwachsene {\cf4 =}{\cf4 =} {\cf4 0} {\cf4 &}{\cf4 &} kleinkinder {\cf4 !}{\cf4 =} {\cf4 0}{\cf4 )} {\cf4 \{} {\cf5\i //Gibt es keine Erwachsenen, aber Kleinkinder\par
+}            System{\cf4 .}{\cf23 out}{\cf4 .}{\cf23 println}{\cf4 (}{\cf2 "Die "} {\cf4 +} Integer{\cf4 .}{\cf23 toString}{\cf4 (}kleinkinder{\cf4 )} {\cf4 +} {\cf2 " Kleinkinder d{\u252}rfen nicht ohne die Aufsicht einer Erwachsenen Person das Schwimmbad besuchen."}{\cf4 )}{\cf4 ;}\par
+            System{\cf4 .}{\cf23 exit}{\cf4 (}{\cf4 0}{\cf4 )}{\cf4 ;} {\cf5\i //Wir sind fertig !\par
+}        {\cf4 \}}\par
+        {\cf18 int} kinderecht {\cf4 =} kinder{\cf4 ;}\par
+        {\cf18 int} erwachseneecht {\cf4 =} erwachsene{\cf4 ;}\par
+        {\cf8\b if} {\cf4 (}gutscheine {\cf4 >}{\cf4 =} personen{\cf4 )} {\cf4 \{} {\cf5\i // Gibt es mehr Gutscheine als Personen\par
+}            {\cf5\i //K{\u246}nnen einfach alle Gutscheine eingesetzt werden\par
+}            System{\cf4 .}{\cf23 out}{\cf4 .}{\cf23 println}{\cf4 (}{\cf2 "Setzen sie "} {\cf4 +} Integer{\cf4 .}{\cf23 toString}{\cf4 (}personen{\cf4 )} {\cf4 +} {\cf2 " Gutscheine ein, und sie werden nichts bezahlen m{\u252}ssen."}{\cf4 )}{\cf4 ;}\par
+            System{\cf4 .}{\cf23 exit}{\cf4 (}{\cf4 0}{\cf4 )}{\cf4 ;} {\cf5\i //Wir sind fertig !\par
+}        {\cf4 \}}\par
+        {\cf8\b if} {\cf4 (}gutscheine {\cf4 >} {\cf4 0}{\cf4 )} {\cf4 \{} {\cf5\i //Gibt es mindestens einen Gutschein\par
+}            {\cf5\i //Alle M{\u246}glichkeiten, die Gutscheine einzusetzen, generieren\par
+}            {\cf5\i //Erstmal, falls ein Gutschein f{\u252}r die Erm{\u228}ssigung von 10 % eingesetzt werden soll\par
+}            Besuch resultat {\cf4 =} {\cf8\b null}{\cf4 ;}\par
+            {\cf8\b if} {\cf4 (}gutscheine {\cf4 >} {\cf4 1}{\cf4 )} {\cf4 \{} {\cf5\i //Wenn es genau einen Gutschein gibt, und dieser f{\u252}r 10 % Erm{\u228}ssigung eingesetzt wird, brauchen wir keine "Einsatzm{\u246}glichkeiten" f{\u252}r 0 Gutscheine generieren\par
+}                {\cf8\b for} {\cf4 (}{\cf18 int} i {\cf4 =} {\cf4 0}{\cf4 ;} i {\cf4 <} gutscheine{\cf4 ;} i{\cf4 +}{\cf4 +}{\cf4 )} {\cf4 \{}\par
+                    kinder {\cf4 =} kinderecht{\cf4 ;}\par
+                    erwachsene {\cf4 =} erwachseneecht{\cf4 ;}\par
+                    {\cf18 int} ge {\cf4 =} {\cf4 (}gutscheine {\cf4 -} {\cf4 1}{\cf4 )} {\cf4 -} i{\cf4 ;}\par
+                    kinder {\cf4 -}{\cf4 =} i{\cf4 ;}\par
+                    erwachsene {\cf4 -}{\cf4 =} ge{\cf4 ;}\par
+                    erwachsene {\cf4 =} Math{\cf4 .}{\cf23 max}{\cf4 (}erwachsene{\cf4 ,} {\cf4 0}{\cf4 )}{\cf4 ;}\par
+                    kinder {\cf4 =} Math{\cf4 .}{\cf23 max}{\cf4 (}kinder{\cf4 ,} {\cf4 0}{\cf4 )}{\cf4 ;}\par
+                    personen {\cf4 =} kinder {\cf4 +} erwachsene{\cf4 ;}\par
+                    karten{\cf4 (}{\cf4 )}{\cf4 ;}\par
+                    {\cf8\b if} {\cf4 (}resultat {\cf4 =}{\cf4 =} {\cf8\b null} {\cf4 |}{\cf4 |} bester_besuch{\cf4 .}{\cf23 preis} {\cf4 <} resultat{\cf4 .}{\cf23 preis}{\cf4 )} {\cf4 \{} {\cf5\i //Gibt es noch keinen Rekordhalter, oder ist diese Variante g{\u252}nstiger\par
+}                        {\cf5\i //Ist diese nun der "Rekordhalter"\par
+}                        resultat {\cf4 =} bester_besuch{\cf4 ;}\par
+                        resultat{\cf4 .}{\cf23 gutscheine_kinder} {\cf4 =} i{\cf4 ;}\par
+                        resultat{\cf4 .}{\cf23 gutscheine_erwachsene} {\cf4 =} ge{\cf4 ;}\par
+                    {\cf4 \}}\par
+                {\cf4 \}}\par
+            {\cf4 \}}\par
+            {\cf8\b else} {\cf4 \{}\par
+                karten{\cf4 (}{\cf4 )}{\cf4 ;}\par
+            {\cf4 \}}\par
+            resultat{\cf4 .}{\cf23 setErmaessigung}{\cf4 (}{\cf4 )}{\cf4 ;} {\cf5\i //Erm{\u228}ssigung\par
+}            {\cf5\i //Und ohne einen Gutschein f{\u252}r die Erm{\u228}ssigung von 10 % einzusetzen\par
+}            {\cf8\b for} {\cf4 (}{\cf18 int} i {\cf4 =} {\cf4 0}{\cf4 ;} i {\cf4 <}{\cf4 =} gutscheine{\cf4 ;} i{\cf4 +}{\cf4 +}{\cf4 )} {\cf4 \{}\par
+                kinder {\cf4 =} kinderecht{\cf4 ;}\par
+                erwachsene {\cf4 =} erwachseneecht{\cf4 ;}\par
+                {\cf18 int} ge {\cf4 =} gutscheine {\cf4 -} i{\cf4 ;}\par
+                kinder {\cf4 -}{\cf4 =} i{\cf4 ;}\par
+                erwachsene {\cf4 -}{\cf4 =} ge{\cf4 ;}\par
+                erwachsene {\cf4 =} Math{\cf4 .}{\cf23 max}{\cf4 (}erwachsene{\cf4 ,} {\cf4 0}{\cf4 )}{\cf4 ;}\par
+                kinder {\cf4 =} Math{\cf4 .}{\cf23 max}{\cf4 (}kinder{\cf4 ,} {\cf4 0}{\cf4 )}{\cf4 ;}\par
+                personen {\cf4 =} kinder {\cf4 +} erwachsene{\cf4 ;}\par
+                karten{\cf4 (}{\cf4 )}{\cf4 ;}\par
+                {\cf8\b if} {\cf4 (}bester_besuch{\cf4 .}{\cf23 preis} {\cf4 <} resultat{\cf4 .}{\cf23 preis}{\cf4 )} {\cf4 \{} {\cf5\i //Ist diese Variante g{\u252}nstiger\par
+}                    {\cf5\i //Ist diese nun der "Rekordhalter"\par
+}                    resultat {\cf4 =} bester_besuch{\cf4 ;}\par
+                    resultat{\cf4 .}{\cf23 gutscheine_kinder} {\cf4 =} i{\cf4 ;}\par
+                    resultat{\cf4 .}{\cf23 gutscheine_erwachsene} {\cf4 =} ge{\cf4 ;}\par
+                {\cf4 \}}\par
+            {\cf4 \}}\par
+            System{\cf4 .}{\cf23 out}{\cf4 .}{\cf23 println}{\cf4 (}resultat{\cf4 )}{\cf4 ;} {\cf5\i //Ergebnis ausgeben\par
+}            System{\cf4 .}{\cf23 exit}{\cf4 (}{\cf4 0}{\cf4 )}{\cf4 ;} {\cf5\i //Wir sind fertig !\par
+}        {\cf4 \}}\par
+        karten{\cf4 (}{\cf4 )}{\cf4 ;} {\cf5\i //Gibt es keine Gutscheine, k{\u246}nnen wir einfach normal Karten kaufen\par
+}        System{\cf4 .}{\cf23 out}{\cf4 .}{\cf23 println}{\cf4 (}bester_besuch{\cf4 )}{\cf4 ;} {\cf5\i //Ergebnis ausgeben\par
+}    {\cf4 \}}\par
+{\cf4 \}}\par
+}

@@ -1,0 +1,187 @@
+{\rtf1\ansi\uc0\deff0{\fonttbl{\f0\fmodern\fprq1\fcharset0;}}{\colortbl;\red136\green136\blue136;\red186\green33\blue33;\red0\green68\blue221;\red102\green102\blue102;\red64\green128\blue128;\red160\green160\blue0;\red25\green23\blue124;\red0\green128\blue0;\red187\green102\blue136;\red187\green102\blue34;\red136\green0\blue0;\red170\green34\blue255;\red153\green153\blue153;\red0\green160\blue0;\red160\green0\blue0;\red255\green0\blue0;\red128\green0\blue128;\red176\green0\blue64;\red0\green0\blue255;\red187\green187\blue187;\red188\green122\blue0;\red0\green0\blue128;\red125\green144\blue41;\red210\green65\blue58;}\f0 {\cf5\i /*\par
+ * To change this license header, choose License Headers in Project Properties.\par
+ * To change this template file, choose Tools | Templates\par
+ * and open the template in the editor.\par
+ */}\par
+{\cf8\b package} {\cf19\b bauernopfer}{\cf4 ;}\par
+\par
+{\cf8\b import} {\cf19\b java.awt.event.WindowAdapter}{\cf4 ;}\par
+{\cf8\b import} {\cf19\b java.awt.event.WindowEvent}{\cf4 ;}\par
+{\cf8\b import} {\cf19\b java.util.ArrayList}{\cf4 ;} {\cf5\i //Listen\par
+}{\cf8\b import} {\cf19\b java.util.Scanner}{\cf4 ;} {\cf5\i //Benutzereingabe\par
+}{\cf8\b import} {\cf19\b javax.swing.JFrame}{\cf4 ;} {\cf5\i //Fenster\par
+}\par
+{\cf8\b public} {\cf8\b class} {\cf19\b Bauernopfer} {\cf4 \{}\par
+\par
+    {\cf8\b public} {\cf8\b static} {\cf18 boolean} bauern_dran {\cf4 =} {\cf8\b true}{\cf4 ;} {\cf5\i //Sind die Bauern momentan dran ?\par
+}    {\cf8\b public} {\cf8\b static} {\cf18 boolean} dame {\cf4 =} {\cf8\b false}{\cf4 ;} {\cf5\i //Wird mit Dame gespielt ?\par
+}    {\cf8\b public} {\cf8\b static} {\cf18 byte} zuege{\cf4 ;} {\cf5\i //Wie viele Z{\u252}ge haben die Bauern ?\par
+}    {\cf8\b public} {\cf8\b static} {\cf18 byte} bleibende_zuege{\cf4 ;} {\cf5\i //Wie viele Z{\u252}ge bleiben den Bauern noch\par
+}    {\cf8\b public} {\cf8\b static} {\cf8\b final} Scanner EINGABE {\cf4 =} {\cf8\b new} Scanner{\cf4 (}System{\cf4 .}{\cf23 in}{\cf4 )}{\cf4 ;} {\cf5\i //Benutzereingabe\par
+}    {\cf8\b public} {\cf8\b static} JFrame fenster{\cf4 ;}\par
+\par
+    {\cf8\b public} {\cf8\b static} {\cf18 boolean} {\cf19 jaNeinFrage}{\cf4 (}String frage{\cf4 )} {\cf4 \{} {\cf5\i //Stellt eine ja/nein Frage an den Benutzer\par
+}        {\cf8\b while} {\cf4 (}{\cf8\b true}{\cf4 )} {\cf4 \{}\par
+            System{\cf4 .}{\cf23 out}{\cf4 .}{\cf23 println}{\cf4 (}frage {\cf4 +} {\cf2 "(j/n) ? "}{\cf4 )}{\cf4 ;}\par
+            String s {\cf4 =} EINGABE{\cf4 .}{\cf23 nextLine}{\cf4 (}{\cf4 )}{\cf4 .}{\cf23 toLowerCase}{\cf4 (}{\cf4 )}{\cf4 ;}\par
+            {\cf8\b if} {\cf4 (}s{\cf4 .}{\cf23 equals}{\cf4 (}{\cf2 "j"}{\cf4 )}{\cf4 )} {\cf4 \{}\par
+                {\cf8\b return} {\cf8\b true}{\cf4 ;}\par
+            {\cf4 \}} {\cf8\b else} {\cf8\b if} {\cf4 (}s{\cf4 .}{\cf23 equals}{\cf4 (}{\cf2 "n"}{\cf4 )}{\cf4 )} {\cf4 \{}\par
+                {\cf8\b return} {\cf8\b false}{\cf4 ;}\par
+            {\cf4 \}}\par
+            System{\cf4 .}{\cf23 out}{\cf4 .}{\cf23 println}{\cf4 (}{\cf2 "Bitte antworten sie mit j/n beziehungsweise J/N. Versuchen sie es erneut."}{\cf4 )}{\cf4 ;}\par
+        {\cf4 \}}\par
+    {\cf4 \}}\par
+\par
+    {\cf8\b public} {\cf8\b static} {\cf18 byte} {\cf19 mengenFrage}{\cf4 (}String frage{\cf4 )} {\cf4 \{} {\cf5\i //Fragt nach einer Zahl von 1-8\par
+}        {\cf8\b while} {\cf4 (}{\cf8\b true}{\cf4 )} {\cf4 \{}\par
+            System{\cf4 .}{\cf23 out}{\cf4 .}{\cf23 println}{\cf4 (}frage {\cf4 +} {\cf2 "(Zahl von 1-8) ? "}{\cf4 )}{\cf4 ;}\par
+            String s {\cf4 =} EINGABE{\cf4 .}{\cf23 nextLine}{\cf4 (}{\cf4 )}{\cf4 .}{\cf23 toLowerCase}{\cf4 (}{\cf4 )}{\cf4 ;}\par
+            {\cf8\b try} {\cf4 \{}\par
+                {\cf18 byte} so {\cf4 =} Byte{\cf4 .}{\cf23 parseByte}{\cf4 (}s{\cf4 )}{\cf4 ;}\par
+                {\cf8\b if} {\cf4 (}so {\cf4 >} {\cf4 0} {\cf4 &}{\cf4 &} so {\cf4 <} {\cf4 9}{\cf4 )} {\cf4 \{}\par
+                    {\cf8\b return} so{\cf4 ;}\par
+                {\cf4 \}}\par
+            {\cf4 \}} {\cf8\b catch} {\cf4 (}NumberFormatException e{\cf4 )} {\cf4 \{}\par
+                System{\cf4 .}{\cf23 out}{\cf4 .}{\cf23 println}{\cf4 (}{\cf2 "Bitte antworten sie mit einer Zahl von 1 bis 8. Versuchen sie es erneut."}{\cf4 )}{\cf4 ;}\par
+            {\cf4 \}}\par
+        {\cf4 \}}\par
+    {\cf4 \}}\par
+\par
+    {\cf8\b public} {\cf8\b static} {\cf18 void} {\cf19 main}{\cf4 (}String{\cf4 [}{\cf4 ]} args{\cf4 )} {\cf4 \{}\par
+        dame {\cf4 =} jaNeinFrage{\cf4 (}{\cf2 "Soll mit Dame gespielt werden"}{\cf4 )}{\cf4 ;}\par
+        {\cf18 boolean} turmal {\cf4 =} jaNeinFrage{\cf4 (}{\cf2 "Soll der Turm/die Dame vom Rechner gesteuert werden"}{\cf4 )}{\cf4 ;}\par
+        {\cf18 boolean} bauernal {\cf4 =} jaNeinFrage{\cf4 (}{\cf2 "Sollen die Bauern vom Rechner gesteuert werden"}{\cf4 )}{\cf4 ;}\par
+        {\cf18 byte} bauern {\cf4 =} mengenFrage{\cf4 (}{\cf2 "Wie viele Bauern soll es geben"}{\cf4 )}{\cf4 ;}\par
+        zuege {\cf4 =} mengenFrage{\cf4 (}{\cf2 "Wie viele Z{\u252}ge sollen sie haben"}{\cf4 )}{\cf4 ;}\par
+        bleibende_zuege {\cf4 =} zuege{\cf4 ;}\par
+        fenster {\cf4 =} {\cf8\b new} JFrame{\cf4 (}{\cf4 )}{\cf4 ;} {\cf5\i //Neues Fenster erzeugen\par
+}        fenster{\cf4 .}{\cf23 setSize}{\cf4 (}{\cf4 400}{\cf4 ,} {\cf4 400}{\cf4 )}{\cf4 ;} {\cf5\i //Gr{\u246}{\u223}e auf 400x400 = 50*8 x 50*8 Schachbrett\par
+}        Brett brett {\cf4 =} {\cf8\b new} Brett{\cf4 (}{\cf4 )}{\cf4 ;} {\cf5\i //Neues Spielbrett erzeugen\par
+}        fenster{\cf4 .}{\cf23 setContentPane}{\cf4 (}brett{\cf4 )}{\cf4 ;} {\cf5\i //Brett im Fenster anzeigen\par
+}        fenster{\cf4 .}{\cf23 setVisible}{\cf4 (}{\cf8\b true}{\cf4 )}{\cf4 ;} {\cf5\i //Fenster sichtbar machen\par
+}        fenster{\cf4 .}{\cf23 setFocusable}{\cf4 (}{\cf8\b true}{\cf4 )}{\cf4 ;} {\cf5\i //F{\u252}r die Maus fokusierbar machen\par
+}        fenster{\cf4 .}{\cf23 requestFocus}{\cf4 (}{\cf4 )}{\cf4 ;} {\cf5\i //Maus auf dieses Fenster fokusieren\par
+}        fenster{\cf4 .}{\cf23 addWindowListener}{\cf4 (}{\cf8\b new} WindowAdapter{\cf4 (}{\cf4 )} {\cf4 \{}\par
+            {\cf12 @Override}\par
+            {\cf8\b public} {\cf18 void} {\cf19 windowClosing}{\cf4 (}WindowEvent e{\cf4 )} {\cf4 \{}\par
+                System{\cf4 .}{\cf23 out}{\cf4 .}{\cf23 println}{\cf4 (}{\cf2 "Programm beendet."}{\cf4 )}{\cf4 ;}\par
+                System{\cf4 .}{\cf23 exit}{\cf4 (}{\cf4 0}{\cf4 )}{\cf4 ;} {\cf5\i //Wird das Fenster geschlossen, soll das komplette Programm anhalten\par
+}            {\cf4 \}}\par
+        {\cf4 \}}{\cf4 )}{\cf4 ;}\par
+        {\cf18 long} now{\cf4 ;} {\cf5\i //FPS-Z{\u228}hler\par
+}        Maus maus {\cf4 =} {\cf8\b new} Maus{\cf4 (}{\cf4 )}{\cf4 ;} {\cf5\i //Neue "Maus" erzeugen, die alle f{\u252}r dieses Programm relevanten "Maus-Infos" speichert\par
+}        fenster{\cf4 .}{\cf23 addMouseListener}{\cf4 (}maus{\cf4 )}{\cf4 ;} {\cf5\i //"Maus" zum Fenster hinzuf{\u252}gen, um Position etc. bei {\u196}nderung und pro Frame abzufangen\par
+}        {\cf8\b if} {\cf4 (}bauernal{\cf4 )} {\cf4 \{} {\cf5\i //Werden die Bauern vom Rechner gesteuert ?\par
+}            brett{\cf4 .}{\cf23 platziereBauern}{\cf4 (}BauernAL{\cf4 .}{\cf23 platziereBauern}{\cf4 (}{\cf4 (}{\cf18 byte}{\cf4 )} bauern{\cf4 )}{\cf4 )}{\cf4 ;} {\cf5\i //Bauern von der BauernAL platzieren lassen\par
+}            brett{\cf4 .}{\cf23 repaint}{\cf4 (}{\cf4 )}{\cf4 ;} {\cf5\i //Anzeigen, wie sie platziert wurden\par
+}        {\cf4 \}} {\cf8\b else} {\cf4 \{} {\cf5\i //Ansonsten kann man die Bauern selbst platzieren\par
+}            ArrayList{\cf4 <}Punkt{\cf4 >} plaetze {\cf4 =} {\cf8\b new} ArrayList{\cf4 (}{\cf4 )}{\cf4 ;}\par
+            {\cf18 byte} platzieren {\cf4 =} {\cf4 0}{\cf4 ;}\par
+            now {\cf4 =} System{\cf4 .}{\cf23 currentTimeMillis}{\cf4 (}{\cf4 )}{\cf4 ;}\par
+            {\cf8\b while} {\cf4 (}{\cf8\b true}{\cf4 )} {\cf4 \{}\par
+                {\cf8\b if} {\cf4 (}System{\cf4 .}{\cf23 currentTimeMillis}{\cf4 (}{\cf4 )} {\cf4 -} now {\cf4 >} {\cf4 50}{\cf4 )} {\cf4 \{} {\cf5\i //20 FPS\par
+}                    now {\cf4 =} System{\cf4 .}{\cf23 currentTimeMillis}{\cf4 (}{\cf4 )}{\cf4 ;}\par
+                    maus{\cf4 .}{\cf23 infosHolen}{\cf4 (}{\cf4 )}{\cf4 ;} {\cf5\i //Maus-Infos abfangen\par
+}                    {\cf8\b if} {\cf4 (}maus{\cf4 .}{\cf23 LMB} {\cf4 >} {\cf4 1}{\cf4 )} {\cf4 \{} {\cf5\i //Wurde die linke Maustaste gedr{\u252}ckt\par
+}                        Punkt p {\cf4 =} {\cf8\b new} Punkt{\cf4 (}{\cf4 (}{\cf18 byte}{\cf4 )} {\cf4 (}maus{\cf4 .}{\cf23 mouseX} {\cf4 /} {\cf4 50}{\cf4 )}{\cf4 ,} {\cf4 (}{\cf18 byte}{\cf4 )} {\cf4 (}maus{\cf4 .}{\cf23 mouseY} {\cf4 /} {\cf4 50}{\cf4 )}{\cf4 )}{\cf4 ;} {\cf5\i //Ausgew{\u228}hltes Feld\par
+}                        {\cf8\b if} {\cf4 (}{\cf4 !}brett{\cf4 .}{\cf23 bauern}{\cf4 .}{\cf23 raster}{\cf4 [}p{\cf4 .}{\cf23 x}{\cf4 ]}{\cf4 [}p{\cf4 .}{\cf23 y}{\cf4 ]}{\cf4 )} {\cf4 \{} {\cf5\i //Ist an dem ausgew{\u228}hlten Feld noch kein Bauer\par
+}                            plaetze{\cf4 .}{\cf23 add}{\cf4 (}p{\cf4 )}{\cf4 ;} {\cf5\i //So f{\u252}gen wir diesen hinzu\par
+}                            brett{\cf4 .}{\cf23 platziereBauern}{\cf4 (}{\cf8\b new} Punktmenge{\cf4 (}plaetze{\cf4 )}{\cf4 )}{\cf4 ;} {\cf5\i //Und updaten das Brett\par
+}                            brett{\cf4 .}{\cf23 repaint}{\cf4 (}{\cf4 )}{\cf4 ;} {\cf5\i //Brett neuzeichnen\par
+}                            platzieren{\cf4 +}{\cf4 +}{\cf4 ;}\par
+                            {\cf8\b if} {\cf4 (}platzieren {\cf4 =}{\cf4 =} bauern{\cf4 )} {\cf4 \{} {\cf5\i //Wurden alle Bauern platziert\par
+}                                {\cf8\b break}{\cf4 ;} {\cf5\i //Sind wir hier fertig\par
+}                            {\cf4 \}}\par
+                        {\cf4 \}}\par
+                        maus{\cf4 .}{\cf23 LMB} {\cf4 =} {\cf4 0}{\cf4 ;}\par
+                    {\cf4 \}}\par
+                {\cf4 \}}\par
+            {\cf4 \}}\par
+        {\cf4 \}}\par
+        {\cf8\b if} {\cf4 (}turmal{\cf4 )} {\cf4 \{} {\cf5\i //Falls der Turm/die Dame vom Computer gesteuert werden soll\par
+}            brett{\cf4 .}{\cf23 platziereTurm}{\cf4 (}TurmAL{\cf4 .}{\cf23 platziereTurm}{\cf4 (}brett{\cf4 .}{\cf23 bauern}{\cf4 )}{\cf4 )}{\cf4 ;} {\cf5\i //Automatisch platzieren\par
+}            brett{\cf4 .}{\cf23 repaint}{\cf4 (}{\cf4 )}{\cf4 ;} {\cf5\i //Brett neuzeichen\par
+}        {\cf4 \}} {\cf8\b else} {\cf4 \{}\par
+            now {\cf4 =} System{\cf4 .}{\cf23 currentTimeMillis}{\cf4 (}{\cf4 )}{\cf4 ;}\par
+            {\cf8\b while} {\cf4 (}{\cf8\b true}{\cf4 )} {\cf4 \{}\par
+                maus{\cf4 .}{\cf23 infosHolen}{\cf4 (}{\cf4 )}{\cf4 ;} {\cf5\i //Maus-Infos abfangen\par
+}                {\cf8\b if} {\cf4 (}System{\cf4 .}{\cf23 currentTimeMillis}{\cf4 (}{\cf4 )} {\cf4 -} now {\cf4 >} {\cf4 50}{\cf4 )} {\cf4 \{} {\cf5\i //20 FPS\par
+}                    now {\cf4 =} System{\cf4 .}{\cf23 currentTimeMillis}{\cf4 (}{\cf4 )}{\cf4 ;}\par
+                    {\cf8\b if} {\cf4 (}maus{\cf4 .}{\cf23 LMB} {\cf4 >} {\cf4 1}{\cf4 )} {\cf4 \{} {\cf5\i //Wurde die linke Maustaste gedr{\u252}ckt\par
+}                        Punkt p {\cf4 =} {\cf8\b new} Punkt{\cf4 (}{\cf4 (}{\cf18 byte}{\cf4 )} {\cf4 (}maus{\cf4 .}{\cf23 mouseX} {\cf4 /} {\cf4 50}{\cf4 )}{\cf4 ,} {\cf4 (}{\cf18 byte}{\cf4 )} {\cf4 (}maus{\cf4 .}{\cf23 mouseY} {\cf4 /} {\cf4 50}{\cf4 )}{\cf4 )}{\cf4 ;} {\cf5\i //Ausgew{\u228}hltes Feld\par
+}                        {\cf8\b if} {\cf4 (}{\cf4 !}brett{\cf4 .}{\cf23 bauern}{\cf4 .}{\cf23 raster}{\cf4 [}p{\cf4 .}{\cf23 x}{\cf4 ]}{\cf4 [}p{\cf4 .}{\cf23 y}{\cf4 ]}{\cf4 )} {\cf4 \{} {\cf5\i //Ist an dem ausgew{\u228}hlten Feld noch kein Bauer\par
+}                            brett{\cf4 .}{\cf23 platziereTurm}{\cf4 (}p{\cf4 )}{\cf4 ;} {\cf5\i //So kann dort der Turm/die Dame platziert werden\par
+}                            brett{\cf4 .}{\cf23 repaint}{\cf4 (}{\cf4 )}{\cf4 ;} {\cf5\i //Brett neuzeichnen\par
+}                            {\cf8\b break}{\cf4 ;} {\cf5\i //Der Turm/die Dame wurde platziert, hier sind wir fertig\par
+}                        {\cf4 \}}\par
+                        maus{\cf4 .}{\cf23 LMB} {\cf4 =} {\cf4 0}{\cf4 ;}\par
+                    {\cf4 \}}\par
+                {\cf4 \}}\par
+            {\cf4 \}}\par
+        {\cf4 \}}\par
+        Punkt b {\cf4 =} {\cf8\b null}{\cf4 ;} {\cf5\i //Koordinaten vom aktuell ausgew{\u228}hlten Bauern. Ist "null" wenn keiner ausgew{\u228}hlt wurde.\par
+}        {\cf5\i //K und L : WENN K+L == 9 ?\par
+}        now {\cf4 =} System{\cf4 .}{\cf23 currentTimeMillis}{\cf4 (}{\cf4 )}{\cf4 ;}\par
+        {\cf8\b while} {\cf4 (}{\cf8\b true}{\cf4 )} {\cf4 \{}\par
+            {\cf8\b if} {\cf4 (}System{\cf4 .}{\cf23 currentTimeMillis}{\cf4 (}{\cf4 )} {\cf4 -} now {\cf4 >} {\cf4 50}{\cf4 )} {\cf4 \{} {\cf5\i //20 FPS\par
+}                maus{\cf4 .}{\cf23 infosHolen}{\cf4 (}{\cf4 )}{\cf4 ;} {\cf5\i //Maus-Infos abfangen\par
+}                {\cf8\b if} {\cf4 (}maus{\cf4 .}{\cf23 LMB} {\cf4 >} {\cf4 1}{\cf4 )} {\cf4 \{} {\cf5\i //Wurde die linke Maustaste gedr{\u252}ckt\par
+}                    {\cf8\b if} {\cf4 (}bauern_dran{\cf4 )} {\cf4 \{} {\cf5\i //Sind die Bauern dran\par
+}                        {\cf8\b if} {\cf4 (}bauernal{\cf4 )} {\cf4 \{} {\cf5\i //Werden die Bauern vom Computer gesteuert\par
+}                            Punkt{\cf4 [}{\cf4 ]} bewegen {\cf4 =} BauernAL{\cf4 .}{\cf23 zieheBauern}{\cf4 (}brett{\cf4 .}{\cf23 bauern}{\cf4 ,} brett{\cf4 .}{\cf23 turm}{\cf4 )}{\cf4 ;} {\cf5\i //Bauern ziehen, gibt (1) die Ausgangsposition des Bauern, also welcher Bauer gezogen wird, und (2) dessen Zielposition zur{\u252}ck\par
+}                            brett{\cf4 .}{\cf23 bewegeBauern}{\cf4 (}bewegen{\cf4 [}{\cf4 0}{\cf4 ]}{\cf4 ,} bewegen{\cf4 [}{\cf4 1}{\cf4 ]}{\cf4 )}{\cf4 ;} {\cf5\i //Brett aktualisieren\par
+}                            bleibende_zuege{\cf4 -}{\cf4 -}{\cf4 ;}\par
+                            {\cf8\b if} {\cf4 (}bleibende_zuege {\cf4 =}{\cf4 =} {\cf4 0}{\cf4 )} {\cf4 \{} {\cf5\i //Sollten den Bauern keine Z{\u252}ge mehr bleiben,\par
+}                                bauern_dran {\cf4 =} {\cf8\b false}{\cf4 ;} {\cf5\i //Ist wieder der Turm dran\par
+}                                bleibende_zuege {\cf4 =} zuege{\cf4 ;} {\cf5\i //Und die Bauern haben wieder volle belibende Zugzahl\par
+}                            {\cf4 \}}\par
+                        {\cf4 \}} {\cf8\b else} {\cf8\b if} {\cf4 (}b {\cf4 =}{\cf4 =} {\cf8\b null}{\cf4 )} {\cf4 \{} {\cf5\i //Wenn der Mensch(der Spieler) spielt, und noch keinen Bauern ausgew{\u228}hlt hat, \par
+}                            Punkt p {\cf4 =} {\cf8\b new} Punkt{\cf4 (}{\cf4 (}{\cf18 byte}{\cf4 )} {\cf4 (}maus{\cf4 .}{\cf23 mouseX} {\cf4 /} {\cf4 50}{\cf4 )}{\cf4 ,} {\cf4 (}{\cf18 byte}{\cf4 )} {\cf4 (}maus{\cf4 .}{\cf23 mouseY} {\cf4 /} {\cf4 50}{\cf4 )}{\cf4 )}{\cf4 ;} {\cf5\i //Ausgew{\u228}hltes Feld\par
+}                            {\cf8\b if} {\cf4 (}brett{\cf4 .}{\cf23 bauern}{\cf4 .}{\cf23 raster}{\cf4 [}p{\cf4 .}{\cf23 x}{\cf4 ]}{\cf4 [}p{\cf4 .}{\cf23 y}{\cf4 ]}{\cf4 )} {\cf4 \{} {\cf5\i //Befindet sich dort ein Bauer\par
+}                                b {\cf4 =} p{\cf4 ;} {\cf5\i //Wird dieser ausgew{\u228}hlt\par
+}                            {\cf4 \}}\par
+                        {\cf4 \}} {\cf8\b else} {\cf4 \{} {\cf5\i //Wenn der Mensch(der Spieler) spielt, und schon einen Bauern ausgew{\u228}hlt hat, \par
+}                            ArrayList{\cf4 <}Punkt{\cf4 >} begehbar {\cf4 =} BauernAL{\cf4 .}{\cf23 bestimmeFelder}{\cf4 (}brett{\cf4 .}{\cf23 bauern}{\cf4 ,} b{\cf4 )}{\cf4 ;} {\cf5\i //Ermitteln wir, welche Felder alle von dem Bauer begangen werden k{\u246}nnen\par
+}                            Punkt q {\cf4 =} {\cf8\b new} Punkt{\cf4 (}{\cf4 (}{\cf18 byte}{\cf4 )} {\cf4 (}maus{\cf4 .}{\cf23 mouseX} {\cf4 /} {\cf4 50}{\cf4 )}{\cf4 ,} {\cf4 (}{\cf18 byte}{\cf4 )} {\cf4 (}maus{\cf4 .}{\cf23 mouseY} {\cf4 /} {\cf4 50}{\cf4 )}{\cf4 )}{\cf4 ;} {\cf5\i //Ausgew{\u228}hltes Feld\par
+}                            {\cf18 boolean} c {\cf4 =} {\cf8\b false}{\cf4 ;} {\cf5\i //Kontrolle c : Ist das ausgew{\u228}hlte Feld begehbar ?\par
+}                            {\cf8\b for} {\cf4 (}Punkt k {\cf4 :} begehbar{\cf4 )} {\cf4 \{}\par
+                                {\cf8\b if} {\cf4 (}k{\cf4 .}{\cf23 x} {\cf4 =}{\cf4 =} q{\cf4 .}{\cf23 x} {\cf4 &}{\cf4 &} k{\cf4 .}{\cf23 y} {\cf4 =}{\cf4 =} q{\cf4 .}{\cf23 y}{\cf4 )} {\cf4 \{} {\cf5\i //Es ist begehbar\par
+}                                    c {\cf4 =} {\cf8\b true}{\cf4 ;}\par
+                                    {\cf8\b break}{\cf4 ;} {\cf5\i //Schleife beenden\par
+}                                {\cf4 \}}\par
+                            {\cf4 \}}\par
+                            {\cf8\b if} {\cf4 (}c{\cf4 )} {\cf4 \{}\par
+                                brett{\cf4 .}{\cf23 bewegeBauern}{\cf4 (}b{\cf4 ,} q{\cf4 )}{\cf4 ;} {\cf5\i //Da es ja begehbar ist, k{\u246}nnen wir nun den Bauern ziehen\par
+}                                bleibende_zuege{\cf4 -}{\cf4 -}{\cf4 ;}\par
+                                {\cf8\b if} {\cf4 (}bleibende_zuege {\cf4 =}{\cf4 =} {\cf4 0}{\cf4 )} {\cf4 \{} {\cf5\i //Sollten den Bauern keine Z{\u252}ge mehr bleiben,\par
+}                                    bauern_dran {\cf4 =} {\cf8\b false}{\cf4 ;} {\cf5\i //Ist wieder der Turm dran\par
+}                                    bleibende_zuege {\cf4 =} zuege{\cf4 ;} {\cf5\i //Und die Bauern haben wieder volle belibende Zugzahl\par
+}                                {\cf4 \}}\par
+                                b {\cf4 =} {\cf8\b null}{\cf4 ;} {\cf5\i //Nach dem Zug muss der menschliche Spieler erneut einen Bauern ausw{\u228}hlen\par
+}                            {\cf4 \}} {\cf8\b else} {\cf8\b if} {\cf4 (}brett{\cf4 .}{\cf23 bauern}{\cf4 .}{\cf23 raster}{\cf4 [}q{\cf4 .}{\cf23 x}{\cf4 ]}{\cf4 [}q{\cf4 .}{\cf23 y}{\cf4 ]}{\cf4 )} {\cf4 \{} {\cf5\i //Sollte sich an der gew{\u252}nschten Position ein Bauer befinden, c also "Falsch" sein, \par
+}                                b {\cf4 =} q{\cf4 ;} {\cf5\i //So ist dieser nun ausgew{\u228}hlt\par
+}                            {\cf4 \}}\par
+                        {\cf4 \}}\par
+                    {\cf4 \}} {\cf8\b else} {\cf8\b if} {\cf4 (}turmal{\cf4 )} {\cf4 \{} {\cf5\i //Sonst ist der Turm dran, falls er vom Rechner gesteuert werden soll...\par
+}                        Punkt bewegen {\cf4 =} TurmAL{\cf4 .}{\cf23 zieheTurm}{\cf4 (}brett{\cf4 .}{\cf23 bauern}{\cf4 ,} brett{\cf4 .}{\cf23 turm}{\cf4 )}{\cf4 ;} {\cf5\i //Turm ziehen, gibt neue Position des Turmes zur{\u252}ck\par
+}                        brett{\cf4 .}{\cf23 bewegeTurm}{\cf4 (}bewegen{\cf4 )}{\cf4 ;} {\cf5\i //Brett aktualisieren\par
+}                        bauern_dran {\cf4 =} {\cf8\b true}{\cf4 ;} {\cf5\i //Danach sind wieder die Bauern dran\par
+}                    {\cf4 \}} {\cf8\b else} {\cf4 \{} {\cf5\i //...und ansonsten steuert der Spieler den Turm\par
+}                        Punkt p {\cf4 =} {\cf8\b new} Punkt{\cf4 (}{\cf4 (}{\cf18 byte}{\cf4 )} {\cf4 (}maus{\cf4 .}{\cf23 mouseX} {\cf4 /} {\cf4 50}{\cf4 )}{\cf4 ,} {\cf4 (}{\cf18 byte}{\cf4 )} {\cf4 (}maus{\cf4 .}{\cf23 mouseY} {\cf4 /} {\cf4 50}{\cf4 )}{\cf4 )}{\cf4 ;}\par
+                        Punktmenge begehbar {\cf4 =} TurmAL{\cf4 .}{\cf23 bestimmeFelder}{\cf4 (}brett{\cf4 .}{\cf23 bauern}{\cf4 ,} brett{\cf4 .}{\cf23 turm}{\cf4 )}{\cf4 ;} {\cf5\i //Alle f{\u252}r den Turm/die Dame begehbare Felder\par
+}                        {\cf8\b if} {\cf4 (}begehbar{\cf4 .}{\cf23 raster}{\cf4 [}p{\cf4 .}{\cf23 x}{\cf4 ]}{\cf4 [}p{\cf4 .}{\cf23 y}{\cf4 ]}{\cf4 )} {\cf4 \{} {\cf5\i //Ist das ausgew{\u228}hlte Feld begehbar ?\par
+}                            brett{\cf4 .}{\cf23 bewegeTurm}{\cf4 (}p{\cf4 )}{\cf4 ;} {\cf5\i //Wird er dahinbewegt\par
+}                            bauern_dran {\cf4 =} {\cf8\b true}{\cf4 ;} {\cf5\i //Danach sind wieder die Bauern dran\par
+}                        {\cf4 \}}\par
+                    {\cf4 \}}\par
+                    brett{\cf4 .}{\cf23 repaint}{\cf4 (}{\cf4 )}{\cf4 ;} {\cf5\i //Brett nach jedem Zug neuzeichnen\par
+}                    maus{\cf4 .}{\cf23 LMB} {\cf4 =} {\cf4 0}{\cf4 ;}\par
+                {\cf4 \}}\par
+                now {\cf4 =} System{\cf4 .}{\cf23 currentTimeMillis}{\cf4 (}{\cf4 )}{\cf4 ;}\par
+                System{\cf4 .}{\cf23 gc}{\cf4 (}{\cf4 )}{\cf4 ;} {\cf5\i //"M{\u252}ll" sammeln : Gibt Speicher frei\par
+}            {\cf4 \}}\par
+        {\cf4 \}}\par
+    {\cf4 \}}\par
+{\cf4 \}}\par
+}

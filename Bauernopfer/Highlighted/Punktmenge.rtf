@@ -1,0 +1,95 @@
+{\rtf1\ansi\uc0\deff0{\fonttbl{\f0\fmodern\fprq1\fcharset0;}}{\colortbl;\red136\green136\blue136;\red186\green33\blue33;\red0\green68\blue221;\red102\green102\blue102;\red64\green128\blue128;\red160\green160\blue0;\red25\green23\blue124;\red0\green128\blue0;\red187\green102\blue136;\red187\green102\blue34;\red136\green0\blue0;\red170\green34\blue255;\red153\green153\blue153;\red0\green160\blue0;\red160\green0\blue0;\red255\green0\blue0;\red128\green0\blue128;\red176\green0\blue64;\red0\green0\blue255;\red187\green187\blue187;\red188\green122\blue0;\red0\green0\blue128;\red125\green144\blue41;\red210\green65\blue58;}\f0 {\cf5\i /*\par
+ * To change this license header, choose License Headers in Project Properties.\par
+ * To change this template file, choose Tools | Templates\par
+ * and open the template in the editor.\par
+ */}\par
+{\cf8\b package} {\cf19\b bauernopfer}{\cf4 ;}\par
+\par
+{\cf8\b import} {\cf19\b java.util.ArrayList}{\cf4 ;}\par
+\par
+{\cf5\i /**\par
+ *\par
+ * @author lars\par
+ */}\par
+{\cf8\b public} {\cf8\b class} {\cf19\b Punktmenge} {\cf4 \{} {\cf5\i //Speichert eine Punktmenge auf einem Brett\par
+}    {\cf8\b public} {\cf18 boolean}{\cf4 [}{\cf4 ]}{\cf4 [}{\cf4 ]} raster{\cf4 ;} {\cf5\i //Punktmenge als Raster/Spielbrett repr{\u228}sentiert\par
+}    {\cf8\b public} ArrayList{\cf4 <}Punkt{\cf4 >} punkte{\cf4 ;} {\cf5\i //Punktmenge als Liste repr{\u228}sentiert\par
+}    {\cf8\b public} {\cf19 Punktmenge}{\cf4 (}{\cf4 )} {\cf4 \{} {\cf5\i //Konstruktor - Erzeugt eine leere Punktmenge\par
+}        {\cf8\b this}{\cf4 .}{\cf23 punkte}{\cf4 =}{\cf8\b new} ArrayList{\cf4 (}{\cf4 )}{\cf4 ;}\par
+        {\cf8\b this}{\cf4 .}{\cf23 raster}{\cf4 =}{\cf8\b new} {\cf18 boolean}{\cf4 [}{\cf4 8}{\cf4 ]}{\cf4 [}{\cf4 8}{\cf4 ]}{\cf4 ;}\par
+    {\cf4 \}}\par
+    {\cf8\b public} {\cf19 Punktmenge}{\cf4 (}{\cf18 boolean}{\cf4 [}{\cf4 ]}{\cf4 [}{\cf4 ]} raster{\cf4 )} {\cf4 \{} {\cf5\i //Konstruktor - Erzeugt eine Punktmenge aus einem Spielbrett, wo Punkte als "WAHR" eingetragen sind\par
+}        {\cf8\b this}{\cf4 .}{\cf23 punkte}{\cf4 =}{\cf8\b new} ArrayList{\cf4 (}{\cf4 )}{\cf4 ;}\par
+        {\cf8\b this}{\cf4 .}{\cf23 raster}{\cf4 =}{\cf8\b new} {\cf18 boolean}{\cf4 [}{\cf4 8}{\cf4 ]}{\cf4 [}{\cf4 8}{\cf4 ]}{\cf4 ;}\par
+        {\cf8\b for} {\cf4 (}{\cf18 byte} x{\cf4 =}{\cf4 0}{\cf4 ;} x {\cf4 <} {\cf4 8}{\cf4 ;} x{\cf4 +}{\cf4 +}{\cf4 )} {\cf4 \{}\par
+            {\cf8\b for} {\cf4 (}{\cf18 byte} y{\cf4 =}{\cf4 0}{\cf4 ;} y {\cf4 <} {\cf4 8}{\cf4 ;} y{\cf4 +}{\cf4 +}{\cf4 )} {\cf4 \{}\par
+                {\cf8\b if} {\cf4 (}raster{\cf4 [}x{\cf4 ]}{\cf4 [}y{\cf4 ]}{\cf4 )} {\cf4 \{} {\cf5\i //Falls sich dort ein Punkt befindet,\par
+}                    {\cf5\i //Punkt {\u252}bernehmen\par
+}                    {\cf8\b this}{\cf4 .}{\cf23 raster}{\cf4 [}x{\cf4 ]}{\cf4 [}y{\cf4 ]}{\cf4 =}{\cf8\b true}{\cf4 ;}\par
+                    punkte{\cf4 .}{\cf23 add}{\cf4 (}{\cf8\b new} Punkt{\cf4 (}x{\cf4 ,}y{\cf4 )}{\cf4 )}{\cf4 ;}\par
+                {\cf4 \}}\par
+            {\cf4 \}}\par
+        {\cf4 \}}\par
+    {\cf4 \}}\par
+    {\cf8\b public} {\cf19 Punktmenge}{\cf4 (}{\cf18 byte}{\cf4 [}{\cf4 ]}{\cf4 [}{\cf4 ]} raster{\cf4 )} {\cf4 \{} {\cf5\i //Konstruktor - Erzeugt eine Punktmenge aus einem Spielbrett, wo Punkte als != 0 eingetragen sind\par
+}        {\cf8\b this}{\cf4 .}{\cf23 punkte}{\cf4 =}{\cf8\b new} ArrayList{\cf4 (}{\cf4 )}{\cf4 ;}\par
+        {\cf8\b this}{\cf4 .}{\cf23 raster}{\cf4 =}{\cf8\b new} {\cf18 boolean}{\cf4 [}{\cf4 8}{\cf4 ]}{\cf4 [}{\cf4 8}{\cf4 ]}{\cf4 ;}\par
+        {\cf8\b for} {\cf4 (}{\cf18 byte} x{\cf4 =}{\cf4 0}{\cf4 ;} x {\cf4 <} {\cf4 8}{\cf4 ;} x{\cf4 +}{\cf4 +}{\cf4 )} {\cf4 \{}\par
+            {\cf8\b for} {\cf4 (}{\cf18 byte} y{\cf4 =}{\cf4 0}{\cf4 ;} y {\cf4 <} {\cf4 8}{\cf4 ;} y{\cf4 +}{\cf4 +}{\cf4 )} {\cf4 \{}\par
+                {\cf8\b if} {\cf4 (}raster{\cf4 [}x{\cf4 ]}{\cf4 [}y{\cf4 ]} {\cf4 !}{\cf4 =} {\cf4 0}{\cf4 )} {\cf4 \{} {\cf5\i //Falls sich dort ein Punkt befindet,\par
+}                    {\cf5\i //Punkt {\u252}bernehmen\par
+}                    {\cf8\b this}{\cf4 .}{\cf23 raster}{\cf4 [}x{\cf4 ]}{\cf4 [}y{\cf4 ]}{\cf4 =}{\cf8\b true}{\cf4 ;}\par
+                    punkte{\cf4 .}{\cf23 add}{\cf4 (}{\cf8\b new} Punkt{\cf4 (}x{\cf4 ,}y{\cf4 )}{\cf4 )}{\cf4 ;}\par
+                {\cf4 \}}\par
+            {\cf4 \}}\par
+        {\cf4 \}}\par
+    {\cf4 \}}\par
+    {\cf8\b public} {\cf19 Punktmenge}{\cf4 (}ArrayList{\cf4 <}Punkt{\cf4 >} punkte {\cf4 )} {\cf4 \{} {\cf5\i //Konstruktor - Erzeugt eine Punktmenge aus einer Liste\par
+}        {\cf8\b this}{\cf4 .}{\cf23 punkte}{\cf4 =}{\cf8\b new} ArrayList{\cf4 (}{\cf4 )}{\cf4 ;}\par
+        {\cf8\b this}{\cf4 .}{\cf23 raster}{\cf4 =}{\cf8\b new} {\cf18 boolean}{\cf4 [}{\cf4 8}{\cf4 ]}{\cf4 [}{\cf4 8}{\cf4 ]}{\cf4 ;}\par
+        {\cf8\b for} {\cf4 (}Punkt p{\cf4 :}punkte{\cf4 )} {\cf4 \{}\par
+            {\cf5\i //Jeden Punkt {\u252}bernehmen\par
+}            {\cf8\b this}{\cf4 .}{\cf23 raster}{\cf4 [}p{\cf4 .}{\cf23 x}{\cf4 ]}{\cf4 [}p{\cf4 .}{\cf23 y}{\cf4 ]}{\cf4 =}{\cf8\b true}{\cf4 ;}\par
+            {\cf8\b this}{\cf4 .}{\cf23 punkte}{\cf4 .}{\cf23 add}{\cf4 (}p{\cf4 )}{\cf4 ;}\par
+        {\cf4 \}}\par
+    {\cf4 \}}\par
+    {\cf8\b public} Punktmenge {\cf19 oder}{\cf4 (}Punktmenge feld{\cf4 )} {\cf4 \{} {\cf5\i //Logischer "oder" Operator\par
+}        {\cf18 boolean}{\cf4 [}{\cf4 ]}{\cf4 [}{\cf4 ]} ergebnis{\cf4 =}{\cf8\b new} {\cf18 boolean}{\cf4 [}{\cf4 8}{\cf4 ]}{\cf4 [}{\cf4 8}{\cf4 ]}{\cf4 ;}\par
+        {\cf8\b for} {\cf4 (}{\cf18 byte} x{\cf4 =}{\cf4 0}{\cf4 ;} x {\cf4 <} {\cf4 8}{\cf4 ;} x{\cf4 +}{\cf4 +}{\cf4 )} {\cf4 \{}\par
+            {\cf8\b for} {\cf4 (}{\cf18 byte} y{\cf4 =}{\cf4 0}{\cf4 ;} y {\cf4 <} {\cf4 8}{\cf4 ;} y{\cf4 +}{\cf4 +}{\cf4 )} {\cf4 \{}\par
+                {\cf8\b if} {\cf4 (}{\cf8\b this}{\cf4 .}{\cf23 raster}{\cf4 [}x{\cf4 ]}{\cf4 [}y{\cf4 ]} {\cf4 |}{\cf4 |} feld{\cf4 .}{\cf23 raster}{\cf4 [}x{\cf4 ]}{\cf4 [}y{\cf4 ]}{\cf4 )} {\cf4 \{} {\cf5\i //Ist der Punkt in mindestens einer der beiden Punktmengen vorhanden\par
+}                    ergebnis{\cf4 [}x{\cf4 ]}{\cf4 [}y{\cf4 ]}{\cf4 =}{\cf8\b true}{\cf4 ;} {\cf5\i //So wird er ins Ergebnis {\u252}bernommen\par
+}                {\cf4 \}}\par
+            {\cf4 \}}\par
+        {\cf4 \}}\par
+        {\cf8\b return} {\cf8\b new} Punktmenge{\cf4 (}ergebnis{\cf4 )}{\cf4 ;}\par
+    {\cf4 \}}\par
+    {\cf8\b public} Punktmenge {\cf19 nund}{\cf4 (}Punktmenge feld{\cf4 )} {\cf4 \{} {\cf5\i //Logischer (1), aber nicht (2) Operator, also werden die {\u220}berschneidungen beider Punktmengen entfernt\par
+}        {\cf18 boolean}{\cf4 [}{\cf4 ]}{\cf4 [}{\cf4 ]} ergebnis{\cf4 =}{\cf8\b new} {\cf18 boolean}{\cf4 [}{\cf4 8}{\cf4 ]}{\cf4 [}{\cf4 8}{\cf4 ]}{\cf4 ;}\par
+        {\cf8\b for} {\cf4 (}{\cf18 byte} x{\cf4 =}{\cf4 0}{\cf4 ;} x {\cf4 <} {\cf4 8}{\cf4 ;} x{\cf4 +}{\cf4 +}{\cf4 )} {\cf4 \{}\par
+            {\cf8\b for} {\cf4 (}{\cf18 byte} y{\cf4 =}{\cf4 0}{\cf4 ;} y {\cf4 <} {\cf4 8}{\cf4 ;} y{\cf4 +}{\cf4 +}{\cf4 )} {\cf4 \{}\par
+                {\cf8\b if} {\cf4 (}{\cf8\b this}{\cf4 .}{\cf23 raster}{\cf4 [}x{\cf4 ]}{\cf4 [}y{\cf4 ]} {\cf4 &}{\cf4 &} {\cf4 !}feld{\cf4 .}{\cf23 raster}{\cf4 [}x{\cf4 ]}{\cf4 [}y{\cf4 ]}{\cf4 )} {\cf4 \{}\par
+                    ergebnis{\cf4 [}x{\cf4 ]}{\cf4 [}y{\cf4 ]}{\cf4 =}{\cf8\b true}{\cf4 ;} {\cf5\i //Wenn sich der Punkt nicht mit dem anderen {\u252}berschneidet, dann kann er ins Ergebnis {\u252}bernommen werden\par
+}                {\cf4 \}}\par
+            {\cf4 \}}\par
+        {\cf4 \}}\par
+        {\cf8\b return} {\cf8\b new} Punktmenge{\cf4 (}ergebnis{\cf4 )}{\cf4 ;}\par
+    {\cf4 \}}\par
+    {\cf12 @Override}\par
+    {\cf8\b public} String {\cf19 toString}{\cf4 (}{\cf4 )} {\cf4 \{} {\cf5\i //Benutzerfreundliche Ausgabe des Feldes, "x" f{\u252}r verzeichnete Punkt, "o" f{\u252}r nicht Verzeichnete\par
+}        String s{\cf4 =}{\cf2 ""}{\cf4 ;}\par
+        {\cf8\b for} {\cf4 (}{\cf18 byte} x{\cf4 =}{\cf4 0}{\cf4 ;} x {\cf4 <} {\cf4 8}{\cf4 ;} x{\cf4 +}{\cf4 +}{\cf4 )} {\cf4 \{}\par
+            {\cf8\b for} {\cf4 (}{\cf18 byte} y{\cf4 =}{\cf4 0}{\cf4 ;} y {\cf4 <} {\cf4 8}{\cf4 ;} y{\cf4 +}{\cf4 +}{\cf4 )} {\cf4 \{}\par
+                {\cf8\b if} {\cf4 (}raster{\cf4 [}x{\cf4 ]}{\cf4 [}y{\cf4 ]}{\cf4 )} {\cf4 \{}\par
+                    s{\cf4 +}{\cf4 =}{\cf2 "x"}{\cf4 ;}\par
+                {\cf4 \}}\par
+                {\cf8\b else} {\cf4 \{}\par
+                    s{\cf4 +}{\cf4 =}{\cf2 "o"}{\cf4 ;}\par
+                {\cf4 \}}\par
+            {\cf4 \}}\par
+            s{\cf4 +}{\cf4 =}{\cf2 "\\n"}{\cf4 ;}\par
+        {\cf4 \}}\par
+        {\cf8\b return} s{\cf4 ;}\par
+    {\cf4 \}}\par
+{\cf4 \}}\par
+}

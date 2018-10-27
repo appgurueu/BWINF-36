@@ -1,0 +1,108 @@
+{\rtf1\ansi\uc0\deff0{\fonttbl{\f0\fmodern\fprq1\fcharset0;}}{\colortbl;\red136\green136\blue136;\red186\green33\blue33;\red0\green68\blue221;\red102\green102\blue102;\red64\green128\blue128;\red160\green160\blue0;\red25\green23\blue124;\red0\green128\blue0;\red187\green102\blue136;\red187\green102\blue34;\red136\green0\blue0;\red170\green34\blue255;\red153\green153\blue153;\red0\green160\blue0;\red160\green0\blue0;\red255\green0\blue0;\red128\green0\blue128;\red176\green0\blue64;\red0\green0\blue255;\red187\green187\blue187;\red188\green122\blue0;\red0\green0\blue128;\red125\green144\blue41;\red210\green65\blue58;}\f0 {\cf5\i /*\par
+ * To change this license header, choose License Headers in Project Properties.\par
+ * To change this template file, choose Tools | Templates\par
+ * and open the template in the editor.\par
+ */}\par
+{\cf8\b package} {\cf19\b wintervorrat}{\cf4 ;}\par
+\par
+{\cf5\i //Dateien\par
+}{\cf8\b import} {\cf19\b java.io.File}{\cf4 ;}\par
+{\cf8\b import} {\cf19\b java.io.FileNotFoundException}{\cf4 ;} {\cf5\i //Datei-nicht-gefunden-Fehler\par
+}{\cf8\b import} {\cf19\b java.io.FileReader}{\cf4 ;} {\cf5\i //Dateien lesen\par
+}{\cf8\b import} {\cf19\b java.io.IOException}{\cf4 ;} {\cf5\i //Eingabe-Ausgabe-Fehler\par
+}{\cf8\b import} {\cf19\b java.util.Scanner}{\cf4 ;} {\cf5\i //Benutzereingabe\par
+}\par
+{\cf5\i /**\par
+ *\par
+ * @author lars\par
+ */}\par
+\par
+{\cf8\b public} {\cf8\b class} {\cf19\b Wintervorrat} {\cf4 \{}\par
+\par
+    {\cf8\b public} {\cf8\b static} {\cf8\b final} Scanner EINGABE{\cf4 =}{\cf8\b new} Scanner{\cf4 (}System{\cf4 .}{\cf23 in}{\cf4 )}{\cf4 ;} {\cf5\i //Benutzereingabe\par
+}    {\cf8\b public} {\cf8\b static} {\cf8\b final} {\cf18 int} DAY {\cf4 =} {\cf4 60} {\cf4 *} {\cf4 12}{\cf4 ;} {\cf5\i //L{\u228}nge eines Tages in Minuten\par
+}    \par
+    {\cf8\b public} {\cf8\b static} String {\cf19 leseDatei}{\cf4 (}File pfad_zur_datei{\cf4 )} {\cf8\b throws} FileNotFoundException{\cf4 ,} IOException {\cf4 \{} {\cf5\i //Liest eine Datei ein, und gibt Text zur{\u252}ck\par
+}        FileReader datei {\cf4 =} {\cf8\b new} FileReader{\cf4 (}pfad_zur_datei{\cf4 )}{\cf4 ;}\par
+        String r {\cf4 =} {\cf2 ""}{\cf4 ;}\par
+        {\cf18 int} i {\cf4 =} datei{\cf4 .}{\cf23 read}{\cf4 (}{\cf4 )}{\cf4 ;}\par
+        {\cf8\b while} {\cf4 (}i {\cf4 !}{\cf4 =} {\cf4 -}{\cf4 1}{\cf4 )} {\cf4 \{}\par
+            r {\cf4 +}{\cf4 =} {\cf4 (}{\cf18 char}{\cf4 )} i{\cf4 ;}\par
+            i {\cf4 =} datei{\cf4 .}{\cf23 read}{\cf4 (}{\cf4 )}{\cf4 ;}\par
+        {\cf4 \}}\par
+        {\cf8\b return} r{\cf4 ;}\par
+    {\cf4 \}}\par
+    \par
+    {\cf8\b public} {\cf8\b static} File {\cf19 dateiFrage}{\cf4 (}String frage{\cf4 )} {\cf4 \{} {\cf5\i //Fragt nach einem Pfad und pr{\u252}ft, ob dieser existiert\par
+}        {\cf8\b while} {\cf4 (}{\cf8\b true}{\cf4 )} {\cf4 \{}\par
+            System{\cf4 .}{\cf23 out}{\cf4 .}{\cf23 println}{\cf4 (}frage {\cf4 +} {\cf2 "(Pfad zu .txt Datei) ? "}{\cf4 )}{\cf4 ;}\par
+            String s {\cf4 =} EINGABE{\cf4 .}{\cf23 nextLine}{\cf4 (}{\cf4 )}{\cf4 ;}\par
+            File f {\cf4 =} {\cf8\b new} File{\cf4 (}s{\cf4 )}{\cf4 ;}\par
+            {\cf8\b if} {\cf4 (}f{\cf4 .}{\cf23 exists}{\cf4 (}{\cf4 )} {\cf4 &}{\cf4 &} {\cf4 !}f{\cf4 .}{\cf23 isDirectory}{\cf4 (}{\cf4 )} {\cf4 &}{\cf4 &} f{\cf4 .}{\cf23 canRead}{\cf4 (}{\cf4 )}{\cf4 )} {\cf4 \{} {\cf5\i //Pr{\u252}fe, ob : - existiert die Datei - ist es kein Ordner - ist sie lesbar\par
+}                {\cf8\b return} f{\cf4 ;} {\cf5\i //Gebe Pfad zur{\u252}ck\par
+}            {\cf4 \}}\par
+            System{\cf4 .}{\cf23 out}{\cf4 .}{\cf23 println}{\cf4 (}{\cf2 "Bitte antworten sie mit einem vorhandenen Pfad einer .txt Datei. Versuchen sie es erneut."}{\cf4 )}{\cf4 ;}\par
+        {\cf4 \}}\par
+    {\cf4 \}}\par
+    \par
+    {\cf8\b public} {\cf8\b static} String {\cf19 textFrage}{\cf4 (}String frage{\cf4 )} {\cf4 \{} {\cf5\i //Fragt nach einer Zeichenkette\par
+}        System{\cf4 .}{\cf23 out}{\cf4 .}{\cf23 println}{\cf4 (}frage {\cf4 +} {\cf2 "(Zeichenkette) ? "}{\cf4 )}{\cf4 ;}\par
+        String s {\cf4 =} EINGABE{\cf4 .}{\cf23 nextLine}{\cf4 (}{\cf4 )}{\cf4 ;}\par
+        {\cf8\b return} s{\cf4 ;}\par
+    {\cf4 \}}\par
+    \par
+    {\cf8\b public} {\cf8\b static} {\cf18 boolean} {\cf19 jaNeinFrage}{\cf4 (}String frage{\cf4 )} {\cf4 \{} {\cf5\i //Stellt eine ja/nein Frage\par
+}        {\cf8\b while} {\cf4 (}{\cf8\b true}{\cf4 )} {\cf4 \{}\par
+            System{\cf4 .}{\cf23 out}{\cf4 .}{\cf23 println}{\cf4 (}frage {\cf4 +} {\cf2 "(j/n) ? "}{\cf4 )}{\cf4 ;}\par
+            String s {\cf4 =} EINGABE{\cf4 .}{\cf23 nextLine}{\cf4 (}{\cf4 )}{\cf4 .}{\cf23 toLowerCase}{\cf4 (}{\cf4 )}{\cf4 ;}\par
+            {\cf8\b if} {\cf4 (}s{\cf4 .}{\cf23 equals}{\cf4 (}{\cf2 "j"}{\cf4 )}{\cf4 )} {\cf4 \{}\par
+                {\cf8\b return} {\cf8\b true}{\cf4 ;}\par
+            {\cf4 \}} {\cf8\b else} {\cf8\b if} {\cf4 (}s{\cf4 .}{\cf23 equals}{\cf4 (}{\cf2 "n"}{\cf4 )}{\cf4 )} {\cf4 \{}\par
+                {\cf8\b return} {\cf8\b false}{\cf4 ;}\par
+            {\cf4 \}}\par
+            System{\cf4 .}{\cf23 out}{\cf4 .}{\cf23 println}{\cf4 (}{\cf2 "Bitte antworten sie mit j/n beziehungsweise J/N. Versuchen sie es erneut."}{\cf4 )}{\cf4 ;}\par
+        {\cf4 \}}\par
+    {\cf4 \}}\par
+\par
+    {\cf8\b public} {\cf8\b static} Punkt {\cf19 parseDir}{\cf4 (}String dir{\cf4 )} {\cf4 \{} {\cf5\i //Wandelt eine Himmelsrichtung in einen "Vektor"(Punkt) um\par
+}        {\cf8\b switch} {\cf4 (}dir{\cf4 .}{\cf23 charAt}{\cf4 (}{\cf4 0}{\cf4 )}{\cf4 )} {\cf4 \{}\par
+            {\cf8\b case} {\cf2 'N'}{\cf4 :} {\cf5\i //Norden : nach oben\par
+}                {\cf8\b return} {\cf8\b new} Punkt{\cf4 (}{\cf4 0}{\cf4 ,} {\cf4 1}{\cf4 )}{\cf4 ;}\par
+            {\cf8\b case} {\cf2 'O'}{\cf4 :} {\cf5\i //Osten : nach rechts\par
+}                {\cf8\b return} {\cf8\b new} Punkt{\cf4 (}{\cf4 1}{\cf4 ,} {\cf4 0}{\cf4 )}{\cf4 ;}\par
+            {\cf8\b case} {\cf2 'S'}{\cf4 :} {\cf5\i //S{\u252}den : nach unten\par
+}                {\cf8\b return} {\cf8\b new} Punkt{\cf4 (}{\cf4 0}{\cf4 ,} {\cf4 -}{\cf4 1}{\cf4 )}{\cf4 ;}\par
+            {\cf8\b default}{\cf4 :} {\cf5\i //Westen : nach links\par
+}                {\cf8\b return} {\cf8\b new} Punkt{\cf4 (}{\cf4 -}{\cf4 1}{\cf4 ,} {\cf4 0}{\cf4 )}{\cf4 ;}\par
+        {\cf4 \}}\par
+    {\cf4 \}}\par
+\par
+    {\cf5\i /**\par
+     * @param args the command line arguments\par
+     */}\par
+    {\cf8\b public} {\cf8\b static} {\cf18 void} {\cf19 main}{\cf4 (}String{\cf4 [}{\cf4 ]} args{\cf4 )} {\cf8\b throws} IOException {\cf4 \{}\par
+        String file {\cf4 =} leseDatei{\cf4 (}dateiFrage{\cf4 (}{\cf2 "Wo befindet sich die Aufgabe"}{\cf4 )}{\cf4 )}{\cf4 ;}\par
+        {\cf18 boolean} bilder {\cf4 =} jaNeinFrage{\cf4 (}{\cf2 "Sollen Ausgabebilder gespeichert werden"}{\cf4 )}{\cf4 ;}\par
+        {\cf18 boolean} svg{\cf4 =}{\cf8\b false}{\cf4 ;}\par
+        {\cf18 boolean} jpg{\cf4 =}{\cf8\b false}{\cf4 ;}\par
+        String ausgabe{\cf4 =}{\cf2 "?"}{\cf4 ;}\par
+        {\cf8\b if} {\cf4 (}bilder{\cf4 )} {\cf4 \{}\par
+            ausgabe {\cf4 =} textFrage{\cf4 (}{\cf2 "Wo sollen die Ausgabebilder gespeichert werden(ohne Endung & Nummer)"}{\cf4 )}{\cf4 ;}\par
+            svg {\cf4 =} jaNeinFrage{\cf4 (}{\cf2 "Als SVG"}{\cf4 )}{\cf4 ;}\par
+            jpg {\cf4 =} jaNeinFrage{\cf4 (}{\cf2 "Als JPG"}{\cf4 )}{\cf4 ;}\par
+        {\cf4 \}}\par
+        String{\cf4 [}{\cf4 ]} zeilen {\cf4 =} file{\cf4 .}{\cf23 split}{\cf4 (}{\cf2 "\\n"}{\cf4 )}{\cf4 ;} {\cf5\i //Zeilen der Datei, split("\\n") trennt den String bei Zeilenumbr{\u252}chen\par
+}        String{\cf4 [}{\cf4 ]} dim {\cf4 =} zeilen{\cf4 [}{\cf4 0}{\cf4 ]}{\cf4 .}{\cf23 split}{\cf4 (}{\cf2 " "}{\cf4 )}{\cf4 ;} {\cf5\i //Dimensionen des Rechteckwalds, split(" ") trennt den String bei Leerzeichen\par
+}        Adler{\cf4 [}{\cf4 ]} adler {\cf4 =} {\cf8\b new} Adler{\cf4 [}Integer{\cf4 .}{\cf23 parseInt}{\cf4 (}zeilen{\cf4 [}{\cf4 1}{\cf4 ]}{\cf4 )}{\cf4 ]}{\cf4 ;} {\cf5\i //Adler-Array\par
+}        {\cf8\b for} {\cf4 (}{\cf18 int} i {\cf4 =} {\cf4 2}{\cf4 ;} i {\cf4 <} zeilen{\cf4 .}{\cf23 length}{\cf4 ;} i{\cf4 +}{\cf4 +}{\cf4 )} {\cf4 \{}\par
+            String{\cf4 [}{\cf4 ]} info {\cf4 =} zeilen{\cf4 [}i{\cf4 ]}{\cf4 .}{\cf23 split}{\cf4 (}{\cf2 " "}{\cf4 )}{\cf4 ;} {\cf5\i //Werte eines Adlers, split(" ") trennt den String bei Leerzeichen\par
+}            Adler a {\cf4 =} {\cf8\b new} Adler{\cf4 (}Short{\cf4 .}{\cf23 parseShort}{\cf4 (}info{\cf4 [}{\cf4 2}{\cf4 ]}{\cf4 )}{\cf4 ,} {\cf8\b new} Punkt{\cf4 (}Integer{\cf4 .}{\cf23 parseInt}{\cf4 (}info{\cf4 [}{\cf4 0}{\cf4 ]}{\cf4 )}{\cf4 -}{\cf4 1}{\cf4 ,} Integer{\cf4 .}{\cf23 parseInt}{\cf4 (}info{\cf4 [}{\cf4 1}{\cf4 ]}{\cf4 )}{\cf4 -}{\cf4 1}{\cf4 )}{\cf4 ,} parseDir{\cf4 (}info{\cf4 [}{\cf4 3}{\cf4 ]}{\cf4 )}{\cf4 )}{\cf4 ;} {\cf5\i //Neuen Adler erzeugen\par
+}            adler{\cf4 [}i {\cf4 -} {\cf4 2}{\cf4 ]} {\cf4 =} a{\cf4 ;} {\cf5\i //Und speichern\par
+}        {\cf4 \}}\par
+        Wald wald {\cf4 =} {\cf8\b new} Wald{\cf4 (}ausgabe{\cf4 ,}Integer{\cf4 .}{\cf23 parseInt}{\cf4 (}dim{\cf4 [}{\cf4 0}{\cf4 ]}{\cf4 )}{\cf4 ,} Integer{\cf4 .}{\cf23 parseInt}{\cf4 (}dim{\cf4 [}{\cf4 1}{\cf4 ]}{\cf4 )}{\cf4 ,} adler{\cf4 ,} svg{\cf4 ,} jpg{\cf4 )}{\cf4 ;} {\cf5\i //Wald mit gegebener Breite und H{\u246}he erzeugen, sowie gegebenem Speichernamen f{\u252}r die Bilder und ob svgs oder jpgs gespeichert werden sollen\par
+}        wald{\cf4 .}{\cf23 simulieren}{\cf4 (}{\cf4 )}{\cf4 ;} {\cf5\i //Wald simulieren\par
+}        System{\cf4 .}{\cf23 out}{\cf4 .}{\cf23 println}{\cf4 (}wald{\cf4 )}{\cf4 ;} {\cf5\i //Sicherheiten der Felder des Waldes ausgeben\par
+}    {\cf4 \}}\par
+\par
+{\cf4 \}}\par
+}

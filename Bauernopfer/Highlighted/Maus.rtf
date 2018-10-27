@@ -1,0 +1,71 @@
+{\rtf1\ansi\uc0\deff0{\fonttbl{\f0\fmodern\fprq1\fcharset0;}}{\colortbl;\red136\green136\blue136;\red186\green33\blue33;\red0\green68\blue221;\red102\green102\blue102;\red64\green128\blue128;\red160\green160\blue0;\red25\green23\blue124;\red0\green128\blue0;\red187\green102\blue136;\red187\green102\blue34;\red136\green0\blue0;\red170\green34\blue255;\red153\green153\blue153;\red0\green160\blue0;\red160\green0\blue0;\red255\green0\blue0;\red128\green0\blue128;\red176\green0\blue64;\red0\green0\blue255;\red187\green187\blue187;\red188\green122\blue0;\red0\green0\blue128;\red125\green144\blue41;\red210\green65\blue58;}\f0 {\cf5\i /*\par
+ * To change this license header, choose License Headers in Project Properties.\par
+ * To change this template file, choose Tools | Templates\par
+ * and open the template in the editor.\par
+ */}\par
+{\cf8\b package} {\cf19\b bauernopfer}{\cf4 ;}\par
+\par
+{\cf5\i /**\par
+ *\par
+ * @author lars\par
+ */}\par
+{\cf8\b import} {\cf19\b java.awt.event.MouseEvent}{\cf4 ;}\par
+{\cf8\b import} {\cf19\b java.awt.event.MouseListener}{\cf4 ;}\par
+\par
+{\cf5\i /**\par
+ *\par
+ * @author lars\par
+ */}\par
+{\cf8\b public} {\cf8\b class} {\cf19\b Maus} {\cf8\b implements} MouseListener {\cf4 \{}\par
+    {\cf8\b public} {\cf18 int} mouseX{\cf4 ;} {\cf5\i //Speichert die X-Position der Maus\par
+}    {\cf8\b public} {\cf18 int} mouseY{\cf4 ;} {\cf5\i //Speichert die Y-Position der Maus\par
+}    {\cf8\b public} {\cf18 int} LMB{\cf4 ;} {\cf5\i //Speichert, ob die linke Maustaste gedr{\u252}ckt worden ist\par
+}    {\cf8\b public} {\cf18 int} RMB{\cf4 ;} {\cf5\i //Speichert, ob die rechte Maustaste gedr{\u252}ckt worden ist\par
+}    {\cf8\b public} {\cf19 Maus}{\cf4 (}{\cf4 )} {\cf4 \{}\par
+        RMB{\cf4 =}{\cf4 0}{\cf4 ;}\par
+        LMB{\cf4 =}{\cf4 0}{\cf4 ;}\par
+        Bauernopfer{\cf4 .}{\cf23 fenster}{\cf4 .}{\cf23 requestFocus}{\cf4 (}{\cf4 )}{\cf4 ;} {\cf5\i //Alle Maus-Ereignisse von diesem Fenster abfangen lassen\par
+}    {\cf4 \}}\par
+    {\cf12 @Override}\par
+    {\cf8\b public} {\cf18 void} {\cf19 mousePressed}{\cf4 (}MouseEvent m{\cf4 )} {\cf4 \{} {\cf5\i //Mausknopf gedr{\u252}ckt\par
+}        {\cf8\b if} {\cf4 (}m{\cf4 .}{\cf23 getButton}{\cf4 (}{\cf4 )} {\cf4 =}{\cf4 =} MouseEvent{\cf4 .}{\cf23 BUTTON3}{\cf4 )} {\cf4 \{} {\cf5\i //Rechte Maustaste\par
+}            RMB{\cf4 =}{\cf4 1}{\cf4 ;}\par
+        {\cf4 \}}\par
+        {\cf8\b if} {\cf4 (}m{\cf4 .}{\cf23 getButton}{\cf4 (}{\cf4 )} {\cf4 =}{\cf4 =} MouseEvent{\cf4 .}{\cf23 BUTTON1}{\cf4 )} {\cf4 \{} {\cf5\i //Linke Maustaste\par
+}            LMB{\cf4 =}{\cf4 1}{\cf4 ;}\par
+        {\cf4 \}}\par
+    {\cf4 \}}\par
+    {\cf12 @Override}\par
+    {\cf8\b public} {\cf18 void} {\cf19 mouseClicked}{\cf4 (}MouseEvent m{\cf4 )} {\cf4 \{} {\cf5\i //Mausknopf geklickt\par
+}        {\cf8\b if} {\cf4 (}m{\cf4 .}{\cf23 getButton}{\cf4 (}{\cf4 )} {\cf4 =}{\cf4 =} MouseEvent{\cf4 .}{\cf23 BUTTON3}{\cf4 )} {\cf4 \{} {\cf5\i //Rechte Maustaste\par
+}            RMB{\cf4 =}{\cf4 2}{\cf4 ;}\par
+        {\cf4 \}}\par
+        {\cf8\b if} {\cf4 (}m{\cf4 .}{\cf23 getButton}{\cf4 (}{\cf4 )} {\cf4 =}{\cf4 =} MouseEvent{\cf4 .}{\cf23 BUTTON1}{\cf4 )} {\cf4 \{}\par
+            LMB{\cf4 =}{\cf4 2}{\cf4 ;}\par
+        {\cf4 \}}\par
+    {\cf4 \}}\par
+    {\cf12 @Override}\par
+    {\cf8\b public} {\cf18 void} {\cf19 mouseReleased}{\cf4 (}MouseEvent m{\cf4 )} {\cf4 \{} {\cf5\i //Mausknopf losgelassen\par
+}        {\cf8\b if} {\cf4 (}m{\cf4 .}{\cf23 getButton}{\cf4 (}{\cf4 )} {\cf4 =}{\cf4 =} MouseEvent{\cf4 .}{\cf23 BUTTON3}{\cf4 )} {\cf4 \{} {\cf5\i //Rechte Maustaste\par
+}            RMB{\cf4 =}{\cf4 3}{\cf4 ;}\par
+        {\cf4 \}}\par
+        {\cf8\b if} {\cf4 (}m{\cf4 .}{\cf23 getButton}{\cf4 (}{\cf4 )} {\cf4 =}{\cf4 =} MouseEvent{\cf4 .}{\cf23 BUTTON1}{\cf4 )} {\cf4 \{} {\cf5\i //Linke Maustaste\par
+}            LMB{\cf4 =}{\cf4 3}{\cf4 ;}\par
+        {\cf4 \}}\par
+    {\cf4 \}}\par
+    {\cf12 @Override}\par
+    {\cf8\b public} {\cf18 void} {\cf19 mouseEntered}{\cf4 (}MouseEvent m{\cf4 )} {\cf4 \{}\par
+    {\cf4 \}}\par
+    {\cf12 @Override}\par
+    {\cf8\b public} {\cf18 void} {\cf19 mouseExited}{\cf4 (}MouseEvent m{\cf4 )} {\cf4 \{}\par
+    {\cf4 \}}\par
+    {\cf8\b public} {\cf18 void} {\cf19 infosHolen}{\cf4 (}{\cf4 )} {\cf4 \{}\par
+        Bauernopfer{\cf4 .}{\cf23 fenster}{\cf4 .}{\cf23 requestFocus}{\cf4 (}{\cf4 )}{\cf4 ;} {\cf5\i //Alle Maus-Ereignisse von diesem Fenster abfangen lassen\par
+}        {\cf8\b try} {\cf4 \{}\par
+        {\cf5\i //Versucht, die Maus-Koordinaten relativ zum Fenster zu erfahren, erzeugt einen Fehler, wenn die Maus au{\u223}erhalb des Fensters ist\par
+}        mouseX{\cf4 =}Bauernopfer{\cf4 .}{\cf23 fenster}{\cf4 .}{\cf23 getMousePosition}{\cf4 (}{\cf4 )}{\cf4 .}{\cf23 x}{\cf4 ;}\par
+        mouseY{\cf4 =}Bauernopfer{\cf4 .}{\cf23 fenster}{\cf4 .}{\cf23 getMousePosition}{\cf4 (}{\cf4 )}{\cf4 .}{\cf23 y}{\cf4 ;}\par
+        {\cf4 \}} {\cf8\b catch} {\cf4 (}Exception e{\cf4 )} {\cf4 \{}{\cf4 \}}\par
+    {\cf4 \}}\par
+{\cf4 \}}\par
+}

@@ -1,0 +1,41 @@
+{\rtf1\ansi\uc0\deff0{\fonttbl{\f0\fmodern\fprq1\fcharset0;}}{\colortbl;\red136\green136\blue136;\red186\green33\blue33;\red0\green68\blue221;\red102\green102\blue102;\red64\green128\blue128;\red160\green160\blue0;\red25\green23\blue124;\red0\green128\blue0;\red187\green102\blue136;\red187\green102\blue34;\red136\green0\blue0;\red170\green34\blue255;\red153\green153\blue153;\red0\green160\blue0;\red160\green0\blue0;\red255\green0\blue0;\red128\green0\blue128;\red176\green0\blue64;\red0\green0\blue255;\red187\green187\blue187;\red188\green122\blue0;\red0\green0\blue128;\red125\green144\blue41;\red210\green65\blue58;}\f0 {\cf5\i /*\par
+ * To change this license header, choose License Headers in Project Properties.\par
+ * To change this template file, choose Tools | Templates\par
+ * and open the template in the editor.\par
+ */}\par
+{\cf8\b package} {\cf19\b bauernopfer}{\cf4 ;}\par
+\par
+{\cf5\i /**\par
+ *\par
+ * @author lars\par
+ */}\par
+{\cf8\b public} {\cf8\b class} {\cf19\b Punkt} {\cf4 \{} {\cf5\i //Speichert einen Punkt auf dem Spielbrett\par
+}\par
+    {\cf8\b public} {\cf18 byte} x{\cf4 ;} {\cf5\i //X-Koordinate(von 0-7), deshalb reicht 1 Byte\par
+}    {\cf8\b public} {\cf18 byte} y{\cf4 ;} {\cf5\i //Y-Koordinate(von 0-7), deshalb reicht 1 Byte\par
+}\par
+    {\cf8\b public} {\cf19 Punkt}{\cf4 (}{\cf18 byte} x{\cf4 ,} {\cf18 byte} y{\cf4 )} {\cf4 \{} {\cf5\i //Konstruktor - X und Y werden gegeben\par
+}        {\cf8\b this}{\cf4 .}{\cf23 x} {\cf4 =} x{\cf4 ;}\par
+        {\cf8\b this}{\cf4 .}{\cf23 y} {\cf4 =} y{\cf4 ;}\par
+    {\cf4 \}}\par
+\par
+    {\cf8\b public} {\cf18 double} {\cf19 entfernung}{\cf4 (}Punkt p{\cf4 )} {\cf4 \{} {\cf5\i //Bestimmt nach dem Satz des Pythagoras die Entfernung zweier Punkte\par
+}        {\cf18 byte} xw{\cf4 =}{\cf4 (}{\cf18 byte}{\cf4 )} {\cf4 (}p{\cf4 .}{\cf23 x}{\cf4 -}x{\cf4 )}{\cf4 ;}\par
+        {\cf18 byte} yw{\cf4 =}{\cf4 (}{\cf18 byte}{\cf4 )} {\cf4 (}p{\cf4 .}{\cf23 y}{\cf4 -}y{\cf4 )}{\cf4 ;}\par
+        {\cf8\b return}  Math{\cf4 .}{\cf23 sqrt}{\cf4 (}xw {\cf4 *} xw {\cf4 +} yw {\cf4 *} yw{\cf4 )}{\cf4 ;}\par
+    {\cf4 \}}\par
+\par
+    {\cf8\b public} Punkt {\cf19 plus}{\cf4 (}Punkt p{\cf4 )} {\cf4 \{} {\cf5\i //Addiert auf diesen Punkt einen Punkt p\par
+}        {\cf8\b return} {\cf8\b new} Punkt{\cf4 (}{\cf4 (}{\cf18 byte}{\cf4 )}{\cf4 (}{\cf8\b this}{\cf4 .}{\cf23 x}{\cf4 +}p{\cf4 .}{\cf23 x}{\cf4 )}{\cf4 ,}{\cf4 (}{\cf18 byte}{\cf4 )}{\cf4 (}{\cf8\b this}{\cf4 .}{\cf23 y}{\cf4 +}p{\cf4 .}{\cf23 y}{\cf4 )}{\cf4 )}{\cf4 ;}\par
+    {\cf4 \}}\par
+    \par
+    {\cf8\b public} Punkt {\cf19 minus}{\cf4 (}Punkt p{\cf4 )} {\cf4 \{} {\cf5\i //Zieht von diesem Punkt einen Punkt p ab\par
+}        {\cf8\b return} {\cf8\b new} Punkt{\cf4 (}{\cf4 (}{\cf18 byte}{\cf4 )}{\cf4 (}{\cf8\b this}{\cf4 .}{\cf23 x}{\cf4 -}p{\cf4 .}{\cf23 x}{\cf4 )}{\cf4 ,}{\cf4 (}{\cf18 byte}{\cf4 )}{\cf4 (}{\cf8\b this}{\cf4 .}{\cf23 y}{\cf4 -}p{\cf4 .}{\cf23 y}{\cf4 )}{\cf4 )}{\cf4 ;}\par
+    {\cf4 \}}\par
+    \par
+    {\cf12 @Override}\par
+    {\cf8\b public} String {\cf19 toString}{\cf4 (}{\cf4 )} {\cf4 \{} {\cf5\i //Gibt diesen Punkt in Tupleschreibweise aus\par
+}        {\cf8\b return} {\cf2 "("} {\cf4 +} Byte{\cf4 .}{\cf23 toString}{\cf4 (}x{\cf4 )} {\cf4 +} {\cf2 "|"} {\cf4 +} Byte{\cf4 .}{\cf23 toString}{\cf4 (}y{\cf4 )} {\cf4 +} {\cf2 ")"}{\cf4 ;}\par
+    {\cf4 \}}\par
+{\cf4 \}}\par
+}

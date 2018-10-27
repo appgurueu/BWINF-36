@@ -1,0 +1,17 @@
+run:
+Wo befindet sich die Aufgabe(Pfad zu .txt Datei) ? 
+wintervorrat2.txt
+Sollen Ausgabebilder gespeichert werden(j/n) ? 
+n
+X=0 Y=2 SM=1 EM=33
+X=0 Y=3 SM=1 EM=31
+X=2 Y=2 SM=1 EM=35
+X=3 Y=2 SM=1 EM=36
+X=4 Y=2 SM=1 EM=37
+0 0 0 0 0
+1 0 0 0 0
+1 0 1 1 1
+0 0 0 0 0
+0 0 0 0 0
+
+BUILD SUCCESSFUL (total time: 15 seconds)

@@ -1,0 +1,274 @@
+{\rtf1\ansi\uc0\deff0{\fonttbl{\f0\fmodern\fprq1\fcharset0;}}{\colortbl;\red136\green136\blue136;\red186\green33\blue33;\red0\green68\blue221;\red102\green102\blue102;\red64\green128\blue128;\red160\green160\blue0;\red25\green23\blue124;\red0\green128\blue0;\red187\green102\blue136;\red187\green102\blue34;\red136\green0\blue0;\red170\green34\blue255;\red153\green153\blue153;\red0\green160\blue0;\red160\green0\blue0;\red255\green0\blue0;\red128\green0\blue128;\red176\green0\blue64;\red0\green0\blue255;\red187\green187\blue187;\red188\green122\blue0;\red0\green0\blue128;\red125\green144\blue41;\red210\green65\blue58;}\f0 {\cf8\b package} {\cf19\b autoscrabble}{\cf4 ;}\par
+\par
+{\cf8\b import} {\cf19\b java.io.File}{\cf4 ;} {\cf5\i //F{\u252}r Dateien\par
+}{\cf8\b import} {\cf19\b java.io.FileNotFoundException}{\cf4 ;} {\cf5\i //Fehler, entsteht, wenn eine Datei nicht aufzufinden ist\par
+}{\cf8\b import} {\cf19\b java.io.FileReader}{\cf4 ;} {\cf5\i //Liest Dateien\par
+}{\cf8\b import} {\cf19\b java.io.IOException}{\cf4 ;} {\cf5\i //Eingabe/Ausgabe Fehler, entsteht, wenn eine Datei nicht lesbar ist\par
+}{\cf8\b import} {\cf19\b java.util.ArrayList}{\cf4 ;} {\cf5\i //Listen\par
+}{\cf8\b import} {\cf19\b java.util.HashMap}{\cf4 ;} {\cf5\i //"W{\u246}rterbuch" : jedem Schl{\u252}ssel(wert) s wird ein Wert w zugeordnet\par
+}{\cf8\b import} {\cf19\b java.util.Scanner}{\cf4 ;} {\cf5\i //Terminal : Eingabe\par
+}\par
+{\cf5\i /**\par
+ *\par
+ * @author lars\par
+ */}\par
+{\cf8\b public} {\cf8\b class} {\cf19\b AutoScrabble} {\cf4 \{}\par
+\par
+    {\cf8\b public} {\cf8\b static} {\cf8\b final} Scanner EINGABE{\cf4 =}{\cf8\b new} Scanner{\cf4 (}System{\cf4 .}{\cf23 in}{\cf4 )}{\cf4 ;} {\cf5\i //Benutzereingabe\par
+}    {\cf8\b public} {\cf8\b static} String{\cf4 [}{\cf4 ]} kuerzel{\cf4 ;} {\cf5\i //Alle K{\u252}rzel\par
+}    {\cf8\b public} {\cf8\b static} String{\cf4 [}{\cf4 ]} woerter{\cf4 ;} {\cf5\i //Alle zu pr{\u252}fenden W{\u246}rter\par
+}    {\cf8\b public} {\cf8\b static} String wort{\cf4 ;} {\cf5\i //Aktuell gepr{\u252}ftes Wort\par
+}    {\cf8\b public} {\cf8\b static} HashMap positionen{\cf4 ;} {\cf5\i //Stellen, an denen K{\u252}rzel im Wort auftauchen\par
+}    {\cf8\b public} {\cf8\b static} {\cf18 char}{\cf4 [}{\cf4 ]} buchstaben{\cf4 ;} {\cf5\i //Gro{\u223}buchstaben\par
+}    {\cf8\b public} {\cf8\b static} ArrayList{\cf4 <}String{\cf4 >} kombinationen{\cf4 ;} {\cf5\i //Alle m{\u246}glichen Zeichenketten\par
+}    {\cf8\b public} {\cf8\b static} {\cf18 int} n{\cf4 ;} {\cf5\i //Von n Zeichen\par
+}    {\cf8\b public} {\cf8\b static} {\cf8\b final} String SEPARATOR {\cf4 =} fuelle{\cf4 (}{\cf2 '-'}{\cf4 ,} {\cf4 50}{\cf4 )}{\cf4 ;} {\cf5\i //Separator\par
+}\par
+    {\cf8\b public} {\cf8\b static} String {\cf19 leseDatei}{\cf4 (}File pfad_zur_datei{\cf4 )} {\cf8\b throws} FileNotFoundException{\cf4 ,} IOException {\cf4 \{} {\cf5\i //Liest eine Datei ein, und gibt Text zur{\u252}ck\par
+}        FileReader datei {\cf4 =} {\cf8\b new} FileReader{\cf4 (}pfad_zur_datei{\cf4 )}{\cf4 ;}\par
+        String r {\cf4 =} {\cf2 ""}{\cf4 ;}\par
+        {\cf18 int} i {\cf4 =} datei{\cf4 .}{\cf23 read}{\cf4 (}{\cf4 )}{\cf4 ;}\par
+        {\cf8\b while} {\cf4 (}i {\cf4 !}{\cf4 =} {\cf4 -}{\cf4 1}{\cf4 )} {\cf4 \{}\par
+            r {\cf4 +}{\cf4 =} {\cf4 (}{\cf18 char}{\cf4 )} i{\cf4 ;}\par
+            i {\cf4 =} datei{\cf4 .}{\cf23 read}{\cf4 (}{\cf4 )}{\cf4 ;}\par
+        {\cf4 \}}\par
+        {\cf8\b return} r{\cf4 ;}\par
+    {\cf4 \}}\par
+\par
+    {\cf8\b public} {\cf8\b static} File {\cf19 dateiFrage}{\cf4 (}String frage{\cf4 )} {\cf4 \{} {\cf5\i //Fragt nach einem Pfad und pr{\u252}ft, ob dieser existiert\par
+}        {\cf8\b while} {\cf4 (}{\cf8\b true}{\cf4 )} {\cf4 \{}\par
+            System{\cf4 .}{\cf23 out}{\cf4 .}{\cf23 println}{\cf4 (}frage {\cf4 +} {\cf2 "(Pfad zu .txt Datei) ? "}{\cf4 )}{\cf4 ;}\par
+            String s {\cf4 =} EINGABE{\cf4 .}{\cf23 nextLine}{\cf4 (}{\cf4 )}{\cf4 ;}\par
+            File f {\cf4 =} {\cf8\b new} File{\cf4 (}s{\cf4 )}{\cf4 ;}\par
+            {\cf8\b if} {\cf4 (}f{\cf4 .}{\cf23 exists}{\cf4 (}{\cf4 )} {\cf4 &}{\cf4 &} {\cf4 !}f{\cf4 .}{\cf23 isDirectory}{\cf4 (}{\cf4 )} {\cf4 &}{\cf4 &} f{\cf4 .}{\cf23 canRead}{\cf4 (}{\cf4 )}{\cf4 )} {\cf4 \{}\par
+                {\cf8\b return} f{\cf4 ;}\par
+            {\cf4 \}}\par
+            System{\cf4 .}{\cf23 out}{\cf4 .}{\cf23 println}{\cf4 (}{\cf2 "Bitte antworten sie mit einem vorhandenen Pfad einer .txt Datei. Versuchen sie es erneut."}{\cf4 )}{\cf4 ;}\par
+        {\cf4 \}}\par
+    {\cf4 \}}\par
+\par
+    {\cf8\b public} {\cf8\b static} {\cf18 boolean} {\cf19 jaNeinFrage}{\cf4 (}String frage{\cf4 )} {\cf4 \{} {\cf5\i //Stellt eine ja/nein Frage\par
+}        {\cf8\b while} {\cf4 (}{\cf8\b true}{\cf4 )} {\cf4 \{}\par
+            System{\cf4 .}{\cf23 out}{\cf4 .}{\cf23 println}{\cf4 (}frage {\cf4 +} {\cf2 "(j/n) ? "}{\cf4 )}{\cf4 ;}\par
+            String s {\cf4 =} EINGABE{\cf4 .}{\cf23 nextLine}{\cf4 (}{\cf4 )}{\cf4 .}{\cf23 toLowerCase}{\cf4 (}{\cf4 )}{\cf4 ;}\par
+            {\cf8\b if} {\cf4 (}s{\cf4 .}{\cf23 equals}{\cf4 (}{\cf2 "j"}{\cf4 )}{\cf4 )} {\cf4 \{}\par
+                {\cf8\b return} {\cf8\b true}{\cf4 ;}\par
+            {\cf4 \}} {\cf8\b else} {\cf8\b if} {\cf4 (}s{\cf4 .}{\cf23 equals}{\cf4 (}{\cf2 "n"}{\cf4 )}{\cf4 )} {\cf4 \{}\par
+                {\cf8\b return} {\cf8\b false}{\cf4 ;}\par
+            {\cf4 \}}\par
+            System{\cf4 .}{\cf23 out}{\cf4 .}{\cf23 println}{\cf4 (}{\cf2 "Bitte antworten sie mit j/n beziehungsweise J/N. Versuchen sie es erneut."}{\cf4 )}{\cf4 ;}\par
+        {\cf4 \}}\par
+    {\cf4 \}}\par
+\par
+    {\cf8\b public} {\cf8\b static} {\cf4 <}T{\cf4 >} String {\cf19 gebeListeAus}{\cf4 (}ArrayList{\cf4 <}T{\cf4 >} k{\cf4 )} {\cf4 \{} {\cf5\i //Gibt eine Liste benutzerfreundlich aus\par
+}        {\cf18 int} zeilenumbruch {\cf4 =} {\cf4 (}{\cf18 int}{\cf4 )} {\cf4 (}Math{\cf4 .}{\cf23 sqrt}{\cf4 (}k{\cf4 .}{\cf23 size}{\cf4 (}{\cf4 )}{\cf4 )}{\cf4 )}{\cf4 ;}\par
+        {\cf18 int} counter {\cf4 =} {\cf4 0}{\cf4 ;}\par
+        {\cf18 int} index {\cf4 =} {\cf4 0}{\cf4 ;}\par
+        String s {\cf4 =} {\cf2 ""}{\cf4 ;}\par
+        {\cf8\b for} {\cf4 (}T objekt {\cf4 :} k{\cf4 )} {\cf4 \{}\par
+            s {\cf4 +}{\cf4 =} objekt{\cf4 .}{\cf23 toString}{\cf4 (}{\cf4 )}{\cf4 ;}\par
+            counter{\cf4 +}{\cf4 +}{\cf4 ;}\par
+            index{\cf4 +}{\cf4 +}{\cf4 ;}\par
+            {\cf8\b if} {\cf4 (}index {\cf4 !}{\cf4 =} k{\cf4 .}{\cf23 size}{\cf4 (}{\cf4 )}{\cf4 )} {\cf4 \{}\par
+                {\cf8\b if} {\cf4 (}counter {\cf4 =}{\cf4 =} zeilenumbruch{\cf4 )} {\cf4 \{}\par
+                    s {\cf4 +}{\cf4 =} {\cf2 "\\n"}{\cf4 ;}\par
+                    counter {\cf4 =} {\cf4 0}{\cf4 ;}\par
+                {\cf4 \}} {\cf8\b else} {\cf4 \{}\par
+                    s {\cf4 +}{\cf4 =} {\cf2 ", "}{\cf4 ;}\par
+                {\cf4 \}}\par
+            {\cf4 \}}\par
+        {\cf4 \}}\par
+        {\cf8\b return} s{\cf4 ;}\par
+    {\cf4 \}}\par
+\par
+    {\cf8\b public} {\cf8\b static} String {\cf19 fuelle}{\cf4 (}{\cf18 char} c{\cf4 ,} {\cf18 int} m{\cf4 )} {\cf4 \{} {\cf5\i //Erzeugt einen Text aus m mal Schriftzeichen c\par
+}        String e {\cf4 =} {\cf2 ""}{\cf4 ;}\par
+        {\cf8\b for} {\cf4 (}{\cf18 int} i {\cf4 =} {\cf4 0}{\cf4 ;} i {\cf4 <} m{\cf4 ;} i{\cf4 +}{\cf4 +}{\cf4 )} {\cf4 \{}\par
+            e {\cf4 +}{\cf4 =} c{\cf4 ;}\par
+        {\cf4 \}}\par
+        {\cf8\b return} e{\cf4 ;}\par
+    {\cf4 \}}\par
+\par
+    {\cf8\b public} {\cf8\b static} {\cf18 boolean} {\cf19 umlaut}{\cf4 (}{\cf18 char} c{\cf4 )} {\cf4 \{} {\cf5\i //Pr{\u252}ft, ob ein Schriftzeichen ein Umlaut ist\par
+}        {\cf8\b return} c {\cf4 =}{\cf4 =} {\cf2 '{\u196}'} {\cf4 |}{\cf4 |} c {\cf4 =}{\cf4 =} {\cf2 '{\u214}'} {\cf4 |}{\cf4 |} c {\cf4 =}{\cf4 =} {\cf2 '{\u220}'}{\cf4 ;}\par
+        {\cf5\i //Gebe "Wahr" zur{\u252}ck, wenn das Schriftzeichen {\u214}, {\u196} oder {\u220} ist, ansonsten gebe "Falsch" zur{\u252}ck. \par
+}        {\cf5\i //Die Kleinbuchstaben m{\u252}ssen wir hier nicht pr{\u252}fen, da wir nur mit Gro{\u223}buchstaben arbeiten\par
+}    {\cf4 \}}\par
+\par
+    {\cf8\b public} {\cf8\b static} {\cf18 void} {\cf19 moeglichkeiten}{\cf4 (}{\cf18 int} n{\cf4 ,} String aktuell{\cf4 )} {\cf4 \{} {\cf5\i //Rekursive Funktion, generiert alle M{\u246}glichkeiten mit n Zeichen aus Gro{\u223}buchstaben\par
+}        {\cf8\b for} {\cf4 (}{\cf18 int} i {\cf4 =} {\cf4 0}{\cf4 ;} i {\cf4 <} buchstaben{\cf4 .}{\cf23 length}{\cf4 ;} i{\cf4 +}{\cf4 +}{\cf4 )} {\cf4 \{}\par
+            {\cf8\b if} {\cf4 (}n {\cf4 =}{\cf4 =} AutoScrabble{\cf4 .}{\cf23 n}{\cf4 )} {\cf4 \{} {\cf5\i //Wenn diese Kombination fertig generiert wurde\par
+}                kombinationen{\cf4 .}{\cf23 add}{\cf4 (}aktuell {\cf4 +} buchstaben{\cf4 [}i{\cf4 ]}{\cf4 )}{\cf4 ;} {\cf5\i //Kann sie an die Liste der Kombis angeh{\u228}ngt werden\par
+}            {\cf4 \}} {\cf8\b else} {\cf4 \{}\par
+                moeglichkeiten{\cf4 (}n {\cf4 +} {\cf4 1}{\cf4 ,} aktuell {\cf4 +} buchstaben{\cf4 [}i{\cf4 ]}{\cf4 )}{\cf4 ;} {\cf5\i //Sonst muss wieder gestartet werden, diesmal mit aktueller Kombi als Startwert\par
+}            {\cf4 \}}\par
+        {\cf4 \}}\par
+    {\cf4 \}}\par
+\par
+    {\cf8\b public} {\cf8\b static} HashMap{\cf4 <}Integer{\cf4 ,} ArrayList{\cf4 <}String{\cf4 >}{\cf4 >} {\cf19 findKuerzels}{\cf4 (}String s{\cf4 )} {\cf4 \{} {\cf5\i //Findet St{\u228}dtekuerzel in einem Kennzeichen und speichert, an welchen Indexes welche K{\u252}rzel zu finden sind.\par
+}        HashMap{\cf4 <}Integer{\cf4 ,} ArrayList{\cf4 <}String{\cf4 >}{\cf4 >} result {\cf4 =} {\cf8\b new} HashMap{\cf4 (}{\cf4 )}{\cf4 ;}\par
+        {\cf18 char}{\cf4 [}{\cf4 ]} chars {\cf4 =} s{\cf4 .}{\cf23 toCharArray}{\cf4 (}{\cf4 )}{\cf4 ;}\par
+        {\cf18 int} kplace{\cf4 ;}\par
+        {\cf8\b for} {\cf4 (}String k {\cf4 :} kuerzel{\cf4 )} {\cf4 \{} {\cf5\i //F{\u252}r alle K{\u252}rzel\par
+}            kplace {\cf4 =} {\cf4 0}{\cf4 ;}\par
+            {\cf8\b for} {\cf4 (}{\cf18 int} i {\cf4 =} {\cf4 0}{\cf4 ;} i {\cf4 <} chars{\cf4 .}{\cf23 length}{\cf4 ;} i{\cf4 +}{\cf4 +}{\cf4 )} {\cf4 \{} {\cf5\i //Buchstaben des Wortes durchgehen\par
+}                {\cf8\b if} {\cf4 (}chars{\cf4 [}i{\cf4 ]} {\cf4 =}{\cf4 =} k{\cf4 .}{\cf23 charAt}{\cf4 (}kplace{\cf4 )}{\cf4 )} {\cf4 \{} {\cf5\i //Entspricht der aktuelle Buchstabe dem Buchstaben, der jetzt kommen m{\u252}sste\par
+}                    kplace{\cf4 +}{\cf4 +}{\cf4 ;}\par
+                {\cf4 \}} {\cf8\b else} {\cf4 \{} {\cf5\i //Falls nicht\par
+}                    i {\cf4 -}{\cf4 =} kplace{\cf4 ;} {\cf5\i //Gehe zur{\u252}ck, weil sich das Kennzeichen hier finden lassen k{\u246}nnte\par
+}                    kplace {\cf4 =} {\cf4 0}{\cf4 ;} {\cf5\i //Wir fangen an, den ersten Buchstaben des Wortes zum Vergleich zu stellen\par
+}                {\cf4 \}}\par
+                {\cf8\b if} {\cf4 (}kplace {\cf4 =}{\cf4 =} k{\cf4 .}{\cf23 length}{\cf4 (}{\cf4 )}{\cf4 )} {\cf4 \{} {\cf5\i //Wenn das komplette Wort aufzufinden ist\par
+}                    {\cf18 int} key {\cf4 =} i {\cf4 +} {\cf4 1} {\cf4 -} k{\cf4 .}{\cf23 length}{\cf4 (}{\cf4 )}{\cf4 ;} {\cf5\i //Anfangsposition im Wort\par
+}                    ArrayList{\cf4 <}String{\cf4 >} value {\cf4 =} result{\cf4 .}{\cf23 get}{\cf4 (}key{\cf4 )}{\cf4 ;} {\cf5\i //Gibt es schon eine K{\u252}rzel an dieser Stelle ?\par
+}                    {\cf8\b if} {\cf4 (}value {\cf4 =}{\cf4 =} {\cf8\b null}{\cf4 )} {\cf4 \{} {\cf5\i //Wenn nicht, erstellen wir eine neue Liste und f{\u252}gen das eben gefundene K{\u252}rzel hinzu\par
+}                        ArrayList{\cf4 <}String{\cf4 >} a {\cf4 =} {\cf8\b new} ArrayList{\cf4 (}{\cf4 )}{\cf4 ;}\par
+                        a{\cf4 .}{\cf23 add}{\cf4 (}k{\cf4 )}{\cf4 ;}\par
+                        result{\cf4 .}{\cf23 put}{\cf4 (}i {\cf4 +} {\cf4 1} {\cf4 -} k{\cf4 .}{\cf23 length}{\cf4 (}{\cf4 )}{\cf4 ,} a{\cf4 )}{\cf4 ;}\par
+                    {\cf4 \}} {\cf8\b else} {\cf4 \{} {\cf5\i //Es gibt schon eine Liste\par
+}                        value{\cf4 .}{\cf23 add}{\cf4 (}k{\cf4 )}{\cf4 ;} {\cf5\i //F{\u252}gt das Kennzeichen zu der Liste hinzu\par
+}                    {\cf4 \}}\par
+                    kplace {\cf4 =} {\cf4 0}{\cf4 ;} {\cf5\i //Wir fangen an, den ersten Buchstaben des Wortes zum Vergleich zu stellen\par
+}                {\cf4 \}}\par
+            {\cf4 \}}\par
+        {\cf4 \}}\par
+        {\cf8\b return} result{\cf4 ;} {\cf5\i //Gefunden K{\u252}rzel als "W{\u246}rterbuch" zur{\u252}ckgeben\par
+}    {\cf4 \}}\par
+\par
+    {\cf8\b public} {\cf8\b static} {\cf18 boolean} {\cf19 schreibbar}{\cf4 (}String s{\cf4 )} {\cf4 \{} {\cf5\i //Gibt aus, ob eine ein Wort mit einem Kennzeichen schreibbar ist. Sinnvoll f{\u252}r W{\u246}rter aus 2-5 Buchstaben\par
+}        {\cf18 char}{\cf4 [}{\cf4 ]} c {\cf4 =} s{\cf4 .}{\cf23 toCharArray}{\cf4 (}{\cf4 )}{\cf4 ;}\par
+        {\cf8\b for} {\cf4 (}String k {\cf4 :} kuerzel{\cf4 )} {\cf4 \{}\par
+            {\cf8\b if} {\cf4 (}k{\cf4 .}{\cf23 length}{\cf4 (}{\cf4 )} {\cf4 <} c{\cf4 .}{\cf23 length} {\cf4 &}{\cf4 &} c{\cf4 .}{\cf23 length} {\cf4 -} {\cf4 2} {\cf4 <}{\cf4 =} k{\cf4 .}{\cf23 length}{\cf4 (}{\cf4 )}{\cf4 )} {\cf4 \{} {\cf5\i //W{\u228}re der Anhang maximal zwei Buchstaben, und mindestens einen lang\par
+}                {\cf18 boolean} unmoeglich {\cf4 =} {\cf8\b false}{\cf4 ;}\par
+                {\cf8\b for} {\cf4 (}{\cf18 int} j {\cf4 =} c{\cf4 .}{\cf23 length} {\cf4 -} {\cf4 1}{\cf4 ;} j {\cf4 >}{\cf4 =} k{\cf4 .}{\cf23 length}{\cf4 (}{\cf4 )}{\cf4 ;} j{\cf4 -}{\cf4 -}{\cf4 )} {\cf4 \{} {\cf5\i //W{\u252}rde der Anhang Umlaute enthalten, ist es nicht mit diesem K{\u252}rzel m{\u246}glich\par
+}                    {\cf8\b if} {\cf4 (}umlaut{\cf4 (}c{\cf4 [}j{\cf4 ]}{\cf4 )}{\cf4 )} {\cf4 \{}\par
+                        unmoeglich {\cf4 =} {\cf8\b true}{\cf4 ;}\par
+                        {\cf8\b break}{\cf4 ;}\par
+                    {\cf4 \}}\par
+                {\cf4 \}}\par
+                {\cf8\b if} {\cf4 (}unmoeglich{\cf4 )} {\cf4 \{}\par
+                    {\cf8\b continue}{\cf4 ;}\par
+                {\cf4 \}}\par
+                {\cf8\b for} {\cf4 (}{\cf18 int} i {\cf4 =} {\cf4 0}{\cf4 ;} i {\cf4 <} k{\cf4 .}{\cf23 length}{\cf4 (}{\cf4 )}{\cf4 ;} i{\cf4 +}{\cf4 +}{\cf4 )} {\cf4 \{} {\cf5\i //Pr{\u252}fen, ob das K{\u252}rzel auch tats{\u228}chlich ab Wortanfang vorzufinden ist, falls nicht, ist es mit diesem K{\u252}rzel nicht m{\u246}glich\par
+}                    {\cf8\b if} {\cf4 (}k{\cf4 .}{\cf23 charAt}{\cf4 (}i{\cf4 )} {\cf4 !}{\cf4 =} c{\cf4 [}i{\cf4 ]}{\cf4 )} {\cf4 \{}\par
+                        unmoeglich {\cf4 =} {\cf8\b true}{\cf4 ;}\par
+                        {\cf8\b break}{\cf4 ;}\par
+                    {\cf4 \}}\par
+                {\cf4 \}}\par
+                {\cf8\b if} {\cf4 (}unmoeglich{\cf4 )} {\cf4 \{}\par
+                    {\cf8\b continue}{\cf4 ;}\par
+                {\cf4 \}}\par
+                {\cf8\b return} {\cf8\b true}{\cf4 ;} {\cf5\i //Sollte es mit diesem K{\u252}rzel gehen, ist das Wort offensichtlich schreibbar\par
+}            {\cf4 \}}\par
+        {\cf4 \}}\par
+        {\cf8\b return} {\cf8\b false}{\cf4 ;} {\cf5\i //Sollte es mit keinem K{\u252}rzel geklappt haben, ist es wohl leider nicht m{\u246}glich\par
+}    {\cf4 \}}\par
+\par
+    {\cf8\b public} {\cf8\b static} ArrayList{\cf4 <}String{\cf4 >} {\cf19 pruefe}{\cf4 (}{\cf18 int} z{\cf4 )} {\cf4 \{} {\cf5\i //Gibt alle W{\u246}rter mit z Buchstaben zur{\u252}ck, die mit Kennzeichen nicht schreibbar sind\par
+}        ArrayList{\cf4 <}String{\cf4 >} ergebnis {\cf4 =} {\cf8\b new} ArrayList{\cf4 (}{\cf4 )}{\cf4 ;} {\cf5\i //Liste nicht schreibbarer W{\u246}rter\par
+}        kombinationen {\cf4 =} {\cf8\b new} ArrayList{\cf4 (}{\cf4 )}{\cf4 ;} {\cf5\i //Alle Kombinationen aus z Buchstaben\par
+}        n {\cf4 =} z {\cf4 -} {\cf4 1}{\cf4 ;}\par
+        moeglichkeiten{\cf4 (}{\cf4 0}{\cf4 ,} {\cf2 ""}{\cf4 )}{\cf4 ;} {\cf5\i //Alle W{\u246}rter generieren\par
+}        System{\cf4 .}{\cf23 gc}{\cf4 (}{\cf4 )}{\cf4 ;} {\cf5\i //Speicher freigeben\par
+}        {\cf8\b for} {\cf4 (}String c {\cf4 :} kombinationen{\cf4 )} {\cf4 \{}\par
+            {\cf8\b if} {\cf4 (}{\cf4 !}schreibbar{\cf4 (}c{\cf4 )}{\cf4 )} {\cf4 \{} {\cf5\i //Falls nicht schreibbar\par
+}                ergebnis{\cf4 .}{\cf23 add}{\cf4 (}c{\cf4 )}{\cf4 ;} {\cf5\i //Gilt dieses Wort als nicht schreibbar\par
+}            {\cf4 \}}\par
+        {\cf4 \}}\par
+        {\cf8\b return} ergebnis{\cf4 ;} {\cf5\i //Liste der nicht schreibbaren W{\u246}rter mit z Buchstaben zur{\u252}ckgeben\par
+}    {\cf4 \}}\par
+\par
+    {\cf8\b public} {\cf8\b static} {\cf18 void} {\cf19 pruefeMoegliche}{\cf4 (}{\cf4 )} {\cf4 \{} {\cf5\i //Ermittelt nicht schreibbare W{\u246}rter\par
+}        System{\cf4 .}{\cf23 out}{\cf4 .}{\cf23 println}{\cf4 (}SEPARATOR{\cf4 )}{\cf4 ;}\par
+        {\cf18 boolean} timo_schreibbar {\cf4 =} schreibbar{\cf4 (}{\cf2 "TIMO"}{\cf4 )}{\cf4 ;} {\cf5\i //Pr{\u252}fen, ob "TIMO" schreibbar ist\par
+}        System{\cf4 .}{\cf23 out}{\cf4 .}{\cf23 println}{\cf4 (}{\cf2 "TIMO ist "}{\cf4 )}{\cf4 ;}\par
+        {\cf8\b if} {\cf4 (}{\cf4 !}timo_schreibbar{\cf4 )} {\cf4 \{} {\cf5\i //Wenn "TIMO" nicht schreibbar ist, wird zwischen "TIMO" und "ist schreibbar" nicht ausgegeben\par
+}            System{\cf4 .}{\cf23 out}{\cf4 .}{\cf23 println}{\cf4 (}{\cf2 "nicht "}{\cf4 )}{\cf4 ;}\par
+        {\cf4 \}}\par
+        System{\cf4 .}{\cf23 out}{\cf4 .}{\cf23 println}{\cf4 (}{\cf2 "schreibbar"}{\cf4 )}{\cf4 ;}\par
+        System{\cf4 .}{\cf23 out}{\cf4 .}{\cf23 println}{\cf4 (}SEPARATOR{\cf4 )}{\cf4 ;} {\cf5\i //Trennlinie\par
+}        System{\cf4 .}{\cf23 out}{\cf4 .}{\cf23 println}{\cf4 (}{\cf2 "Nicht schreibbare W{\u246}rter mit zwei Buchstaben : "}{\cf4 )}{\cf4 ;}\par
+        System{\cf4 .}{\cf23 out}{\cf4 .}{\cf23 println}{\cf4 (}gebeListeAus{\cf4 (}pruefe{\cf4 (}{\cf4 2}{\cf4 )}{\cf4 )}{\cf4 )}{\cf4 ;} {\cf5\i //Alle nicht schreibbaren W{\u246}rter mit zwei Buchstaben ausgeben\par
+}        System{\cf4 .}{\cf23 gc}{\cf4 (}{\cf4 )}{\cf4 ;} {\cf5\i //Speicher freigeben\par
+}        System{\cf4 .}{\cf23 out}{\cf4 .}{\cf23 println}{\cf4 (}SEPARATOR{\cf4 )}{\cf4 ;} {\cf5\i //Trennlinie\par
+}        System{\cf4 .}{\cf23 out}{\cf4 .}{\cf23 println}{\cf4 (}{\cf2 "Nicht schreibbare W{\u246}rter mit drei Buchstaben : "}{\cf4 )}{\cf4 ;}\par
+        System{\cf4 .}{\cf23 out}{\cf4 .}{\cf23 println}{\cf4 (}gebeListeAus{\cf4 (}pruefe{\cf4 (}{\cf4 3}{\cf4 )}{\cf4 )}{\cf4 )}{\cf4 ;} {\cf5\i //Alle nicht schreibbaren W{\u246}rter mit drei Buchstaben ausgeben\par
+}        System{\cf4 .}{\cf23 gc}{\cf4 (}{\cf4 )}{\cf4 ;} {\cf5\i //Speicher freigeben\par
+}        System{\cf4 .}{\cf23 out}{\cf4 .}{\cf23 println}{\cf4 (}SEPARATOR{\cf4 )}{\cf4 ;} {\cf5\i //Trennlinie\par
+}        {\cf8\b if} {\cf4 (}jaNeinFrage{\cf4 (}{\cf2 "Wollen sie alle Kombinationen von W{\u246}rtern mit 4 Buchstaben, die nicht mit einem Kennzeichen schreibbar sind, anzeigen lassen"}{\cf4 )}{\cf4 )} {\cf4 \{} {\cf5\i //Falls erw{\u252}nscht...\par
+}            System{\cf4 .}{\cf23 out}{\cf4 .}{\cf23 println}{\cf4 (}{\cf2 "Nicht schreibbare W{\u246}rter mit vier Buchstaben : "}{\cf4 )}{\cf4 ;}\par
+            System{\cf4 .}{\cf23 out}{\cf4 .}{\cf23 println}{\cf4 (}gebeListeAus{\cf4 (}pruefe{\cf4 (}{\cf4 4}{\cf4 )}{\cf4 )}{\cf4 )}{\cf4 ;} {\cf5\i //...alle nicht schreibbaren W{\u246}rter mit vier Buchstaben ausgeben(dauert allerdings)\par
+}            System{\cf4 .}{\cf23 out}{\cf4 .}{\cf23 println}{\cf4 (}SEPARATOR{\cf4 )}{\cf4 ;} {\cf5\i //Trennlinie\par
+}        {\cf4 \}}\par
+    {\cf4 \}}\par
+\par
+    {\cf8\b public} {\cf8\b static} ArrayList{\cf4 <}Kennzeichen{\cf4 >} {\cf19 schreibeWort}{\cf4 (}ArrayList{\cf4 <}Kennzeichen{\cf4 >} a{\cf4 ,} {\cf18 int} stelle{\cf4 )} {\cf4 \{} {\cf5\i //Schreibt ein Wort aus Kennzeichen, falls das Wort nicht schreibbar ist, wird "null" zur{\u252}ckgegeben\par
+}        {\cf8\b if} {\cf4 (}wort{\cf4 =}{\cf4 =}{\cf8\b null}{\cf4 )} {\cf4 \{} {\cf5\i //STOP ! Es ist schon eine L{\u246}sung gefunden worden.\par
+}            {\cf8\b return} {\cf8\b null}{\cf4 ;}\par
+        {\cf4 \}}\par
+        {\cf8\b if} {\cf4 (}stelle {\cf4 =}{\cf4 =} wort{\cf4 .}{\cf23 length}{\cf4 (}{\cf4 )}{\cf4 )} {\cf4 \{}\par
+            wort{\cf4 =}{\cf8\b null}{\cf4 ;} {\cf5\i //Bedeutet : Es ist eine L{\u246}sung gefunden worden, s{\u228}mtliche Prozesse, die gestartet wurden und auch nach einer L{\u246}sung suchen, werden dann angehalten\par
+}            {\cf8\b return} a{\cf4 ;} {\cf5\i //Kennzeichenliste zur{\u252}ckgeben\par
+}        {\cf4 \}}\par
+        ArrayList{\cf4 <}String{\cf4 >} kuerzel_bei_stelle {\cf4 =} {\cf4 (}ArrayList{\cf4 <}String{\cf4 >}{\cf4 )} positionen{\cf4 .}{\cf23 get}{\cf4 (}stelle{\cf4 )}{\cf4 ;} {\cf5\i //Alle K{\u252}rzel einholen, die sich an dem Anfang des noch zu schreibenden Teils befinden\par
+}        {\cf8\b if} {\cf4 (}kuerzel_bei_stelle {\cf4 =}{\cf4 =} {\cf8\b null} {\cf4 |}{\cf4 |} wort{\cf4 .}{\cf23 length}{\cf4 (}{\cf4 )}{\cf4 -}stelle {\cf4 =}{\cf4 =} {\cf4 1}{\cf4 )} {\cf4 \{} {\cf5\i //Dieser Prozess fand keine L{\u246}sung, wenn es im jetzt noch zu schreibenden Teil kein K{\u252}rzel am Anfang gibt oder noch ein Buchstabe {\u252}brig bleibt\par
+}            {\cf8\b return} {\cf8\b null}{\cf4 ;}\par
+        {\cf4 \}} {\cf8\b else} {\cf4 \{}\par
+            {\cf8\b for} {\cf4 (}String s {\cf4 :} kuerzel_bei_stelle{\cf4 )} {\cf4 \{} {\cf5\i //Unter Verwendung dieses K{\u252}rzels\par
+}                {\cf18 int} pos {\cf4 =} s{\cf4 .}{\cf23 length}{\cf4 (}{\cf4 )} {\cf4 +} stelle{\cf4 ;} {\cf5\i //Stelle im Wort + Kuerzel\par
+}                {\cf8\b if} {\cf4 (}wort{\cf4 .}{\cf23 length}{\cf4 (}{\cf4 )} {\cf4 -} pos {\cf4 >}{\cf4 =} {\cf4 1} {\cf4 &}{\cf4 &} {\cf4 !}umlaut{\cf4 (}wort{\cf4 .}{\cf23 charAt}{\cf4 (}pos{\cf4 )}{\cf4 )}{\cf4 )} {\cf4 \{} {\cf5\i //Bleibt mindestens noch ein Buchstabe f{\u252}r den Anhang unter Verwendung dieses K{\u252}rzels, und w{\u228}re dies kein Umlaut ?\par
+}                    {\cf5\i //Kopie der Kennzeichen-Liste erstellen\par
+}                    ArrayList b {\cf4 =} {\cf8\b new} ArrayList{\cf4 (}{\cf4 )}{\cf4 ;}\par
+                    b{\cf4 .}{\cf23 addAll}{\cf4 (}a{\cf4 )}{\cf4 ;}\par
+                    {\cf5\i //Neues Kennzeichen hinzuf{\u252}gen (Aktuell gepr{\u252}ftes K{\u252}rzel+ein Buchstabe Anhang, durchnummerieren)\par
+}                    b{\cf4 .}{\cf23 add}{\cf4 (}{\cf8\b new} Kennzeichen{\cf4 (}s{\cf4 ,} {\cf2 ""} {\cf4 +} wort{\cf4 .}{\cf23 charAt}{\cf4 (}pos{\cf4 )}{\cf4 ,} a{\cf4 .}{\cf23 size}{\cf4 (}{\cf4 )} {\cf4 +} {\cf4 1}{\cf4 )}{\cf4 )}{\cf4 ;}\par
+                    ArrayList c {\cf4 =} schreibeWort{\cf4 (}b{\cf4 ,} pos {\cf4 +} {\cf4 1}{\cf4 )}{\cf4 ;} {\cf5\i //Weiter "schreiben"\par
+}                    {\cf8\b if} {\cf4 (}c {\cf4 !}{\cf4 =} {\cf8\b null}{\cf4 )} {\cf4 \{} {\cf5\i //Konnte es zuendegeschrieben werden ?\par
+}                        {\cf8\b return} c{\cf4 ;} {\cf5\i //Gebe das Ergebnis zur{\u252}ck\par
+}                    {\cf4 \}}\par
+                {\cf4 \}}\par
+                {\cf8\b if} {\cf4 (}wort{\cf4 .}{\cf23 length}{\cf4 (}{\cf4 )} {\cf4 -} pos {\cf4 >}{\cf4 =} {\cf4 2} {\cf4 &}{\cf4 &} {\cf4 !}umlaut{\cf4 (}wort{\cf4 .}{\cf23 charAt}{\cf4 (}pos{\cf4 )}{\cf4 )} {\cf4 &}{\cf4 &} {\cf4 !}umlaut{\cf4 (}wort{\cf4 .}{\cf23 charAt}{\cf4 (}pos {\cf4 +} {\cf4 1}{\cf4 )}{\cf4 )}{\cf4 )} {\cf4 \{} {\cf5\i //Bleiben mindestens noch zwei Buchstabe f{\u252}r den Anhang unter Verwendung dieses K{\u252}rzels, und w{\u228}re unter diesen kein Umlaut ?\par
+}                    {\cf5\i //Kopie der Kennzeichen-Liste erstellen\par
+}                    ArrayList b {\cf4 =} {\cf8\b new} ArrayList{\cf4 (}{\cf4 )}{\cf4 ;}\par
+                    b{\cf4 .}{\cf23 addAll}{\cf4 (}a{\cf4 )}{\cf4 ;}\par
+                    {\cf5\i //Neues Kennzeichen hinzuf{\u252}gen (Aktuell gepr{\u252}ftes K{\u252}rzel+zwei Buchstaben Anhang, durchnummerieren)\par
+}                    b{\cf4 .}{\cf23 add}{\cf4 (}{\cf8\b new} Kennzeichen{\cf4 (}s{\cf4 ,} {\cf2 ""} {\cf4 +} wort{\cf4 .}{\cf23 charAt}{\cf4 (}pos{\cf4 )} {\cf4 +} wort{\cf4 .}{\cf23 charAt}{\cf4 (}pos {\cf4 +} {\cf4 1}{\cf4 )}{\cf4 ,} a{\cf4 .}{\cf23 size}{\cf4 (}{\cf4 )} {\cf4 +} {\cf4 1}{\cf4 )}{\cf4 )}{\cf4 ;}\par
+                    ArrayList c {\cf4 =} schreibeWort{\cf4 (}b{\cf4 ,} pos {\cf4 +} {\cf4 2}{\cf4 )}{\cf4 ;} {\cf5\i //Weiter "schreiben"\par
+}                    {\cf8\b if} {\cf4 (}c {\cf4 !}{\cf4 =} {\cf8\b null}{\cf4 )} {\cf4 \{} {\cf5\i //Konnte es zuendegeschrieben werden ?\par
+}                        {\cf8\b return} c{\cf4 ;} {\cf5\i //Gebe das Ergebnis zur{\u252}ck\par
+}                    {\cf4 \}}\par
+                {\cf4 \}}\par
+            {\cf4 \}}\par
+        {\cf4 \}}\par
+        {\cf8\b return} {\cf8\b null}{\cf4 ;}\par
+    {\cf4 \}}\par
+\par
+    {\cf8\b public} {\cf8\b static} {\cf18 void} {\cf19 main}{\cf4 (}String{\cf4 [}{\cf4 ]} args{\cf4 )} {\cf8\b throws} IOException {\cf4 \{}\par
+        buchstaben {\cf4 =} {\cf8\b new} {\cf18 char}{\cf4 [}{\cf4 29}{\cf4 ]}{\cf4 ;}\par
+        {\cf8\b for} {\cf4 (}{\cf18 int} c {\cf4 =} {\cf4 0}{\cf4 ;} c {\cf4 <} {\cf4 26}{\cf4 ;} c{\cf4 +}{\cf4 +}{\cf4 )} {\cf4 \{} {\cf5\i //Generiert alle Buchstaben\par
+}            buchstaben{\cf4 [}c{\cf4 ]} {\cf4 =} {\cf4 (}{\cf18 char}{\cf4 )} {\cf4 (}{\cf4 65} {\cf4 +} c{\cf4 )}{\cf4 ;} {\cf5\i //Wandelt Zahl in Buchstaben um\par
+}        {\cf4 \}}\par
+        buchstaben{\cf4 [}{\cf4 26}{\cf4 ]} {\cf4 =} {\cf2 '{\u196}'}{\cf4 ;}\par
+        buchstaben{\cf4 [}{\cf4 27}{\cf4 ]} {\cf4 =} {\cf2 '{\u214}'}{\cf4 ;}\par
+        buchstaben{\cf4 [}{\cf4 28}{\cf4 ]} {\cf4 =} {\cf2 '{\u220}'}{\cf4 ;}\par
+        {\cf5\i //Das Buchstaben-Array enth{\u228}lt jetzt : buchstaben = [A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, {\u196}, {\u214}, {\u220}]\par
+}        kuerzel {\cf4 =} leseDatei{\cf4 (}dateiFrage{\cf4 (}{\cf2 "Wo befindet sich die Liste aller St{\u228}dtek{\u252}rzel"}{\cf4 )}{\cf4 )}{\cf4 .}{\cf23 split}{\cf4 (}{\cf2 "\\n"}{\cf4 )}{\cf4 ;} \par
+        pruefeMoegliche{\cf4 (}{\cf4 )}{\cf4 ;} {\cf5\i //Ermittele nicht-schreibbare W{\u246}rter\par
+}        woerter {\cf4 =} leseDatei{\cf4 (}dateiFrage{\cf4 (}{\cf2 "Wo befindet sich die Aufgabe"}{\cf4 )}{\cf4 )}{\cf4 .}{\cf23 split}{\cf4 (}{\cf2 "\\n"}{\cf4 )}{\cf4 ;}\par
+        System{\cf4 .}{\cf23 gc}{\cf4 (}{\cf4 )}{\cf4 ;} {\cf5\i //Speicher befreien\par
+}        {\cf8\b for} {\cf4 (}String w {\cf4 :} woerter{\cf4 )} {\cf4 \{} {\cf5\i //W{\u246}rter durchgehen\par
+}            System{\cf4 .}{\cf23 out}{\cf4 .}{\cf23 println}{\cf4 (}SEPARATOR{\cf4 )}{\cf4 ;} {\cf5\i //Trennline\par
+}            wort {\cf4 =} w{\cf4 ;}\par
+            System{\cf4 .}{\cf23 out}{\cf4 .}{\cf23 println}{\cf4 (}wort{\cf4 )}{\cf4 ;} {\cf5\i //Wort ausgeben\par
+}            positionen {\cf4 =} findKuerzels{\cf4 (}wort{\cf4 )}{\cf4 ;} {\cf5\i //Alle K{\u252}rzel im Wort ausmachen\par
+}            ArrayList{\cf4 <}Kennzeichen{\cf4 >} k {\cf4 =} schreibeWort{\cf4 (}{\cf8\b new} ArrayList{\cf4 (}{\cf4 )}{\cf4 ,} {\cf4 0}{\cf4 )}{\cf4 ;} {\cf5\i //Ermittle eine Liste aus Kennzeichen, mit denen das Wort schreibbar ist\par
+}            {\cf8\b if} {\cf4 (}k {\cf4 !}{\cf4 =} {\cf8\b null}{\cf4 )} {\cf4 \{} {\cf5\i //Sollte eine gefunden worden sein\par
+}                System{\cf4 .}{\cf23 out}{\cf4 .}{\cf23 println}{\cf4 (}gebeListeAus{\cf4 (}k{\cf4 )}{\cf4 )}{\cf4 ;}\par
+            {\cf4 \}} {\cf8\b else} {\cf4 \{} {\cf5\i //Ansonsten war's wohl nicht schreibbar\par
+}                System{\cf4 .}{\cf23 out}{\cf4 .}{\cf23 println}{\cf4 (}{\cf2 "Nicht schreibbar"}{\cf4 )}{\cf4 ;}\par
+            {\cf4 \}}\par
+            System{\cf4 .}{\cf23 gc}{\cf4 (}{\cf4 )}{\cf4 ;} {\cf5\i //Speicher freigeben\par
+}        {\cf4 \}}\par
+    {\cf4 \}}\par
+{\cf4 \}}\par
+}

@@ -1,0 +1,89 @@
+{\rtf1\ansi\uc0\deff0{\fonttbl{\f0\fmodern\fprq1\fcharset0;}}{\colortbl;\red136\green136\blue136;\red186\green33\blue33;\red0\green68\blue221;\red102\green102\blue102;\red64\green128\blue128;\red160\green160\blue0;\red25\green23\blue124;\red0\green128\blue0;\red187\green102\blue136;\red187\green102\blue34;\red136\green0\blue0;\red170\green34\blue255;\red153\green153\blue153;\red0\green160\blue0;\red160\green0\blue0;\red255\green0\blue0;\red128\green0\blue128;\red176\green0\blue64;\red0\green0\blue255;\red187\green187\blue187;\red188\green122\blue0;\red0\green0\blue128;\red125\green144\blue41;\red210\green65\blue58;}\f0 {\cf5\i /*\par
+ * To change value license header, choose License Headers in Project Properties.\par
+ * To change value template file, choose Tools | Templates\par
+ * and open the template in the editor.\par
+ */}\par
+{\cf8\b package} {\cf19\b dreieckezaehlen}{\cf4 ;}\par
+\par
+{\cf8\b import} {\cf19\b java.math.BigDecimal}{\cf4 ;} {\cf5\i //Dezimalzahlen mit vielen Nachkommastellen\par
+}{\cf8\b import} {\cf19\b java.text.DecimalFormat}{\cf4 ;} {\cf5\i //Textausgabe\par
+}\par
+{\cf5\i /**\par
+ *\par
+ * @author lars\par
+ */}\par
+\par
+{\cf8\b public} {\cf8\b class} {\cf19\b Dezimalzahl} {\cf4 \{}\par
+\par
+    {\cf8\b public} {\cf8\b static} {\cf8\b final} Dezimalzahl ZERO{\cf4 =}{\cf8\b new} Dezimalzahl{\cf4 (}{\cf8\b new} BigDecimal{\cf4 (}{\cf2 "0"}{\cf4 )}{\cf4 )}{\cf4 ;} {\cf5\i //Dezimalzahl 0\par
+}    {\cf8\b public} {\cf8\b static} {\cf8\b final} DecimalFormat DARSTELLUNG{\cf4 =}{\cf8\b new} DecimalFormat{\cf4 (}{\cf2 "#.######"}{\cf4 )}{\cf4 ;} {\cf5\i //Ausgabeformat/Darstellung : 6 Nachkommastellen\par
+}    {\cf8\b public} BigDecimal wert{\cf4 ;} {\cf5\i //Wert der Dezimalzahl\par
+}    \par
+    {\cf8\b public} {\cf19 Dezimalzahl}{\cf4 (}{\cf18 double} w{\cf4 )} {\cf4 \{}\par
+        wert{\cf4 =}{\cf8\b new} BigDecimal{\cf4 (}w{\cf4 )}{\cf4 ;}\par
+    {\cf4 \}}\par
+    \par
+    {\cf8\b public} {\cf19 Dezimalzahl}{\cf4 (}BigDecimal w{\cf4 )} {\cf4 \{}\par
+        wert{\cf4 =}w{\cf4 ;}\par
+    {\cf4 \}}\par
+    \par
+    {\cf8\b public} {\cf18 boolean} {\cf19 isNull}{\cf4 (}{\cf4 )} {\cf4 \{} {\cf5\i //Ermittelt, ob diese Dezimalzahl 0 ist\par
+}        {\cf8\b return} {\cf8\b this}{\cf4 .}{\cf23 w}{\cf4 (}{\cf4 )}{\cf4 .}{\cf23 compareTo}{\cf4 (}BigDecimal{\cf4 .}{\cf23 ZERO}{\cf4 )} {\cf4 =}{\cf4 =} {\cf4 0}{\cf4 ;}\par
+    {\cf4 \}}\par
+    \par
+    {\cf8\b public} {\cf18 boolean} {\cf19 e}{\cf4 (}Dezimalzahl b{\cf4 )} {\cf4 \{} {\cf5\i //Ermittelt, ob zwei Dezimalzahlen einander entsprechen\par
+}        {\cf8\b return} {\cf8\b this}{\cf4 .}{\cf23 w}{\cf4 (}{\cf4 )}{\cf4 .}{\cf23 compareTo}{\cf4 (}b{\cf4 .}{\cf23 w}{\cf4 (}{\cf4 )}{\cf4 )}{\cf4 =}{\cf4 =}{\cf4 0}{\cf4 ;}\par
+    {\cf4 \}}\par
+    \par
+    {\cf8\b public} BigDecimal {\cf19 w}{\cf4 (}{\cf4 )} {\cf4 \{} {\cf5\i //Gerundet auf 12 Nachkommastellen\par
+}        {\cf8\b return} wert{\cf4 .}{\cf23 setScale}{\cf4 (}{\cf4 12}{\cf4 ,} BigDecimal{\cf4 .}{\cf23 ROUND_HALF_UP}{\cf4 )}{\cf4 ;}\par
+    {\cf4 \}}\par
+    \par
+    {\cf8\b public} Dezimalzahl {\cf19 minus}{\cf4 (}{\cf4 )} {\cf4 \{} {\cf5\i //Vorzeichen umdrehen\par
+}        {\cf8\b return} {\cf8\b new} Dezimalzahl{\cf4 (}wert{\cf4 .}{\cf23 negate}{\cf4 (}{\cf4 )}{\cf4 )}{\cf4 ;}\par
+    {\cf4 \}}\par
+    \par
+    {\cf8\b public} {\cf18 boolean} {\cf19 gg}{\cf4 (}Dezimalzahl b{\cf4 )} {\cf4 \{} {\cf5\i //Ist diese Dezimalzahl gr{\u246}{\u223}er-gleich b ?\par
+}        {\cf8\b return} {\cf8\b this}{\cf4 .}{\cf23 w}{\cf4 (}{\cf4 )}{\cf4 .}{\cf23 compareTo}{\cf4 (}b{\cf4 .}{\cf23 w}{\cf4 (}{\cf4 )}{\cf4 )} {\cf4 >}{\cf4 =} {\cf4 0}{\cf4 ;}\par
+    {\cf4 \}}\par
+    \par
+    {\cf8\b public} {\cf18 boolean} {\cf19 kg}{\cf4 (}Dezimalzahl b{\cf4 )} {\cf4 \{} {\cf5\i //Ist diese Dezimalzahl kleiner-gleich b ?\par
+}        {\cf8\b return} {\cf8\b this}{\cf4 .}{\cf23 w}{\cf4 (}{\cf4 )}{\cf4 .}{\cf23 compareTo}{\cf4 (}b{\cf4 .}{\cf23 w}{\cf4 (}{\cf4 )}{\cf4 )} {\cf4 <}{\cf4 =} {\cf4 0}{\cf4 ;}\par
+    {\cf4 \}}\par
+    \par
+    {\cf8\b public} {\cf18 double} {\cf19 wert}{\cf4 (}{\cf4 )} {\cf4 \{} {\cf5\i //Gibt diese Dezimalzahl im "double"-Format zur{\u252}ck\par
+}        {\cf8\b return} {\cf8\b this}{\cf4 .}{\cf23 w}{\cf4 (}{\cf4 )}{\cf4 .}{\cf23 doubleValue}{\cf4 (}{\cf4 )}{\cf4 ;}\par
+    {\cf4 \}}\par
+    \par
+    {\cf8\b public} Dezimalzahl {\cf19 plus}{\cf4 (}Dezimalzahl b{\cf4 )} {\cf4 \{}\par
+        {\cf8\b return} {\cf8\b new} Dezimalzahl{\cf4 (}wert{\cf4 .}{\cf23 add}{\cf4 (}b{\cf4 .}{\cf23 wert}{\cf4 )}{\cf4 )}{\cf4 ;}\par
+    {\cf4 \}}\par
+    \par
+    {\cf8\b public} Dezimalzahl {\cf19 minus}{\cf4 (}Dezimalzahl b{\cf4 )} {\cf4 \{}\par
+        {\cf8\b return} {\cf8\b new} Dezimalzahl{\cf4 (}wert{\cf4 .}{\cf23 subtract}{\cf4 (}b{\cf4 .}{\cf23 wert}{\cf4 )}{\cf4 )}{\cf4 ;}\par
+    {\cf4 \}}\par
+    {\cf8\b public} Dezimalzahl {\cf19 mal}{\cf4 (}Dezimalzahl b{\cf4 )} {\cf4 \{}\par
+        {\cf8\b return} {\cf8\b new} Dezimalzahl{\cf4 (}wert{\cf4 .}{\cf23 multiply}{\cf4 (}b{\cf4 .}{\cf23 wert}{\cf4 )}{\cf4 )}{\cf4 ;}\par
+    {\cf4 \}}\par
+    {\cf8\b public} Dezimalzahl {\cf19 geteilt}{\cf4 (}Dezimalzahl b{\cf4 )} {\cf4 \{}\par
+        {\cf8\b return} {\cf8\b new} Dezimalzahl{\cf4 (}wert{\cf4 .}{\cf23 divide}{\cf4 (}b{\cf4 .}{\cf23 wert}{\cf4 ,}{\cf4 64}{\cf4 ,}BigDecimal{\cf4 .}{\cf23 ROUND_HALF_UP}{\cf4 )}{\cf4 )}{\cf4 ;} {\cf5\i //Mit 64 Nachkommastellen Genauigkeit rechnen\par
+}    {\cf4 \}}\par
+    {\cf8\b public} {\cf8\b static} Dezimalzahl {\cf19 abs}{\cf4 (}Dezimalzahl b{\cf4 )} {\cf4 \{} {\cf5\i //Absolutwert von einer Dezimalzahl b\par
+}        {\cf8\b return} {\cf8\b new} Dezimalzahl{\cf4 (}b{\cf4 .}{\cf23 wert}{\cf4 .}{\cf23 abs}{\cf4 (}{\cf4 )}{\cf4 )}{\cf4 ;}\par
+    {\cf4 \}}\par
+    {\cf8\b public} {\cf8\b static} Dezimalzahl {\cf19 min}{\cf4 (}Dezimalzahl g{\cf4 ,}Dezimalzahl b{\cf4 )} {\cf4 \{} {\cf5\i //Kleinster Wert von b und g\par
+}        {\cf8\b return} {\cf8\b new} Dezimalzahl{\cf4 (}g{\cf4 .}{\cf23 wert}{\cf4 .}{\cf23 min}{\cf4 (}b{\cf4 .}{\cf23 wert}{\cf4 )}{\cf4 )}{\cf4 ;}\par
+    {\cf4 \}}\par
+    {\cf8\b public} {\cf8\b static} Dezimalzahl {\cf19 max}{\cf4 (}Dezimalzahl g{\cf4 ,}Dezimalzahl b{\cf4 )} {\cf4 \{} {\cf5\i //Gr{\u246}{\u223}ter Wert von b und g\par
+}        {\cf8\b return} {\cf8\b new} Dezimalzahl{\cf4 (}g{\cf4 .}{\cf23 wert}{\cf4 .}{\cf23 max}{\cf4 (}b{\cf4 .}{\cf23 wert}{\cf4 )}{\cf4 )}{\cf4 ;}\par
+    {\cf4 \}}\par
+    {\cf12 @Override}\par
+    {\cf8\b public} String {\cf19 toString}{\cf4 (}{\cf4 )} {\cf4 \{} {\cf5\i //Darstellung : 6 Nachkommastellen\par
+}        String s{\cf4 =}DARSTELLUNG{\cf4 .}{\cf23 format}{\cf4 (}{\cf8\b this}{\cf4 .}{\cf23 w}{\cf4 (}{\cf4 )}{\cf4 )}{\cf4 ;} {\cf5\i //Mit 6 Nachkommastellen anzeigen\par
+}        {\cf8\b if} {\cf4 (}s{\cf4 .}{\cf23 length}{\cf4 (}{\cf4 )} {\cf4 =}{\cf4 =} {\cf4 2} {\cf4 &}{\cf4 &} s{\cf4 .}{\cf23 charAt}{\cf4 (}{\cf4 0}{\cf4 )} {\cf4 =}{\cf4 =} {\cf2 '-'} {\cf4 &}{\cf4 &} s{\cf4 .}{\cf23 charAt}{\cf4 (}{\cf4 1}{\cf4 )} {\cf4 =}{\cf4 =} {\cf2 '0'}{\cf4 )} {\cf4 \{} {\cf5\i //-0 wird zu 0\par
+}            {\cf8\b return} {\cf2 "0"}{\cf4 ;}\par
+        {\cf4 \}}\par
+        {\cf8\b return} s{\cf4 ;}\par
+    {\cf4 \}}\par
+{\cf4 \}}\par
+}

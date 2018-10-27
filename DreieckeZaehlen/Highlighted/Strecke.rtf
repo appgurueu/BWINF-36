@@ -1,0 +1,101 @@
+{\rtf1\ansi\uc0\deff0{\fonttbl{\f0\fmodern\fprq1\fcharset0;}}{\colortbl;\red136\green136\blue136;\red186\green33\blue33;\red0\green68\blue221;\red102\green102\blue102;\red64\green128\blue128;\red160\green160\blue0;\red25\green23\blue124;\red0\green128\blue0;\red187\green102\blue136;\red187\green102\blue34;\red136\green0\blue0;\red170\green34\blue255;\red153\green153\blue153;\red0\green160\blue0;\red160\green0\blue0;\red255\green0\blue0;\red128\green0\blue128;\red176\green0\blue64;\red0\green0\blue255;\red187\green187\blue187;\red188\green122\blue0;\red0\green0\blue128;\red125\green144\blue41;\red210\green65\blue58;}\f0 {\cf5\i /*\par
+ * To change this license header, choose License Headers in Project Properties.\par
+ * To change this template file, choose Tools | Templates\par
+ * and open the template in the editor.\par
+ */}\par
+{\cf8\b package} {\cf19\b dreieckezaehlen}{\cf4 ;}\par
+\par
+{\cf8\b import} {\cf19\b java.util.HashMap}{\cf4 ;} {\cf5\i //"W{\u246}rterb{\u252}cher" : Jedem "Schl{\u252}ssel" s wird ein "Wert" w zugeordnet\par
+}\par
+{\cf5\i /**\par
+ *\par
+ * @author lars\par
+ */}\par
+{\cf8\b public} {\cf8\b class} {\cf19\b Strecke} {\cf4 \{} {\cf5\i //Speichert eine Strecke\par
+}\par
+    {\cf8\b public} HashMap{\cf4 <}Strecke{\cf4 ,} Schnittpunkt{\cf4 >} schnitte{\cf4 ;} {\cf5\i //Schnittpunkt mit anderen Strecken\par
+}    {\cf8\b public} Rechteck r{\cf4 ;} {\cf5\i //Umfassendes Rechteck\par
+}    {\cf8\b public} Punkt a{\cf4 ,} b{\cf4 ;} {\cf5\i //Startpunkt/Endpunkt\par
+}    {\cf8\b public} Dezimalzahl steigungX{\cf4 ;} {\cf5\i //Steigung per x-Wert\par
+}    {\cf8\b public} Dezimalzahl steigungY{\cf4 ;} {\cf5\i //Steigung per y-Wert\par
+}    {\cf8\b public} Dezimalzahl Y{\cf4 ;} {\cf5\i //Y-Achsenabschnitt\par
+}    {\cf8\b public} Dezimalzahl X{\cf4 ;} {\cf5\i //X-Achsenabschnitt\par
+}    {\cf8\b public} {\cf18 boolean} waagerecht{\cf4 ;} {\cf5\i //Speichert f{\u252}r Strecken ohne Steigung die Ausrichtung\par
+}    {\cf8\b public} {\cf18 boolean} sonderfall{\cf4 ;} {\cf5\i //Speichert, ob diese Strecke solch eine ist\par
+}\par
+    {\cf8\b public} {\cf19 Strecke}{\cf4 (}Punkt a{\cf4 ,} Punkt b{\cf4 )} {\cf4 \{} {\cf5\i //Konstruktor - Start/Endpunkt werden vorgegeben\par
+}        schnitte {\cf4 =} {\cf8\b new} HashMap{\cf4 (}{\cf4 )}{\cf4 ;}\par
+        r {\cf4 =} {\cf8\b new} Rechteck{\cf4 (}a{\cf4 ,} b{\cf4 )}{\cf4 ;} {\cf5\i //Umfassendes Rechteck erzeugen\par
+}        {\cf8\b this}{\cf4 .}{\cf23 a} {\cf4 =} a{\cf4 ;}\par
+        {\cf8\b this}{\cf4 .}{\cf23 b} {\cf4 =} b{\cf4 ;}\par
+        Punkt temp {\cf4 =} b{\cf4 .}{\cf23 minus}{\cf4 (}a{\cf4 )}{\cf4 ;} {\cf5\i //b-a=(delta x|delta y)\par
+}        {\cf8\b if} {\cf4 (}{\cf4 !}temp{\cf4 .}{\cf23 x}{\cf4 .}{\cf23 isNull}{\cf4 (}{\cf4 )} {\cf4 &}{\cf4 &} {\cf4 !}temp{\cf4 .}{\cf23 y}{\cf4 .}{\cf23 isNull}{\cf4 (}{\cf4 )}{\cf4 )} {\cf4 \{} {\cf5\i //Falls diese kein Sonderfall ist(nicht waagerecht oder senkrecht)\par
+}            sonderfall {\cf4 =} {\cf8\b false}{\cf4 ;} {\cf5\i //Kein Sonderfall\par
+}            steigungX {\cf4 =} temp{\cf4 .}{\cf23 y}{\cf4 .}{\cf23 geteilt}{\cf4 (}temp{\cf4 .}{\cf23 x}{\cf4 )}{\cf4 ;} {\cf5\i //Steigung X bestimmen\par
+}            Y {\cf4 =} {\cf8\b this}{\cf4 .}{\cf23 a}{\cf4 .}{\cf23 y}{\cf4 .}{\cf23 minus}{\cf4 (}{\cf8\b this}{\cf4 .}{\cf23 a}{\cf4 .}{\cf23 x}{\cf4 .}{\cf23 mal}{\cf4 (}steigungX{\cf4 )}{\cf4 )}{\cf4 ;} {\cf5\i //X-Achsenabschnitt berechnen\par
+}            steigungY {\cf4 =} temp{\cf4 .}{\cf23 x}{\cf4 .}{\cf23 geteilt}{\cf4 (}temp{\cf4 .}{\cf23 y}{\cf4 )}{\cf4 ;} {\cf5\i //Steigung Y bestimmen\par
+}            X {\cf4 =} {\cf8\b this}{\cf4 .}{\cf23 a}{\cf4 .}{\cf23 x}{\cf4 .}{\cf23 minus}{\cf4 (}{\cf8\b this}{\cf4 .}{\cf23 a}{\cf4 .}{\cf23 y}{\cf4 .}{\cf23 mal}{\cf4 (}steigungY{\cf4 )}{\cf4 )}{\cf4 ;} {\cf5\i //Y-Achsenabschnitt berechnen\par
+}        {\cf4 \}} {\cf8\b else} {\cf4 \{}\par
+            sonderfall {\cf4 =} {\cf8\b true}{\cf4 ;} {\cf5\i //Ansonsten ist es ein Sonderfall, dann gilt es nur zu ermitteln, ob waagerecht oder senkrecht\par
+}            steigungX {\cf4 =} {\cf8\b null}{\cf4 ;}\par
+            steigungY {\cf4 =} {\cf8\b null}{\cf4 ;}\par
+            X {\cf4 =} {\cf8\b null}{\cf4 ;}\par
+            Y {\cf4 =} {\cf8\b null}{\cf4 ;}\par
+            waagerecht {\cf4 =} {\cf4 !}temp{\cf4 .}{\cf23 x}{\cf4 .}{\cf23 isNull}{\cf4 (}{\cf4 )}{\cf4 ;} {\cf5\i //Sollte die x-Achsendifferenz null sein, ist die Strecke senkrecht also !waagerecht\par
+}        {\cf4 \}}\par
+    {\cf4 \}}\par
+\par
+    {\cf8\b public} Schnittpunkt {\cf19 schnittPunkt}{\cf4 (}Strecke s{\cf4 )} {\cf4 \{} {\cf5\i //Ermittelt den Schnittpunkt zweier Strecken, und damit auch, ob sie sich schneiden\par
+}        Dezimalzahl schnitt_x{\cf4 ,} schnitt_y{\cf4 ;} {\cf5\i //Schnitt X-und Y-Koordinate\par
+}        schnitt_x {\cf4 =} {\cf8\b null}{\cf4 ;}\par
+        schnitt_y {\cf4 =} {\cf8\b null}{\cf4 ;}\par
+        {\cf8\b if} {\cf4 (}{\cf4 !}s{\cf4 .}{\cf23 sonderfall} {\cf4 &}{\cf4 &} {\cf4 !}{\cf8\b this}{\cf4 .}{\cf23 sonderfall}{\cf4 )} {\cf4 \{} {\cf5\i //Sollten beide Strecken keine Sonderf{\u228}lle sein\par
+}            {\cf8\b if} {\cf4 (}s{\cf4 .}{\cf23 steigungY}{\cf4 .}{\cf23 e}{\cf4 (}{\cf8\b this}{\cf4 .}{\cf23 steigungY}{\cf4 )}{\cf4 )} {\cf4 \{} {\cf5\i //Sind die Steigungen identisch\par
+}                {\cf8\b return} {\cf8\b new} Schnittpunkt{\cf4 (}{\cf4 )}{\cf4 ;} {\cf5\i //Gibt es keinen Schnittpunkt\par
+}            {\cf4 \}}\par
+            Dezimalzahl steigungsdifferenz {\cf4 =} {\cf8\b this}{\cf4 .}{\cf23 steigungX}{\cf4 .}{\cf23 minus}{\cf4 (}s{\cf4 .}{\cf23 steigungX}{\cf4 )}{\cf4 ;} {\cf5\i //Formel : Differenz der Steigungen\par
+}            Dezimalzahl offsetdifferenz {\cf4 =} s{\cf4 .}{\cf23 Y}{\cf4 .}{\cf23 minus}{\cf4 (}{\cf8\b this}{\cf4 .}{\cf23 Y}{\cf4 )}{\cf4 ;} {\cf5\i //Formel : Differenz der Y-Achsenabschnitte\par
+}            schnitt_x {\cf4 =} offsetdifferenz{\cf4 .}{\cf23 geteilt}{\cf4 (}steigungsdifferenz{\cf4 )}{\cf4 ;} {\cf5\i //Formel : Schnittpunkt X berechnen\par
+}            schnitt_y {\cf4 =} {\cf8\b this}{\cf4 .}{\cf23 Y}{\cf4 .}{\cf23 plus}{\cf4 (}schnitt_x{\cf4 .}{\cf23 mal}{\cf4 (}{\cf8\b this}{\cf4 .}{\cf23 steigungX}{\cf4 )}{\cf4 )}{\cf4 ;} {\cf5\i //Schnittpunkt X einsetzen in eine der beiden Geradengleichungen\par
+}        {\cf4 \}} {\cf8\b else} {\cf8\b if} {\cf4 (}s{\cf4 .}{\cf23 sonderfall} {\cf4 &}{\cf4 &} {\cf8\b this}{\cf4 .}{\cf23 sonderfall}{\cf4 )} {\cf4 \{} {\cf5\i //Sollten beide Strecken Sonderf{\u228}lle sein\par
+}            {\cf8\b if} {\cf4 (}s{\cf4 .}{\cf23 waagerecht} {\cf4 !}{\cf4 =} {\cf8\b this}{\cf4 .}{\cf23 waagerecht}{\cf4 )} {\cf4 \{} {\cf5\i //Sind sie nicht parallel zueinander\par
+}                {\cf8\b if} {\cf4 (}s{\cf4 .}{\cf23 waagerecht}{\cf4 )} {\cf4 \{} {\cf5\i //Ist s waagerecht ?\par
+}                    schnitt_y {\cf4 =} s{\cf4 .}{\cf23 a}{\cf4 .}{\cf23 y}{\cf4 ;} {\cf5\i //Die Y-Koordinate des Schnittes ist dann von s\par
+}                    schnitt_x {\cf4 =} {\cf8\b this}{\cf4 .}{\cf23 a}{\cf4 .}{\cf23 x}{\cf4 ;} {\cf5\i //Entsprechend ist die X-Koordinate von dieser\par
+}                {\cf4 \}} {\cf8\b else} {\cf4 \{} {\cf5\i //Sollte es andersrum sein...\par
+}                    {\cf5\i //Werden auch die Koordinaten des Schnittes andersrum belegt\par
+}                    schnitt_x {\cf4 =} s{\cf4 .}{\cf23 a}{\cf4 .}{\cf23 x}{\cf4 ;}\par
+                    schnitt_y {\cf4 =} {\cf8\b this}{\cf4 .}{\cf23 a}{\cf4 .}{\cf23 y}{\cf4 ;}\par
+                {\cf4 \}}\par
+            {\cf4 \}} {\cf8\b else} {\cf4 \{} {\cf5\i //Wenn sie parallel zueinander sind, schneiden sie sich nicht\par
+}                {\cf8\b return} {\cf8\b new} Schnittpunkt{\cf4 (}{\cf4 )}{\cf4 ;}\par
+            {\cf4 \}}\par
+        {\cf4 \}} {\cf8\b else} {\cf8\b if} {\cf4 (}s{\cf4 .}{\cf23 sonderfall}{\cf4 )} {\cf4 \{} {\cf5\i //Ist nur s ein Sonderfall\par
+}            {\cf8\b if} {\cf4 (}s{\cf4 .}{\cf23 waagerecht}{\cf4 )} {\cf4 \{} {\cf5\i //Ist s waagerecht\par
+}                schnitt_y {\cf4 =} s{\cf4 .}{\cf23 a}{\cf4 .}{\cf23 y}{\cf4 ;} {\cf5\i //Ist die Y-Koordinate des Schnittpunkts klar von s\par
+}                Dezimalzahl offsetdifferenz {\cf4 =} schnitt_y{\cf4 .}{\cf23 minus}{\cf4 (}{\cf8\b this}{\cf4 .}{\cf23 Y}{\cf4 )}{\cf4 ;}\par
+                schnitt_x {\cf4 =} offsetdifferenz{\cf4 .}{\cf23 geteilt}{\cf4 (}{\cf8\b this}{\cf4 .}{\cf23 steigungX}{\cf4 )}{\cf4 ;} {\cf5\i //Nach der Formel wird dann die X-Koordinate ermittelt\par
+}            {\cf4 \}} {\cf8\b else} {\cf4 \{}\par
+                schnitt_x {\cf4 =} s{\cf4 .}{\cf23 a}{\cf4 .}{\cf23 x}{\cf4 ;} {\cf5\i //Ansonsten ist es die X-Koordinate, welche von s ist\par
+}                Dezimalzahl offsetdifferenz {\cf4 =} schnitt_x{\cf4 .}{\cf23 minus}{\cf4 (}{\cf8\b this}{\cf4 .}{\cf23 X}{\cf4 )}{\cf4 ;}\par
+                schnitt_y {\cf4 =} offsetdifferenz{\cf4 .}{\cf23 geteilt}{\cf4 (}{\cf8\b this}{\cf4 .}{\cf23 steigungY}{\cf4 )}{\cf4 ;} {\cf5\i //Nach der Formel wird dann die Y-Koordinate ermittelt\par
+}            {\cf4 \}}\par
+        {\cf4 \}} {\cf8\b else} {\cf8\b if} {\cf4 (}{\cf8\b this}{\cf4 .}{\cf23 sonderfall}{\cf4 )} {\cf4 \{} {\cf5\i //Sollte diese Gerade von beiden der Sonderfall sein, geschieht das Selbe wie oben; lediglich s udn diese Gerade m{\u252}ssen vertauscht werden\par
+}            {\cf8\b if} {\cf4 (}{\cf8\b this}{\cf4 .}{\cf23 waagerecht}{\cf4 )} {\cf4 \{}\par
+                schnitt_y {\cf4 =} {\cf8\b this}{\cf4 .}{\cf23 a}{\cf4 .}{\cf23 y}{\cf4 ;}\par
+                Dezimalzahl offsetdifferenz {\cf4 =} schnitt_y{\cf4 .}{\cf23 minus}{\cf4 (}s{\cf4 .}{\cf23 Y}{\cf4 )}{\cf4 ;}\par
+                schnitt_x {\cf4 =} offsetdifferenz{\cf4 .}{\cf23 geteilt}{\cf4 (}s{\cf4 .}{\cf23 steigungX}{\cf4 )}{\cf4 ;}\par
+            {\cf4 \}} {\cf8\b else} {\cf4 \{}\par
+                schnitt_x {\cf4 =} {\cf8\b this}{\cf4 .}{\cf23 a}{\cf4 .}{\cf23 x}{\cf4 ;}\par
+                Dezimalzahl offsetdifferenz {\cf4 =} schnitt_x{\cf4 .}{\cf23 minus}{\cf4 (}s{\cf4 .}{\cf23 X}{\cf4 )}{\cf4 ;}\par
+                schnitt_y {\cf4 =} offsetdifferenz{\cf4 .}{\cf23 geteilt}{\cf4 (}s{\cf4 .}{\cf23 steigungY}{\cf4 )}{\cf4 ;}\par
+            {\cf4 \}}\par
+        {\cf4 \}}\par
+        Punkt p {\cf4 =} {\cf8\b new} Punkt{\cf4 (}schnitt_x{\cf4 ,} schnitt_y{\cf4 )}{\cf4 ;}\par
+        {\cf8\b if} {\cf4 (}s{\cf4 .}{\cf23 r}{\cf4 .}{\cf23 schneidetPunkt}{\cf4 (}p{\cf4 )} {\cf4 &}{\cf4 &} {\cf8\b this}{\cf4 .}{\cf23 r}{\cf4 .}{\cf23 schneidetPunkt}{\cf4 (}p{\cf4 )}{\cf4 )} {\cf4 \{} {\cf5\i //Ist der Schnittpunkt "valid", liegt er also auf beiden Strecken\par
+}            {\cf8\b return} {\cf8\b new} Schnittpunkt{\cf4 (}p{\cf4 .}{\cf23 x}{\cf4 ,} p{\cf4 .}{\cf23 y}{\cf4 )}{\cf4 ;} {\cf5\i //Kann er zur{\u252}ckgegeben werden\par
+}        {\cf4 \}}\par
+        {\cf8\b return} {\cf8\b new} Schnittpunkt{\cf4 (}{\cf4 )}{\cf4 ;} {\cf5\i //Sonst liegt wohl kein Schnitt vor...\par
+}    {\cf4 \}}\par
+{\cf4 \}}\par
+}

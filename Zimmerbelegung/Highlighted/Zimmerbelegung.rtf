@@ -1,0 +1,208 @@
+{\rtf1\ansi\uc0\deff0{\fonttbl{\f0\fmodern\fprq1\fcharset0;}}{\colortbl;\red136\green136\blue136;\red186\green33\blue33;\red0\green68\blue221;\red102\green102\blue102;\red64\green128\blue128;\red160\green160\blue0;\red25\green23\blue124;\red0\green128\blue0;\red187\green102\blue136;\red187\green102\blue34;\red136\green0\blue0;\red170\green34\blue255;\red153\green153\blue153;\red0\green160\blue0;\red160\green0\blue0;\red255\green0\blue0;\red128\green0\blue128;\red176\green0\blue64;\red0\green0\blue255;\red187\green187\blue187;\red188\green122\blue0;\red0\green0\blue128;\red125\green144\blue41;\red210\green65\blue58;}\f0 {\cf8\b package} {\cf19\b zimmerbelegung}{\cf4 ;}\par
+\par
+{\cf5\i //N{\u246}tige Bibliotheken importieren\par
+}{\cf5\i //Dateien einlesen\par
+}{\cf8\b import} {\cf19\b java.io.File}{\cf4 ;}\par
+{\cf8\b import} {\cf19\b java.io.FileNotFoundException}{\cf4 ;}\par
+{\cf8\b import} {\cf19\b java.io.FileReader}{\cf4 ;}\par
+{\cf8\b import} {\cf19\b java.io.IOException}{\cf4 ;}\par
+{\cf5\i //Listen\par
+}{\cf8\b import} {\cf19\b java.util.ArrayList}{\cf4 ;}\par
+{\cf5\i //HashMap\par
+}{\cf8\b import} {\cf19\b java.util.HashMap}{\cf4 ;}\par
+{\cf8\b import} {\cf19\b java.util.Map.Entry}{\cf4 ;}\par
+{\cf8\b import} {\cf19\b java.util.Set}{\cf4 ;}\par
+{\cf5\i //Benutzereingabe\par
+}{\cf8\b import} {\cf19\b java.util.Scanner}{\cf4 ;}\par
+\par
+{\cf5\i /**\par
+ *\par
+ * @author lars\par
+ */}\par
+{\cf8\b public} {\cf8\b class} {\cf19\b Zimmerbelegung} {\cf4 \{}\par
+\par
+    {\cf8\b public} {\cf8\b static} {\cf8\b final} Scanner EINGABE{\cf4 =}{\cf8\b new} Scanner{\cf4 (}System{\cf4 .}{\cf23 in}{\cf4 )}{\cf4 ;} {\cf5\i //Benutzereingabe\par
+}    {\cf8\b public} {\cf8\b static} Zimmer zimmer{\cf4 ;} {\cf5\i //Aktuelles Zimmer\par
+}    {\cf8\b public} {\cf8\b static} HashMap{\cf4 <}String{\cf4 ,} Maedchen{\cf4 >} maedchen{\cf4 ;} {\cf5\i //Liste aller Maedchen\par
+}    {\cf8\b public} {\cf8\b static} ArrayList{\cf4 <}Zimmer{\cf4 >} besteZimmerbelegung{\cf4 ;} {\cf5\i //Die ideale Zimmerbelegung(nach der Vorstellung des Lehrers)\par
+}    \par
+    {\cf8\b public} {\cf8\b static} String {\cf19 leseDatei}{\cf4 (}File pfad_zur_datei{\cf4 )} {\cf8\b throws} FileNotFoundException{\cf4 ,} IOException {\cf4 \{} {\cf5\i //Liest eine Datei ein, und gibt Text zur{\u252}ck\par
+}        FileReader datei {\cf4 =} {\cf8\b new} FileReader{\cf4 (}pfad_zur_datei{\cf4 )}{\cf4 ;}\par
+        String r {\cf4 =} {\cf2 ""}{\cf4 ;}\par
+        {\cf18 int} i {\cf4 =} datei{\cf4 .}{\cf23 read}{\cf4 (}{\cf4 )}{\cf4 ;}\par
+        {\cf8\b while} {\cf4 (}i {\cf4 !}{\cf4 =} {\cf4 -}{\cf4 1}{\cf4 )} {\cf4 \{}\par
+            r {\cf4 +}{\cf4 =} {\cf4 (}{\cf18 char}{\cf4 )} i{\cf4 ;}\par
+            i {\cf4 =} datei{\cf4 .}{\cf23 read}{\cf4 (}{\cf4 )}{\cf4 ;}\par
+        {\cf4 \}}\par
+        {\cf8\b return} r{\cf4 ;}\par
+    {\cf4 \}}\par
+    \par
+    {\cf8\b public} {\cf8\b static} File {\cf19 dateiFrage}{\cf4 (}String frage{\cf4 )} {\cf4 \{} {\cf5\i //Fragt nach einem Pfad und pr{\u252}ft, ob dieser existiert\par
+}        {\cf8\b while} {\cf4 (}{\cf8\b true}{\cf4 )} {\cf4 \{}\par
+            System{\cf4 .}{\cf23 out}{\cf4 .}{\cf23 println}{\cf4 (}frage {\cf4 +} {\cf2 "(Pfad zu .txt Datei) ? "}{\cf4 )}{\cf4 ;}\par
+            String s {\cf4 =} EINGABE{\cf4 .}{\cf23 nextLine}{\cf4 (}{\cf4 )}{\cf4 ;}\par
+            File f {\cf4 =} {\cf8\b new} File{\cf4 (}s{\cf4 )}{\cf4 ;}\par
+            {\cf8\b if} {\cf4 (}f{\cf4 .}{\cf23 exists}{\cf4 (}{\cf4 )} {\cf4 &}{\cf4 &} {\cf4 !}f{\cf4 .}{\cf23 isDirectory}{\cf4 (}{\cf4 )} {\cf4 &}{\cf4 &} f{\cf4 .}{\cf23 canRead}{\cf4 (}{\cf4 )}{\cf4 )} {\cf4 \{} {\cf5\i //Pr{\u252}fe, ob : - existiert die Datei - ist es kein Ordner - ist sie lesbar\par
+}                {\cf8\b return} f{\cf4 ;} {\cf5\i //Gebe Pfad zur{\u252}ck\par
+}            {\cf4 \}}\par
+            System{\cf4 .}{\cf23 out}{\cf4 .}{\cf23 println}{\cf4 (}{\cf2 "Bitte antworten sie mit einem vorhandenen Pfad einer .txt Datei. Versuchen sie es erneut."}{\cf4 )}{\cf4 ;}\par
+        {\cf4 \}}\par
+    {\cf4 \}}\par
+\par
+    {\cf8\b public} {\cf8\b static} {\cf18 boolean} {\cf19 jaNeinFrage}{\cf4 (}String frage{\cf4 )} {\cf4 \{} {\cf5\i //Stellt eine ja/nein Frage\par
+}        {\cf8\b while} {\cf4 (}{\cf8\b true}{\cf4 )} {\cf4 \{}\par
+            System{\cf4 .}{\cf23 out}{\cf4 .}{\cf23 println}{\cf4 (}frage {\cf4 +} {\cf2 "(j/n) ? "}{\cf4 )}{\cf4 ;}\par
+            String s {\cf4 =} EINGABE{\cf4 .}{\cf23 nextLine}{\cf4 (}{\cf4 )}{\cf4 .}{\cf23 toLowerCase}{\cf4 (}{\cf4 )}{\cf4 ;}\par
+            {\cf8\b if} {\cf4 (}s{\cf4 .}{\cf23 equals}{\cf4 (}{\cf2 "j"}{\cf4 )}{\cf4 )} {\cf4 \{}\par
+                {\cf8\b return} {\cf8\b true}{\cf4 ;}\par
+            {\cf4 \}} {\cf8\b else} {\cf8\b if} {\cf4 (}s{\cf4 .}{\cf23 equals}{\cf4 (}{\cf2 "n"}{\cf4 )}{\cf4 )} {\cf4 \{}\par
+                {\cf8\b return} {\cf8\b false}{\cf4 ;}\par
+            {\cf4 \}}\par
+            System{\cf4 .}{\cf23 out}{\cf4 .}{\cf23 println}{\cf4 (}{\cf2 "Bitte antworten sie mit j/n beziehungsweise J/N. Versuchen sie es erneut."}{\cf4 )}{\cf4 ;}\par
+        {\cf4 \}}\par
+    {\cf4 \}}\par
+    \par
+    {\cf8\b public} {\cf8\b static} {\cf4 <}T{\cf4 >} String {\cf19 gebeListeAus}{\cf4 (}Set{\cf4 <}T{\cf4 >} k{\cf4 )} {\cf4 \{} {\cf5\i //Gibt die "Schl{\u252}ssel" der Eintr{\u228}ge einer HashMap benutzerfreundlich aus\par
+}        {\cf18 int} zeilenumbruch {\cf4 =} {\cf4 (}{\cf18 int}{\cf4 )} {\cf4 (}Math{\cf4 .}{\cf23 sqrt}{\cf4 (}k{\cf4 .}{\cf23 size}{\cf4 (}{\cf4 )}{\cf4 )}{\cf4 )}{\cf4 ;}\par
+        {\cf18 int} counter {\cf4 =} {\cf4 0}{\cf4 ;}\par
+        {\cf18 int} index {\cf4 =} {\cf4 0}{\cf4 ;}\par
+        String s {\cf4 =} {\cf2 ""}{\cf4 ;}\par
+        {\cf8\b for} {\cf4 (}T objekt {\cf4 :} k{\cf4 )} {\cf4 \{}\par
+            Entry e{\cf4 =}{\cf4 (}Entry{\cf4 )}objekt{\cf4 ;}\par
+            s {\cf4 +}{\cf4 =} e{\cf4 .}{\cf23 getKey}{\cf4 (}{\cf4 )}{\cf4 .}{\cf23 toString}{\cf4 (}{\cf4 )}{\cf4 ;}\par
+            counter{\cf4 +}{\cf4 +}{\cf4 ;}\par
+            index{\cf4 +}{\cf4 +}{\cf4 ;}\par
+            {\cf8\b if} {\cf4 (}index {\cf4 !}{\cf4 =} k{\cf4 .}{\cf23 size}{\cf4 (}{\cf4 )}{\cf4 )} {\cf4 \{}\par
+                {\cf8\b if} {\cf4 (}counter {\cf4 =}{\cf4 =} zeilenumbruch{\cf4 )} {\cf4 \{}\par
+                    s {\cf4 +}{\cf4 =} {\cf2 "\\n"}{\cf4 ;}\par
+                    counter {\cf4 =} {\cf4 0}{\cf4 ;}\par
+                {\cf4 \}} {\cf8\b else} {\cf4 \{}\par
+                    s {\cf4 +}{\cf4 =} {\cf2 ", "}{\cf4 ;}\par
+                {\cf4 \}}\par
+            {\cf4 \}}\par
+        {\cf4 \}}\par
+        {\cf8\b return} s{\cf4 ;}\par
+    {\cf4 \}}\par
+\par
+    {\cf8\b public} {\cf8\b static} {\cf18 void} {\cf19 zimmerAufloesen}{\cf4 (}ArrayList{\cf4 <}Zimmer{\cf4 >} aktuelleZimmerbelegung{\cf4 ,} {\cf18 boolean} einzelzimmer{\cf4 )} {\cf4 \{} {\cf5\i //Versucht, Zimmer zusammenzuf{\u252}hren, wobei welche "aufgel{\u246}st" werden.\par
+}        {\cf18 boolean} kein_zusammenfuehren {\cf4 =} {\cf8\b true}{\cf4 ;} {\cf5\i //Konnten Zimmer zusammengef{\u252}hrt werden ?\par
+}        {\cf8\b for} {\cf4 (}{\cf18 int} i {\cf4 =} {\cf4 0}{\cf4 ;} i {\cf4 <} aktuelleZimmerbelegung{\cf4 .}{\cf23 size}{\cf4 (}{\cf4 )}{\cf4 ;} i{\cf4 +}{\cf4 +}{\cf4 )} {\cf4 \{} {\cf5\i //Alle Zimmer durchgehen\par
+}            Zimmer z {\cf4 =} aktuelleZimmerbelegung{\cf4 .}{\cf23 get}{\cf4 (}i{\cf4 )}{\cf4 ;}\par
+            {\cf5\i //F{\u252}r alle Zimmer, f{\u252}r die noch nicht gepr{\u252}ft wurde, ob sie mit diesem Zimmer zusammengef{\u252}hrt werden k{\u246}nnen, wird dies gepr{\u252}ft und weiterverfolgt\par
+}            {\cf8\b for} {\cf4 (}{\cf18 int} j {\cf4 =} i {\cf4 +} {\cf4 1}{\cf4 ;} j {\cf4 <} aktuelleZimmerbelegung{\cf4 .}{\cf23 size}{\cf4 (}{\cf4 )}{\cf4 ;} j{\cf4 +}{\cf4 +}{\cf4 )} {\cf4 \{}\par
+                Zimmer k {\cf4 =} aktuelleZimmerbelegung{\cf4 .}{\cf23 get}{\cf4 (}j{\cf4 )}{\cf4 ;}\par
+                {\cf5\i //Will der Lehrer nur Einzelzimmer vermeiden, werden keine nicht-Einzelzimmer mit nicht-Einzelzimmern zusammengef{\u252}hrt\par
+}                {\cf8\b if} {\cf4 (}einzelzimmer {\cf4 &}{\cf4 &} {\cf4 (}z{\cf4 .}{\cf23 zimmerinsassen}{\cf4 .}{\cf23 size}{\cf4 (}{\cf4 )} {\cf4 !}{\cf4 =} {\cf4 1} {\cf4 &}{\cf4 &} k{\cf4 .}{\cf23 zimmerinsassen}{\cf4 .}{\cf23 size}{\cf4 (}{\cf4 )} {\cf4 !}{\cf4 =} {\cf4 1}{\cf4 )}{\cf4 )} {\cf4 \{}\par
+                    {\cf8\b continue}{\cf4 ;}\par
+                {\cf4 \}}\par
+                {\cf8\b if} {\cf4 (}k{\cf4 .}{\cf23 kannLeiden}{\cf4 (}z{\cf4 )}{\cf4 )} {\cf4 \{} {\cf5\i //K{\u246}nnen die Zimmer zusammengef{\u252}hrt werden ?\par
+}                    kein_zusammenfuehren {\cf4 =} {\cf8\b false}{\cf4 ;} {\cf5\i //Dann konnten offensichtlich noch Zimmer zusammengef{\u252}hrt werden.\par
+}                    {\cf5\i //Diese fiktive Zimmerbelegung wird weiter {\u252}berlegt\par
+}                    ArrayList{\cf4 <}Zimmer{\cf4 >} kopie {\cf4 =} {\cf8\b new} ArrayList{\cf4 (}{\cf4 )}{\cf4 ;}\par
+                    kopie{\cf4 .}{\cf23 add}{\cf4 (}k{\cf4 .}{\cf23 zimmerZusammenfuehren}{\cf4 (}z{\cf4 )}{\cf4 )}{\cf4 ;} {\cf5\i //Zimmer k und z als neues Zimmer hinzuf{\u252}gen\par
+}                    {\cf5\i //Kopie der aktuellen Zimmerbelegung anfertigen, ausgenommen Zimmer k und z\par
+}                    {\cf8\b for} {\cf4 (}{\cf18 int} n {\cf4 =} {\cf4 0}{\cf4 ;} n {\cf4 <} aktuelleZimmerbelegung{\cf4 .}{\cf23 size}{\cf4 (}{\cf4 )}{\cf4 ;} n{\cf4 +}{\cf4 +}{\cf4 )} {\cf4 \{}\par
+                        {\cf8\b if} {\cf4 (}n {\cf4 !}{\cf4 =} i {\cf4 &}{\cf4 &} n {\cf4 !}{\cf4 =} j{\cf4 )} {\cf4 \{}\par
+                            kopie{\cf4 .}{\cf23 add}{\cf4 (}aktuelleZimmerbelegung{\cf4 .}{\cf23 get}{\cf4 (}n{\cf4 )}{\cf4 )}{\cf4 ;}\par
+                        {\cf4 \}}\par
+                    {\cf4 \}}\par
+                    zimmerAufloesen{\cf4 (}kopie{\cf4 ,} einzelzimmer{\cf4 )}{\cf4 ;} {\cf5\i //Versuchen, weitere Zimmer zusammenzuf{\u252}hren und alle M{\u246}glichkeiten dies zu tun erstellen\par
+}                {\cf4 \}}\par
+            {\cf4 \}}\par
+        {\cf4 \}}\par
+        {\cf8\b if} {\cf4 (}kein_zusammenfuehren{\cf4 )} {\cf4 \{} {\cf5\i //Falls keine Zimmer mehr zusammengef{\u252}hrt werden konnten\par
+}            {\cf8\b if} {\cf4 (}aktuelleZimmerbelegung{\cf4 .}{\cf23 size}{\cf4 (}{\cf4 )} {\cf4 <} besteZimmerbelegung{\cf4 .}{\cf23 size}{\cf4 (}{\cf4 )}{\cf4 )} {\cf4 \{} {\cf5\i //Gibt es bei dieser Zimmerbelegung weniger Zimmer als bei der als ideal geltenden\par
+}                besteZimmerbelegung {\cf4 =} {\cf8\b new} ArrayList{\cf4 (}{\cf4 )}{\cf4 ;}\par
+                besteZimmerbelegung{\cf4 .}{\cf23 addAll}{\cf4 (}aktuelleZimmerbelegung{\cf4 )}{\cf4 ;} {\cf5\i //So gilt diese nun als ideal !\par
+}            {\cf4 \}}\par
+        {\cf4 \}}\par
+    {\cf4 \}}\par
+\par
+    {\cf8\b public} {\cf8\b static} {\cf18 void} {\cf19 pruefeMaedchen}{\cf4 (}String girl{\cf4 )} {\cf4 \{} {\cf5\i //Pr{\u252}ft, ob ein M{\u228}dchen in einem Zimmer aufgenommen werden kann\par
+}        Maedchen g {\cf4 =} maedchen{\cf4 .}{\cf23 get}{\cf4 (}girl{\cf4 )}{\cf4 ;} {\cf5\i //Freundes/Feindeslisten holen\par
+}        g{\cf4 .}{\cf23 zimmer} {\cf4 =} zimmer{\cf4 .}{\cf23 id}{\cf4 ;} {\cf5\i //Das M{\u228}dchen soll ab jetzt als Mitglied dieses Zimmers gelten\par
+}        maedchen{\cf4 .}{\cf23 put}{\cf4 (}girl{\cf4 ,} g{\cf4 )}{\cf4 ;} {\cf5\i //HashMap updaten\par
+}        zimmer{\cf4 .}{\cf23 zimmerinsassen}{\cf4 .}{\cf23 put}{\cf4 (}girl{\cf4 ,} {\cf8\b false}{\cf4 )}{\cf4 ;} {\cf5\i //Es geh{\u246}rt nun zu den Mitgliedern des Zimmers\par
+}        {\cf8\b for} {\cf4 (}String s {\cf4 :} g{\cf4 .}{\cf23 feinde}{\cf4 )} {\cf4 \{} {\cf5\i //F{\u252}r alle unerw{\u252}nschten M{\u228}dchen\par
+}            {\cf8\b if} {\cf4 (}zimmer{\cf4 .}{\cf23 zimmerinsassen}{\cf4 .}{\cf23 get}{\cf4 (}s{\cf4 )} {\cf4 =}{\cf4 =} {\cf8\b null}{\cf4 )} {\cf4 \{} {\cf5\i //Befindet sich das unerw{\u252}nschte M{\u228}dchen in diesem Zimmer\par
+}                zimmer{\cf4 .}{\cf23 zimmergegner}{\cf4 .}{\cf23 put}{\cf4 (}s{\cf4 ,} {\cf8\b false}{\cf4 )}{\cf4 ;} {\cf5\i //Dieser Gegner wird zum Gegner des aktuellen Zimmers erkl{\u228}rt\par
+}            {\cf4 \}} {\cf8\b else} {\cf4 \{} {\cf5\i //Befindet sich ein Gegner des M{\u228}dchens im Zimmer, sind nicht alle W{\u252}nsche erf{\u252}llbar, und das Programm stoppt\par
+}                System{\cf4 .}{\cf23 out}{\cf4 .}{\cf23 println}{\cf4 (}girl {\cf4 +} {\cf2 "s Wunsch kann leider nicht erf{\u252}llt werden. Denn sie kann die Insassin "} {\cf4 +} s {\cf4 +} {\cf2 " nicht leiden"}{\cf4 )}{\cf4 ;}\par
+                System{\cf4 .}{\cf23 exit}{\cf4 (}{\cf4 0}{\cf4 )}{\cf4 ;}\par
+                {\cf8\b return}{\cf4 ;}\par
+            {\cf4 \}}\par
+        {\cf4 \}}\par
+        ArrayList{\cf4 <}String{\cf4 >} freunde_und_bewunderer {\cf4 =} {\cf8\b new} ArrayList{\cf4 (}{\cf4 )}{\cf4 ;}\par
+        freunde_und_bewunderer{\cf4 .}{\cf23 addAll}{\cf4 (}g{\cf4 .}{\cf23 freunde}{\cf4 )}{\cf4 ;}\par
+        {\cf8\b for} {\cf4 (}Entry e {\cf4 :} maedchen{\cf4 .}{\cf23 entrySet}{\cf4 (}{\cf4 )}{\cf4 )} {\cf4 \{} {\cf5\i //Finde alle Bewunderer, die noch aufgenommen werden sollen\par
+}            Maedchen moeglicher_bewunderer {\cf4 =} {\cf4 (}Maedchen{\cf4 )} e{\cf4 .}{\cf23 getValue}{\cf4 (}{\cf4 )}{\cf4 ;}\par
+            {\cf8\b if} {\cf4 (}moeglicher_bewunderer{\cf4 .}{\cf23 zimmer} {\cf4 =}{\cf4 =} {\cf4 -}{\cf4 1}{\cf4 )} {\cf4 \{} {\cf5\i //Ist das M{\u228}dchen noch nicht in einem Zimmer, sonst h{\u228}tte es n{\u228}mlich schon alle dort aufnehmen lassen, die es mag\par
+}                {\cf8\b for} {\cf4 (}String bewundert {\cf4 :} moeglicher_bewunderer{\cf4 .}{\cf23 freunde}{\cf4 )} {\cf4 \{}\par
+                    {\cf8\b if} {\cf4 (}bewundert{\cf4 .}{\cf23 equals}{\cf4 (}girl{\cf4 )}{\cf4 )} {\cf4 \{} {\cf5\i //Wird dieses M{\u228}dchen bewundert\par
+}                        freunde_und_bewunderer{\cf4 .}{\cf23 add}{\cf4 (}{\cf4 (}String{\cf4 )} e{\cf4 .}{\cf23 getKey}{\cf4 (}{\cf4 )}{\cf4 )}{\cf4 ;} {\cf5\i //Zu Freunden und Bewunderern hinzuf{\u252}gen\par
+}                    {\cf4 \}}\par
+                {\cf4 \}}\par
+            {\cf4 \}}\par
+        {\cf4 \}}\par
+        {\cf8\b for} {\cf4 (}String friend {\cf4 :} freunde_und_bewunderer{\cf4 )} {\cf4 \{} {\cf5\i //Jetzt muss gepr{\u252}ft werden, ob besagte Freunde und Bewunderer aufgenommen werden k{\u246}nnen\par
+}            {\cf8\b if} {\cf4 (}zimmer{\cf4 .}{\cf23 zimmergegner}{\cf4 .}{\cf23 get}{\cf4 (}friend{\cf4 )} {\cf4 !}{\cf4 =} {\cf8\b null}{\cf4 )} {\cf4 \{} {\cf5\i //Wenn eine dieser Personen als Gegner bekannt ist, sind nicht alle W{\u252}nsche erf{\u252}llbar, und das Programm stoppt\par
+}                System{\cf4 .}{\cf23 out}{\cf4 .}{\cf23 println}{\cf4 (}{\cf2 "Freundeswunsch nicht erf{\u252}llbar : "} {\cf4 +} friend {\cf4 +} {\cf2 " von "} {\cf4 +} girl {\cf4 +} {\cf2 ", da "} {\cf4 +} friend {\cf4 +} {\cf2 " ein Gegner des Zimmers ist"}{\cf4 )}{\cf4 ;}\par
+                System{\cf4 .}{\cf23 exit}{\cf4 (}{\cf4 0}{\cf4 )}{\cf4 ;}\par
+                {\cf8\b return}{\cf4 ;}\par
+            {\cf4 \}} {\cf8\b else} {\cf8\b if} {\cf4 (}maedchen{\cf4 .}{\cf23 get}{\cf4 (}friend{\cf4 )}{\cf4 .}{\cf23 zimmer} {\cf4 =}{\cf4 =} {\cf4 -}{\cf4 1}{\cf4 )} {\cf4 \{} {\cf5\i //Wenn das M{\u228}dchen noch nicht verplant ist, muss es neu gepr{\u252}ft werden\par
+}                pruefeMaedchen{\cf4 (}friend{\cf4 )}{\cf4 ;} {\cf5\i //Das M{\u228}dchen pr{\u252}fen\par
+}            {\cf4 \}}\par
+        {\cf4 \}}\par
+    {\cf4 \}}\par
+\par
+    {\cf8\b public} {\cf8\b static} {\cf18 void} {\cf19 main}{\cf4 (}String{\cf4 [}{\cf4 ]} args{\cf4 )} {\cf8\b throws} IOException {\cf4 \{}\par
+        maedchen {\cf4 =} {\cf8\b new} HashMap{\cf4 (}{\cf4 )}{\cf4 ;} {\cf5\i //HashMap mit M{\u228}dchen initialisieren\par
+}        zimmer {\cf4 =} {\cf8\b new} Zimmer{\cf4 (}{\cf4 (}{\cf18 byte}{\cf4 )} {\cf4 1}{\cf4 )}{\cf4 ;} {\cf5\i //Aktuelles Zimmer initialisieren\par
+}        ArrayList{\cf4 <}Zimmer{\cf4 >} gewuenschte_zimmerbelegung {\cf4 =} {\cf8\b new} ArrayList{\cf4 (}{\cf4 )}{\cf4 ;} {\cf5\i //Liste von Zimmern(erw{\u252}nschte Zimmerbelegung)\par
+}        String{\cf4 [}{\cf4 ]} zettel {\cf4 =} leseDatei{\cf4 (}dateiFrage{\cf4 (}{\cf2 "Wo befindet sich die Aufgabe"}{\cf4 )}{\cf4 )}{\cf4 .}{\cf23 split}{\cf4 (}{\cf2 "\\n\\n"}{\cf4 )}{\cf4 ;} {\cf5\i //Liste aller Zettel. split("\\n\\n") teilt die Zeichenkette bei zwei Zeilenumbr{\u252}chen\par
+}        {\cf18 boolean} einzelzimmerAufloesen {\cf4 =} jaNeinFrage{\cf4 (}{\cf2 "Hat es f{\u252}r sie Priorit{\u228}t, Einzelzimmer zu vermeiden"}{\cf4 )}{\cf4 ;}\par
+        {\cf18 boolean} zimmerAufloesen {\cf4 =} jaNeinFrage{\cf4 (}{\cf2 "Soll versucht werden, m{\u246}glichst wenige Zimmer zu erstellen"}{\cf4 )}{\cf4 ;}\par
+        {\cf8\b for} {\cf4 (}String z {\cf4 :} zettel{\cf4 )} {\cf4 \{} {\cf5\i //Alle Zettel durchgehen\par
+}            String{\cf4 [}{\cf4 ]} infos {\cf4 =} z{\cf4 .}{\cf23 split}{\cf4 (}{\cf2 "\\n"}{\cf4 )}{\cf4 ;} {\cf5\i //Informationen des jeweiligen M{\u228}dchens\par
+}            String name {\cf4 =} infos{\cf4 [}{\cf4 0}{\cf4 ]}{\cf4 ;}\par
+            String{\cf4 [}{\cf4 ]} friends{\cf4 ,} enemies{\cf4 ;}\par
+            friends {\cf4 =} enemies {\cf4 =} {\cf8\b new} String{\cf4 [}{\cf4 ]}{\cf4 \{}{\cf4 \}}{\cf4 ;}\par
+            {\cf8\b if} {\cf4 (}infos{\cf4 [}{\cf4 1}{\cf4 ]}{\cf4 .}{\cf23 charAt}{\cf4 (}{\cf4 0}{\cf4 )} {\cf4 =}{\cf4 =} {\cf2 '+'}{\cf4 )} {\cf4 \{} {\cf5\i //Entspricht das erste Zeichen der zweiten Zeile des Zettels einem Plus, werden zuerst die Freunde, dann die Feinde aufgef{\u252}hrt\par
+}                {\cf8\b if} {\cf4 (}infos{\cf4 [}{\cf4 1}{\cf4 ]}{\cf4 .}{\cf23 length}{\cf4 (}{\cf4 )} {\cf4 >} {\cf4 2}{\cf4 )} {\cf4 \{}\par
+                    friends {\cf4 =} infos{\cf4 [}{\cf4 1}{\cf4 ]}{\cf4 .}{\cf23 substring}{\cf4 (}{\cf4 2}{\cf4 )}{\cf4 .}{\cf23 split}{\cf4 (}{\cf2 " "}{\cf4 )}{\cf4 ;}\par
+                {\cf4 \}}\par
+                {\cf8\b if} {\cf4 (}infos{\cf4 [}{\cf4 2}{\cf4 ]}{\cf4 .}{\cf23 length}{\cf4 (}{\cf4 )} {\cf4 >} {\cf4 2}{\cf4 )} {\cf4 \{}\par
+                    enemies {\cf4 =} infos{\cf4 [}{\cf4 2}{\cf4 ]}{\cf4 .}{\cf23 substring}{\cf4 (}{\cf4 2}{\cf4 )}{\cf4 .}{\cf23 split}{\cf4 (}{\cf2 " "}{\cf4 )}{\cf4 ;}\par
+                {\cf4 \}}\par
+            {\cf4 \}} {\cf8\b else} {\cf4 \{} {\cf5\i //Sollte es nicht so sein, werden zuerst die Feinde, dann die Freunde aufgef{\u252}hrt\par
+}                {\cf8\b if} {\cf4 (}infos{\cf4 [}{\cf4 2}{\cf4 ]}{\cf4 .}{\cf23 length}{\cf4 (}{\cf4 )} {\cf4 >} {\cf4 2}{\cf4 )} {\cf4 \{}\par
+                    friends {\cf4 =} infos{\cf4 [}{\cf4 2}{\cf4 ]}{\cf4 .}{\cf23 substring}{\cf4 (}{\cf4 2}{\cf4 )}{\cf4 .}{\cf23 split}{\cf4 (}{\cf2 " "}{\cf4 )}{\cf4 ;}\par
+                {\cf4 \}}\par
+                {\cf8\b if} {\cf4 (}infos{\cf4 [}{\cf4 1}{\cf4 ]}{\cf4 .}{\cf23 length}{\cf4 (}{\cf4 )} {\cf4 >} {\cf4 2}{\cf4 )} {\cf4 \{}\par
+                    enemies {\cf4 =} infos{\cf4 [}{\cf4 1}{\cf4 ]}{\cf4 .}{\cf23 substring}{\cf4 (}{\cf4 2}{\cf4 )}{\cf4 .}{\cf23 split}{\cf4 (}{\cf2 " "}{\cf4 )}{\cf4 ;}\par
+                {\cf4 \}}\par
+            {\cf4 \}}\par
+            maedchen{\cf4 .}{\cf23 put}{\cf4 (}name{\cf4 ,} {\cf8\b new} Maedchen{\cf4 (}friends{\cf4 ,} enemies{\cf4 )}{\cf4 )}{\cf4 ;}\par
+        {\cf4 \}}\par
+        {\cf8\b for} {\cf4 (}Entry e {\cf4 :} maedchen{\cf4 .}{\cf23 entrySet}{\cf4 (}{\cf4 )}{\cf4 )} {\cf4 \{}\par
+            Maedchen mz {\cf4 =} {\cf4 (}Maedchen{\cf4 )} e{\cf4 .}{\cf23 getValue}{\cf4 (}{\cf4 )}{\cf4 ;}\par
+            {\cf8\b if} {\cf4 (}mz{\cf4 .}{\cf23 zimmer} {\cf4 =}{\cf4 =} {\cf4 -}{\cf4 1}{\cf4 )} {\cf4 \{} {\cf5\i //Sollte das M{\u228}dchen noch nicht verplant sein\par
+}                pruefeMaedchen{\cf4 (}{\cf4 (}String{\cf4 )} e{\cf4 .}{\cf23 getKey}{\cf4 (}{\cf4 )}{\cf4 )}{\cf4 ;} {\cf5\i //So wird es in ein neues Zimmer gepackt\par
+}                gewuenschte_zimmerbelegung{\cf4 .}{\cf23 add}{\cf4 (}zimmer{\cf4 )}{\cf4 ;} {\cf5\i //Das Zimmer wird zur Zimmerbelegung hinzugef{\u252}gt\par
+}                zimmer {\cf4 =} {\cf8\b new} Zimmer{\cf4 (}{\cf4 (}{\cf18 byte}{\cf4 )} {\cf4 (}zimmer{\cf4 .}{\cf23 id} {\cf4 +} {\cf4 1}{\cf4 )}{\cf4 )}{\cf4 ;} {\cf5\i //F{\u252}r's n{\u228}chste Zimmer geht die Zimmernummer um 1 hoch\par
+}            {\cf4 \}}\par
+        {\cf4 \}}\par
+        besteZimmerbelegung {\cf4 =} {\cf8\b new} ArrayList{\cf4 (}{\cf4 )}{\cf4 ;}\par
+        besteZimmerbelegung{\cf4 .}{\cf23 addAll}{\cf4 (}gewuenschte_zimmerbelegung{\cf4 )}{\cf4 ;}\par
+        {\cf8\b if} {\cf4 (}einzelzimmerAufloesen{\cf4 )} {\cf4 \{}\par
+            zimmerAufloesen{\cf4 (}besteZimmerbelegung{\cf4 ,} {\cf8\b true}{\cf4 )}{\cf4 ;} {\cf5\i //Falls gew{\u252}nscht, wird die Zimmerbelegung optimiert indem zuerst Einzelzimmer aufgel{\u246}st werden.\par
+}        {\cf4 \}}\par
+        {\cf8\b if} {\cf4 (}zimmerAufloesen{\cf4 )} {\cf4 \{}\par
+            zimmerAufloesen{\cf4 (}besteZimmerbelegung{\cf4 ,} {\cf8\b false}{\cf4 )}{\cf4 ;} {\cf5\i //Falls gew{\u252}nscht, wird die Zimmerbelegung optimiert indem m{\u246}glichst wenige Zimmer entstehen sollen.\par
+}        {\cf4 \}}\par
+        {\cf8\b for} {\cf4 (}Zimmer z {\cf4 :} besteZimmerbelegung{\cf4 )} {\cf4 \{}\par
+            System{\cf4 .}{\cf23 out}{\cf4 .}{\cf23 println}{\cf4 (}z{\cf4 )}{\cf4 ;} {\cf5\i //Ausgabe des Zimmers, hierbei werden die Zimmer automatisch mithilfe des Z{\u228}hlers durchnummeriert\par
+}        {\cf4 \}}\par
+    {\cf4 \}}\par
+{\cf4 \}}\par
+}

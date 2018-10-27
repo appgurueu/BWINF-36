@@ -1,0 +1,71 @@
+{\rtf1\ansi\uc0\deff0{\fonttbl{\f0\fmodern\fprq1\fcharset0;}}{\colortbl;\red136\green136\blue136;\red186\green33\blue33;\red0\green68\blue221;\red102\green102\blue102;\red64\green128\blue128;\red160\green160\blue0;\red25\green23\blue124;\red0\green128\blue0;\red187\green102\blue136;\red187\green102\blue34;\red136\green0\blue0;\red170\green34\blue255;\red153\green153\blue153;\red0\green160\blue0;\red160\green0\blue0;\red255\green0\blue0;\red128\green0\blue128;\red176\green0\blue64;\red0\green0\blue255;\red187\green187\blue187;\red188\green122\blue0;\red0\green0\blue128;\red125\green144\blue41;\red210\green65\blue58;}\f0 {\cf5\i /*\par
+ * To change this license header, choose License Headers in Project Properties.\par
+ * To change this template file, choose Tools | Templates\par
+ * and open the template in the editor.\par
+ */}\par
+{\cf8\b package} {\cf19\b buecherregal}{\cf4 ;}\par
+\par
+{\cf8\b import} {\cf19\b java.util.ArrayList}{\cf4 ;}\par
+\par
+{\cf5\i /**\par
+ *\par
+ * @author lars\par
+ */}\par
+{\cf8\b public} {\cf8\b class} {\cf19\b Abschnitt} {\cf8\b extends} ArrayList{\cf4 <}Integer{\cf4 >} {\cf4 \{} {\cf5\i //Abschnitt - speichert H{\u246}hen der B{\u252}cher als Liste\par
+}\par
+    {\cf8\b public} {\cf8\b static} {\cf18 byte} ZAEHLER {\cf4 =} {\cf4 1}{\cf4 ;}\par
+\par
+    {\cf8\b public} {\cf19 Abschnitt}{\cf4 (}{\cf4 )} {\cf4 \{}\par
+        {\cf8\b super}{\cf4 (}{\cf4 )}{\cf4 ;}\par
+    {\cf4 \}}\par
+\par
+    {\cf8\b public} {\cf8\b static} {\cf18 void} {\cf19 zaehlerZuruecksetzen}{\cf4 (}{\cf4 )} {\cf4 \{}\par
+        ZAEHLER {\cf4 =} {\cf4 1}{\cf4 ;}\par
+    {\cf4 \}}\par
+\par
+    {\cf8\b public} {\cf8\b static} String {\cf19 toString}{\cf4 (}ArrayList{\cf4 <}Abschnitt{\cf4 >} abschnitte{\cf4 )} {\cf4 \{}\par
+        String s {\cf4 =} {\cf2 ""}{\cf4 ;}\par
+        {\cf8\b for} {\cf4 (}Abschnitt abschnitt {\cf4 :} abschnitte{\cf4 )} {\cf4 \{}\par
+            s {\cf4 +}{\cf4 =} abschnitt{\cf4 .}{\cf23 toString}{\cf4 (}{\cf4 )}{\cf4 ;}\par
+            s {\cf4 +}{\cf4 =} {\cf2 "\\n"}{\cf4 ;}\par
+        {\cf4 \}}\par
+        {\cf8\b return} s{\cf4 ;}\par
+    {\cf4 \}}\par
+\par
+    {\cf12 @Override}\par
+    {\cf8\b public} String {\cf19 toString}{\cf4 (}{\cf4 )} {\cf4 \{} {\cf5\i //Optimierte Darstellung/Ausgabe\par
+}        String b {\cf4 =} {\cf2 "Abschnitt : "} {\cf4 +} Byte{\cf4 .}{\cf23 toString}{\cf4 (}ZAEHLER{\cf4 )} {\cf4 +} {\cf2 " mit "} {\cf4 +} Integer{\cf4 .}{\cf23 toString}{\cf4 (}size{\cf4 (}{\cf4 )}{\cf4 )} {\cf4 +} {\cf2 " "}{\cf4 ;}\par
+        {\cf8\b if} {\cf4 (}size{\cf4 (}{\cf4 )} {\cf4 !}{\cf4 =} {\cf4 1}{\cf4 )} {\cf4 \{}\par
+            b {\cf4 +}{\cf4 =} {\cf2 "B{\u252}chern"}{\cf4 ;}\par
+        {\cf4 \}} {\cf8\b else} {\cf4 \{}\par
+            b {\cf4 +}{\cf4 =} {\cf2 "Buch"}{\cf4 ;}\par
+        {\cf4 \}}\par
+        String s {\cf4 =} {\cf2 ""}{\cf4 ;}\par
+        {\cf8\b if} {\cf4 (}ZAEHLER {\cf4 !}{\cf4 =} {\cf4 1}{\cf4 )} {\cf4 \{}\par
+            {\cf8\b for} {\cf4 (}{\cf18 int} i {\cf4 =} {\cf4 0}{\cf4 ;} i {\cf4 <} b{\cf4 .}{\cf23 length}{\cf4 (}{\cf4 )}{\cf4 ;} i{\cf4 +}{\cf4 +}{\cf4 )} {\cf4 \{}\par
+                s {\cf4 +}{\cf4 =} {\cf2 "-"}{\cf4 ;}\par
+            {\cf4 \}}\par
+        {\cf4 \}}\par
+        s {\cf4 +}{\cf4 =} {\cf2 "\\n"} {\cf4 +} b {\cf4 +} {\cf2 "\\n"}{\cf4 ;}\par
+        b {\cf4 =} {\cf8\b null}{\cf4 ;}\par
+        {\cf18 byte} index {\cf4 =} {\cf4 0}{\cf4 ;}\par
+        {\cf18 byte} counter {\cf4 =} {\cf4 0}{\cf4 ;}\par
+        {\cf18 byte} zeilenumbruch {\cf4 =} {\cf4 (}{\cf18 byte}{\cf4 )} {\cf4 (}Math{\cf4 .}{\cf23 sqrt}{\cf4 (}size{\cf4 (}{\cf4 )}{\cf4 )}{\cf4 )}{\cf4 ;}\par
+        {\cf8\b for} {\cf4 (}Integer e {\cf4 :} {\cf8\b this}{\cf4 )} {\cf4 \{}\par
+            s {\cf4 +}{\cf4 =} Integer{\cf4 .}{\cf23 toString}{\cf4 (}e{\cf4 )}{\cf4 ;}\par
+            counter{\cf4 +}{\cf4 +}{\cf4 ;}\par
+            index{\cf4 +}{\cf4 +}{\cf4 ;}\par
+            {\cf8\b if} {\cf4 (}index {\cf4 !}{\cf4 =} size{\cf4 (}{\cf4 )}{\cf4 )} {\cf4 \{}\par
+                {\cf8\b if} {\cf4 (}counter {\cf4 =}{\cf4 =} zeilenumbruch{\cf4 )} {\cf4 \{}\par
+                    s {\cf4 +}{\cf4 =} {\cf2 "\\n"}{\cf4 ;}\par
+                    counter {\cf4 =} {\cf4 0}{\cf4 ;}\par
+                {\cf4 \}} {\cf8\b else} {\cf8\b if} {\cf4 (}index {\cf4 !}{\cf4 =} size{\cf4 (}{\cf4 )}{\cf4 )} {\cf4 \{}\par
+                    s {\cf4 +}{\cf4 =} {\cf2 ", "}{\cf4 ;}\par
+                {\cf4 \}}\par
+            {\cf4 \}}\par
+        {\cf4 \}}\par
+        ZAEHLER{\cf4 +}{\cf4 +}{\cf4 ;}\par
+        {\cf8\b return} s{\cf4 ;}\par
+    {\cf4 \}}\par
+{\cf4 \}}\par
+}

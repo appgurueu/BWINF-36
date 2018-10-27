@@ -1,0 +1,51 @@
+{\rtf1\ansi\uc0\deff0{\fonttbl{\f0\fmodern\fprq1\fcharset0;}}{\colortbl;\red136\green136\blue136;\red186\green33\blue33;\red0\green68\blue221;\red102\green102\blue102;\red64\green128\blue128;\red160\green160\blue0;\red25\green23\blue124;\red0\green128\blue0;\red187\green102\blue136;\red187\green102\blue34;\red136\green0\blue0;\red170\green34\blue255;\red153\green153\blue153;\red0\green160\blue0;\red160\green0\blue0;\red255\green0\blue0;\red128\green0\blue128;\red176\green0\blue64;\red0\green0\blue255;\red187\green187\blue187;\red188\green122\blue0;\red0\green0\blue128;\red125\green144\blue41;\red210\green65\blue58;}\f0 {\cf5\i /*\par
+ * To change this license header, choose License Headers in Project Properties.\par
+ * To change this template file, choose Tools | Templates\par
+ * and open the template in the editor.\par
+ */}\par
+{\cf8\b package} {\cf19\b dreieckezaehlen}{\cf4 ;}\par
+\par
+{\cf5\i /**\par
+ *\par
+ * @author lars\par
+ */}\par
+{\cf8\b public} {\cf8\b class} {\cf19\b Rechteck} {\cf4 \{}\par
+    {\cf8\b public} Dezimalzahl x{\cf4 ;}\par
+    {\cf8\b public} Dezimalzahl y{\cf4 ;}\par
+    {\cf8\b public} Dezimalzahl w{\cf4 ;}\par
+    {\cf8\b public} Dezimalzahl h{\cf4 ;}\par
+    {\cf8\b public} Punkt{\cf4 [}{\cf4 ]} eckpunkte{\cf4 ;}\par
+    {\cf8\b public} {\cf19 Rechteck}{\cf4 (}Dezimalzahl x{\cf4 ,} Dezimalzahl y{\cf4 ,} Dezimalzahl w{\cf4 ,} Dezimalzahl h{\cf4 )} {\cf4 \{}\par
+        {\cf8\b this}{\cf4 .}{\cf23 x} {\cf4 =} x{\cf4 ;}\par
+        {\cf8\b this}{\cf4 .}{\cf23 y} {\cf4 =} y{\cf4 ;}\par
+        {\cf8\b this}{\cf4 .}{\cf23 w} {\cf4 =} w{\cf4 ;}\par
+        {\cf8\b this}{\cf4 .}{\cf23 h} {\cf4 =} h{\cf4 ;}\par
+        eckpunkte{\cf4 =}{\cf8\b new} Punkt{\cf4 [}{\cf4 ]} {\cf4 \{}\par
+          {\cf8\b new} Punkt{\cf4 (}x{\cf4 ,}y{\cf4 )}{\cf4 ,}\par
+          {\cf8\b new} Punkt{\cf4 (}x{\cf4 .}{\cf23 plus}{\cf4 (}w{\cf4 )}{\cf4 ,}y{\cf4 )}{\cf4 ,}\par
+          {\cf8\b new} Punkt{\cf4 (}x{\cf4 .}{\cf23 plus}{\cf4 (}w{\cf4 )}{\cf4 ,}y{\cf4 .}{\cf23 plus}{\cf4 (}h{\cf4 )}{\cf4 )}{\cf4 ,}\par
+          {\cf8\b new} Punkt{\cf4 (}x{\cf4 ,}y{\cf4 .}{\cf23 plus}{\cf4 (}h{\cf4 )}{\cf4 )}{\cf4 ,}\par
+        {\cf4 \}}{\cf4 ;}\par
+    {\cf4 \}}\par
+    {\cf8\b public} {\cf19 Rechteck}{\cf4 (}Punkt a{\cf4 ,} Punkt b{\cf4 )} {\cf4 \{}\par
+        {\cf8\b this}{\cf4 .}{\cf23 w}{\cf4 =}Dezimalzahl{\cf4 .}{\cf23 abs}{\cf4 (}a{\cf4 .}{\cf23 x}{\cf4 .}{\cf23 minus}{\cf4 (}b{\cf4 .}{\cf23 x}{\cf4 )}{\cf4 )}{\cf4 ;}\par
+        {\cf8\b this}{\cf4 .}{\cf23 h}{\cf4 =}Dezimalzahl{\cf4 .}{\cf23 abs}{\cf4 (}a{\cf4 .}{\cf23 y}{\cf4 .}{\cf23 minus}{\cf4 (}b{\cf4 .}{\cf23 y}{\cf4 )}{\cf4 )}{\cf4 ;}\par
+        {\cf8\b this}{\cf4 .}{\cf23 x}{\cf4 =}Dezimalzahl{\cf4 .}{\cf23 min}{\cf4 (}a{\cf4 .}{\cf23 x}{\cf4 ,}b{\cf4 .}{\cf23 x}{\cf4 )}{\cf4 ;}\par
+        {\cf8\b this}{\cf4 .}{\cf23 y}{\cf4 =}Dezimalzahl{\cf4 .}{\cf23 min}{\cf4 (}a{\cf4 .}{\cf23 y}{\cf4 ,}b{\cf4 .}{\cf23 y}{\cf4 )}{\cf4 ;}\par
+        eckpunkte{\cf4 =}{\cf8\b new} Punkt{\cf4 [}{\cf4 ]} {\cf4 \{}\par
+          {\cf8\b new} Punkt{\cf4 (}x{\cf4 ,}y{\cf4 )}{\cf4 ,}\par
+          {\cf8\b new} Punkt{\cf4 (}x{\cf4 .}{\cf23 plus}{\cf4 (}w{\cf4 )}{\cf4 ,}y{\cf4 )}{\cf4 ,}\par
+          {\cf8\b new} Punkt{\cf4 (}x{\cf4 .}{\cf23 plus}{\cf4 (}w{\cf4 )}{\cf4 ,}y{\cf4 .}{\cf23 plus}{\cf4 (}h{\cf4 )}{\cf4 )}{\cf4 ,}\par
+          {\cf8\b new} Punkt{\cf4 (}x{\cf4 ,}y{\cf4 .}{\cf23 plus}{\cf4 (}h{\cf4 )}{\cf4 )}{\cf4 ,}\par
+        {\cf4 \}}{\cf4 ;}\par
+    {\cf4 \}}\par
+    {\cf8\b public} {\cf18 boolean} {\cf19 schneidetPunkt}{\cf4 (}Punkt p{\cf4 )} {\cf4 \{}\par
+        {\cf8\b return} p{\cf4 .}{\cf23 x}{\cf4 .}{\cf23 gg}{\cf4 (}eckpunkte{\cf4 [}{\cf4 0}{\cf4 ]}{\cf4 .}{\cf23 x}{\cf4 )} {\cf4 &}{\cf4 &} p{\cf4 .}{\cf23 x}{\cf4 .}{\cf23 kg}{\cf4 (}eckpunkte{\cf4 [}{\cf4 1}{\cf4 ]}{\cf4 .}{\cf23 x}{\cf4 )} {\cf4 &}{\cf4 &} p{\cf4 .}{\cf23 y}{\cf4 .}{\cf23 gg}{\cf4 (}eckpunkte{\cf4 [}{\cf4 0}{\cf4 ]}{\cf4 .}{\cf23 y}{\cf4 )} {\cf4 &}{\cf4 &} p{\cf4 .}{\cf23 y}{\cf4 .}{\cf23 kg}{\cf4 (}eckpunkte{\cf4 [}{\cf4 3}{\cf4 ]}{\cf4 .}{\cf23 y}{\cf4 )}{\cf4 ;}\par
+    {\cf4 \}}\par
+    {\cf12 @Override}\par
+    {\cf8\b public} String {\cf19 toString}{\cf4 (}{\cf4 )} {\cf4 \{}\par
+        String s{\cf4 =}{\cf2 "X : "}{\cf4 +}x{\cf4 .}{\cf23 toString}{\cf4 (}{\cf4 )}{\cf4 +}{\cf2 "Y : "}{\cf4 +}y{\cf4 .}{\cf23 toString}{\cf4 (}{\cf4 )}{\cf4 +}{\cf2 " W : "}{\cf4 +}w{\cf4 .}{\cf23 toString}{\cf4 (}{\cf4 )}{\cf4 +}{\cf2 " H : "}{\cf4 +}h{\cf4 .}{\cf23 toString}{\cf4 (}{\cf4 )}{\cf4 ;}\par
+        {\cf8\b return} s{\cf4 ;}\par
+    {\cf4 \}}\par
+{\cf4 \}}\par
+}

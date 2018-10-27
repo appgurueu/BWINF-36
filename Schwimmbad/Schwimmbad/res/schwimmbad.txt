@@ -1,0 +1,25 @@
+Beispiel 1:
+
+Eine Abiturklasse mit 26 Schülerinnen und Schülern und einer Lehrerin
+wollen an einen Wochentag das Schwimmbad besuchen.  Sie haben drei
+Gutscheine und wollen eigentlich an einem beliebigen Tag in den Ferien
+gehen.  Wenn sie aber dadurch mindestens €5 sparen können, würden
+sie den Besuch auf die Schulzeit verschieben, der dann aber am Wochenende
+stattfinden müsste.
+
+Beispiel 2:
+
+Die Großfamilie Stutzenberg besteht aus Anton und Gerda, die eine Tochter
+Amalie haben.  Diese ist mit Gerhard verheiratet und hat mit ihm die fünf
+Kinder Bobo (3), Zoe (7), Bibi(10), Josefine (14) und Josef (17).
+Außerdem bringt Josef noch seine Freundin Miri (15) mit.  Sie möchten
+die Eintrittspreise für Besuche an Wochentagen und am Wochenende
+herausfinden, aber nur während der Ferienzeit.
+
+Beispiel 3:
+
+Zwei Kegelvereine mit 14 beziehungsweise 18 volljährigen Mitgliedern
+haben zusammen zwei Gutscheine.  Sie möchten eigentlich an zwei
+verschiedenen Wochenenden (beide nicht in den Ferien) das Schwimmbad
+heimsuchen.  Wieviel können sie sparen, wenn sie stattdessen zusammen
+gehen?

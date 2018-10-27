@@ -1,0 +1,81 @@
+{\rtf1\ansi\uc0\deff0{\fonttbl{\f0\fmodern\fprq1\fcharset0;}}{\colortbl;\red136\green136\blue136;\red186\green33\blue33;\red0\green68\blue221;\red102\green102\blue102;\red64\green128\blue128;\red160\green160\blue0;\red25\green23\blue124;\red0\green128\blue0;\red187\green102\blue136;\red187\green102\blue34;\red136\green0\blue0;\red170\green34\blue255;\red153\green153\blue153;\red0\green160\blue0;\red160\green0\blue0;\red255\green0\blue0;\red128\green0\blue128;\red176\green0\blue64;\red0\green0\blue255;\red187\green187\blue187;\red188\green122\blue0;\red0\green0\blue128;\red125\green144\blue41;\red210\green65\blue58;}\f0 {\cf5\i /*\par
+ * To change this license header, choose License Headers in Project Properties.\par
+ * To change this template file, choose Tools | Templates\par
+ * and open the template in the editor.\par
+ */}\par
+{\cf8\b package} {\cf19\b zimmerbelegung}{\cf4 ;}\par
+\par
+{\cf8\b import} {\cf19\b java.util.HashMap}{\cf4 ;}\par
+{\cf8\b import} {\cf19\b java.util.Map.Entry}{\cf4 ;}\par
+\par
+{\cf5\i /**\par
+ *\par
+ * @author lars\par
+ */}\par
+{\cf8\b public} {\cf8\b class} {\cf19\b Zimmer} {\cf4 \{}\par
+\par
+    {\cf8\b public} {\cf8\b static} {\cf18 byte} ZAEHLER {\cf4 =} {\cf4 1}{\cf4 ;} {\cf5\i //Z{\u228}hler f{\u252}rs Durchnummerieren\par
+}    {\cf8\b public} {\cf18 byte} id{\cf4 ;} {\cf5\i //ID\par
+}    {\cf8\b public} HashMap{\cf4 <}String{\cf4 ,} Boolean{\cf4 >} zimmergegner{\cf4 ;} {\cf5\i //Gegner, Wert ist hier egal\par
+}    {\cf8\b public} HashMap{\cf4 <}String{\cf4 ,} Boolean{\cf4 >} zimmerinsassen{\cf4 ;} {\cf5\i //Insassen, Wert ist hier egal\par
+}\par
+    {\cf8\b public} {\cf19 Zimmer}{\cf4 (}{\cf18 byte} id{\cf4 )} {\cf4 \{} {\cf5\i //Konstruktor, Zimmernummer wird vorgegeben\par
+}        {\cf8\b this}{\cf4 .}{\cf23 id} {\cf4 =} id{\cf4 ;}\par
+        zimmerinsassen {\cf4 =} {\cf8\b new} HashMap{\cf4 (}{\cf4 )}{\cf4 ;}\par
+        zimmergegner {\cf4 =} {\cf8\b new} HashMap{\cf4 (}{\cf4 )}{\cf4 ;}\par
+    {\cf4 \}}\par
+\par
+    {\cf8\b public} {\cf8\b static} {\cf18 void} {\cf19 zaehlerZuruecksetzen}{\cf4 (}{\cf4 )} {\cf4 \{}\par
+        ZAEHLER {\cf4 =} {\cf4 1}{\cf4 ;}\par
+    {\cf4 \}}\par
+\par
+    {\cf8\b public} {\cf18 boolean} {\cf19 kannLeiden}{\cf4 (}Zimmer z{\cf4 )} {\cf4 \{} {\cf5\i //Pr{\u252}ft, ob ein Zimmer und ein Anderes zusammengef{\u252}hrt werden k{\u246}nnen, also ob kein Zimmerinsasse einen Insassen des anderen Zimmers als Gegner hat\par
+}        {\cf8\b for} {\cf4 (}Entry e {\cf4 :} z{\cf4 .}{\cf23 zimmerinsassen}{\cf4 .}{\cf23 entrySet}{\cf4 (}{\cf4 )}{\cf4 )} {\cf4 \{}\par
+            String insasse{\cf4 =}{\cf4 (}String{\cf4 )}e{\cf4 .}{\cf23 getKey}{\cf4 (}{\cf4 )}{\cf4 ;}\par
+            {\cf8\b for} {\cf4 (}Entry v {\cf4 :} zimmergegner{\cf4 .}{\cf23 entrySet}{\cf4 (}{\cf4 )}{\cf4 )} {\cf4 \{}\par
+                String gegner{\cf4 =}{\cf4 (}String{\cf4 )}v{\cf4 .}{\cf23 getKey}{\cf4 (}{\cf4 )}{\cf4 ;}\par
+                {\cf8\b if} {\cf4 (}insasse{\cf4 .}{\cf23 equals}{\cf4 (}gegner{\cf4 )}{\cf4 )} {\cf4 \{} {\cf5\i //Ist ein Gegner dieses Zimmers im anderen Zimmer ?\par
+}                    {\cf8\b return} {\cf8\b false}{\cf4 ;} {\cf5\i //Gebe zur{\u252}ck : Leider k{\u246}nnen sich die Zimmer nicht leiden !\par
+}                {\cf4 \}}\par
+            {\cf4 \}}\par
+        {\cf4 \}}\par
+        {\cf8\b for} {\cf4 (}Entry e {\cf4 :} zimmerinsassen{\cf4 .}{\cf23 entrySet}{\cf4 (}{\cf4 )}{\cf4 )} {\cf4 \{}\par
+            String insasse{\cf4 =}{\cf4 (}String{\cf4 )}e{\cf4 .}{\cf23 getKey}{\cf4 (}{\cf4 )}{\cf4 ;}\par
+            {\cf8\b for} {\cf4 (}Entry v {\cf4 :} z{\cf4 .}{\cf23 zimmergegner}{\cf4 .}{\cf23 entrySet}{\cf4 (}{\cf4 )}{\cf4 )} {\cf4 \{}\par
+                String gegner{\cf4 =}{\cf4 (}String{\cf4 )}v{\cf4 .}{\cf23 getKey}{\cf4 (}{\cf4 )}{\cf4 ;}\par
+                {\cf8\b if} {\cf4 (}insasse{\cf4 .}{\cf23 equals}{\cf4 (}gegner{\cf4 )}{\cf4 )} {\cf4 \{} {\cf5\i //Ist ein Gegner des anderen Zimmers in diesem Zimmer ?\par
+}                    {\cf8\b return} {\cf8\b false}{\cf4 ;} {\cf5\i //Gebe zur{\u252}ck : Leider k{\u246}nnen sich die Zimmer nicht leiden !\par
+}                {\cf4 \}}\par
+            {\cf4 \}}\par
+        {\cf4 \}}\par
+        {\cf8\b return} {\cf8\b true}{\cf4 ;} {\cf5\i //Wenn nichts davon der Fall ist, k{\u246}nnen sich die Zimmer leiden.\par
+}    {\cf4 \}}\par
+\par
+    {\cf8\b public} Zimmer {\cf19 zimmerZusammenfuehren}{\cf4 (}Zimmer z{\cf4 )} {\cf4 \{} {\cf5\i //Neues Zimmer aus diesem Zimmer + Zimmer z erstellen\par
+}        Zimmer g{\cf4 =}{\cf8\b new} Zimmer{\cf4 (}{\cf8\b this}{\cf4 .}{\cf23 id}{\cf4 )}{\cf4 ;}\par
+        g{\cf4 .}{\cf23 zimmerinsassen}{\cf4 .}{\cf23 putAll}{\cf4 (}z{\cf4 .}{\cf23 zimmerinsassen}{\cf4 )}{\cf4 ;}\par
+        g{\cf4 .}{\cf23 zimmergegner}{\cf4 .}{\cf23 putAll}{\cf4 (}z{\cf4 .}{\cf23 zimmergegner}{\cf4 )}{\cf4 ;}\par
+        g{\cf4 .}{\cf23 zimmerinsassen}{\cf4 .}{\cf23 putAll}{\cf4 (}zimmerinsassen{\cf4 )}{\cf4 ;}\par
+        g{\cf4 .}{\cf23 zimmergegner}{\cf4 .}{\cf23 putAll}{\cf4 (}zimmergegner{\cf4 )}{\cf4 ;}\par
+        {\cf8\b return} g{\cf4 ;}\par
+    {\cf4 \}}\par
+\par
+    {\cf12 @Override}\par
+    {\cf8\b public} String {\cf19 toString}{\cf4 (}{\cf4 )} {\cf4 \{} {\cf5\i //Zimmer ausgeben, optimierte Darstellung\par
+}        String b {\cf4 =} {\cf2 "Zimmer : "} {\cf4 +} Byte{\cf4 .}{\cf23 toString}{\cf4 (}ZAEHLER{\cf4 )} {\cf4 +} {\cf2 " mit "} {\cf4 +} Integer{\cf4 .}{\cf23 toString}{\cf4 (}zimmerinsassen{\cf4 .}{\cf23 size}{\cf4 (}{\cf4 )}{\cf4 )} {\cf4 +} {\cf2 " Bewohner"}{\cf4 ;}\par
+        {\cf8\b if} {\cf4 (}zimmerinsassen{\cf4 .}{\cf23 size}{\cf4 (}{\cf4 )} {\cf4 !}{\cf4 =} {\cf4 1}{\cf4 )} {\cf4 \{}\par
+            b {\cf4 +}{\cf4 =} {\cf2 "n"}{\cf4 ;}\par
+        {\cf4 \}}\par
+        String s {\cf4 =} {\cf2 ""}{\cf4 ;}\par
+        {\cf8\b if} {\cf4 (}ZAEHLER {\cf4 !}{\cf4 =} {\cf4 1}{\cf4 )} {\cf4 \{}\par
+            {\cf8\b for} {\cf4 (}{\cf18 int} i {\cf4 =} {\cf4 0}{\cf4 ;} i {\cf4 <} b{\cf4 .}{\cf23 length}{\cf4 (}{\cf4 )}{\cf4 ;} i{\cf4 +}{\cf4 +}{\cf4 )} {\cf4 \{}\par
+                s {\cf4 +}{\cf4 =} {\cf2 "-"}{\cf4 ;}\par
+            {\cf4 \}}\par
+        {\cf4 \}}\par
+        s {\cf4 +}{\cf4 =} {\cf2 "\\n"} {\cf4 +} b {\cf4 +} {\cf2 "\\n"}{\cf4 ;}\par
+        s{\cf4 +}{\cf4 =}Zimmerbelegung{\cf4 .}{\cf23 gebeListeAus}{\cf4 (}zimmerinsassen{\cf4 .}{\cf23 entrySet}{\cf4 (}{\cf4 )}{\cf4 )}{\cf4 ;}\par
+        ZAEHLER{\cf4 +}{\cf4 +}{\cf4 ;}\par
+        {\cf8\b return} s{\cf4 ;}\par
+    {\cf4 \}}\par
+{\cf4 \}}\par
+}

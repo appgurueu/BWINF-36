@@ -1,0 +1,118 @@
+{\rtf1\ansi\uc0\deff0{\fonttbl{\f0\fmodern\fprq1\fcharset0;}}{\colortbl;\red136\green136\blue136;\red186\green33\blue33;\red0\green68\blue221;\red102\green102\blue102;\red64\green128\blue128;\red160\green160\blue0;\red25\green23\blue124;\red0\green128\blue0;\red187\green102\blue136;\red187\green102\blue34;\red136\green0\blue0;\red170\green34\blue255;\red153\green153\blue153;\red0\green160\blue0;\red160\green0\blue0;\red255\green0\blue0;\red128\green0\blue128;\red176\green0\blue64;\red0\green0\blue255;\red187\green187\blue187;\red188\green122\blue0;\red0\green0\blue128;\red125\green144\blue41;\red210\green65\blue58;}\f0 {\cf8\b package} {\cf19\b buecherregal}{\cf4 ;}\par
+\par
+{\cf5\i //Bibliotheken, um Dateien zu lesen\par
+}{\cf8\b import} {\cf19\b java.io.File}{\cf4 ;}\par
+{\cf8\b import} {\cf19\b java.io.FileNotFoundException}{\cf4 ;}\par
+{\cf8\b import} {\cf19\b java.io.FileReader}{\cf4 ;}\par
+{\cf8\b import} {\cf19\b java.io.IOException}{\cf4 ;}\par
+{\cf5\i //Listen\par
+}{\cf8\b import} {\cf19\b java.util.ArrayList}{\cf4 ;}\par
+{\cf5\i //Benutzer-Eingabe\par
+}{\cf8\b import} {\cf19\b java.util.Scanner}{\cf4 ;}\par
+\par
+{\cf5\i /**\par
+ *\par
+ * @author lars\par
+ */}\par
+\par
+{\cf8\b public} {\cf8\b class} {\cf19\b Buecherregal} {\cf4 \{}\par
+\par
+    {\cf8\b public} {\cf8\b static} {\cf8\b final} Scanner EINGABE {\cf4 =} {\cf8\b new} Scanner{\cf4 (}System{\cf4 .}{\cf23 in}{\cf4 )}{\cf4 ;}\par
+\par
+    {\cf8\b public} {\cf8\b static} String {\cf19 leseDatei}{\cf4 (}File pfad_zur_datei{\cf4 )} {\cf8\b throws} FileNotFoundException{\cf4 ,} IOException {\cf4 \{} {\cf5\i //Liest eine Datei ein, und gibt Text zur{\u252}ck\par
+}        FileReader datei {\cf4 =} {\cf8\b new} FileReader{\cf4 (}pfad_zur_datei{\cf4 )}{\cf4 ;}\par
+        String r {\cf4 =} {\cf2 ""}{\cf4 ;}\par
+        {\cf18 int} i {\cf4 =} datei{\cf4 .}{\cf23 read}{\cf4 (}{\cf4 )}{\cf4 ;}\par
+        {\cf8\b while} {\cf4 (}i {\cf4 !}{\cf4 =} {\cf4 -}{\cf4 1}{\cf4 )} {\cf4 \{}\par
+            r {\cf4 +}{\cf4 =} {\cf4 (}{\cf18 char}{\cf4 )} i{\cf4 ;}\par
+            i {\cf4 =} datei{\cf4 .}{\cf23 read}{\cf4 (}{\cf4 )}{\cf4 ;}\par
+        {\cf4 \}}\par
+        {\cf8\b return} r{\cf4 ;}\par
+    {\cf4 \}}\par
+\par
+    {\cf8\b public} {\cf8\b static} File {\cf19 dateiFrage}{\cf4 (}String frage{\cf4 )} {\cf4 \{} {\cf5\i //Fragt nach einem Pfad und pr{\u252}ft, ob dieser existiert\par
+}        {\cf8\b while} {\cf4 (}{\cf8\b true}{\cf4 )} {\cf4 \{}\par
+            System{\cf4 .}{\cf23 out}{\cf4 .}{\cf23 println}{\cf4 (}frage {\cf4 +} {\cf2 "(Pfad zu .txt Datei) ? "}{\cf4 )}{\cf4 ;}\par
+            String s {\cf4 =} EINGABE{\cf4 .}{\cf23 nextLine}{\cf4 (}{\cf4 )}{\cf4 ;}\par
+            File f {\cf4 =} {\cf8\b new} File{\cf4 (}s{\cf4 )}{\cf4 ;}\par
+            {\cf8\b if} {\cf4 (}f{\cf4 .}{\cf23 exists}{\cf4 (}{\cf4 )} {\cf4 &}{\cf4 &} {\cf4 !}f{\cf4 .}{\cf23 isDirectory}{\cf4 (}{\cf4 )} {\cf4 &}{\cf4 &} f{\cf4 .}{\cf23 canRead}{\cf4 (}{\cf4 )}{\cf4 )} {\cf4 \{} {\cf5\i //Pr{\u252}fe, ob : - existiert die Datei - ist es kein Ordner - ist sie lesbar\par
+}                {\cf8\b return} f{\cf4 ;} {\cf5\i //Gebe Pfad zur{\u252}ck\par
+}            {\cf4 \}}\par
+            System{\cf4 .}{\cf23 out}{\cf4 .}{\cf23 println}{\cf4 (}{\cf2 "Bitte antworten sie mit einem vorhandenen Pfad einer .txt Datei. Versuchen sie es erneut."}{\cf4 )}{\cf4 ;}\par
+        {\cf4 \}}\par
+    {\cf4 \}}\par
+\par
+    {\cf8\b public} {\cf8\b static} ArrayList{\cf4 <}Integer{\cf4 >} {\cf19 sort}{\cf4 (}ArrayList{\cf4 <}Integer{\cf4 >} liste{\cf4 ,} ArrayList{\cf4 <}Integer{\cf4 >} sortiert{\cf4 )} {\cf4 \{} {\cf5\i //Sortiert eine Liste\par
+}        {\cf5\i //Das kleinste Element und dessen Position(Index) bestimmen\par
+}        {\cf18 int} kleinster_wert_index {\cf4 =} {\cf4 0}{\cf4 ;}             \par
+        {\cf18 int} kleinster_wert {\cf4 =} liste{\cf4 .}{\cf23 get}{\cf4 (}{\cf4 0}{\cf4 )}{\cf4 ;}         \par
+        {\cf8\b for} {\cf4 (}{\cf18 int} i {\cf4 =} {\cf4 1}{\cf4 ;} i {\cf4 <} liste{\cf4 .}{\cf23 size}{\cf4 (}{\cf4 )}{\cf4 ;} i{\cf4 +}{\cf4 +}{\cf4 )} {\cf4 \{}   \par
+            {\cf18 int} wert {\cf4 =} liste{\cf4 .}{\cf23 get}{\cf4 (}i{\cf4 )}{\cf4 ;}             \par
+            {\cf8\b if} {\cf4 (}wert {\cf4 <} kleinster_wert{\cf4 )} {\cf4 \{}         \par
+                kleinster_wert_index {\cf4 =} i{\cf4 ;}          \par
+                kleinster_wert {\cf4 =} wert{\cf4 ;}\par
+            {\cf4 \}}\par
+        {\cf4 \}}\par
+        {\cf8\b if} {\cf4 (}liste{\cf4 .}{\cf23 size}{\cf4 (}{\cf4 )} {\cf4 >} {\cf4 1}{\cf4 )} {\cf4 \{} {\cf5\i //Falls es noch zu sortierende Elemente gibt\par
+}            liste{\cf4 .}{\cf23 remove}{\cf4 (}kleinster_wert_index{\cf4 )}{\cf4 ;} {\cf5\i //Den ermittelten Wert von der Liste entfernen\par
+}            sortiert{\cf4 .}{\cf23 add}{\cf4 (}kleinster_wert{\cf4 )}{\cf4 ;} {\cf5\i //Zur sortierten Liste hinzuf{\u252}gen\par
+}            {\cf8\b return} sort{\cf4 (}liste{\cf4 ,} sortiert{\cf4 )}{\cf4 ;} {\cf5\i //Rufe Funktion noch einmal auf, diesesmal wurde der jetzt ermittelte kleinste Wert aber entfernt\par
+}        {\cf4 \}}\par
+        {\cf8\b return} sortiert{\cf4 ;} {\cf5\i //Wenn das letzte Element angeh{\u228}ngt wurde, kann die sortierte Liste zur{\u252}ckgegeben werden\par
+}    {\cf4 \}}\par
+\par
+    {\cf5\i /**\par
+     * @param args the command line arguments\par
+     */}\par
+    {\cf8\b public} {\cf8\b static} {\cf18 void} {\cf19 main}{\cf4 (}String{\cf4 [}{\cf4 ]} args{\cf4 )} {\cf8\b throws} IOException {\cf4 \{}\par
+        String aufgabe {\cf4 =} leseDatei{\cf4 (}dateiFrage{\cf4 (}{\cf2 "Wo befindet sich die Aufgabe"}{\cf4 )}{\cf4 )}{\cf4 ;} {\cf5\i //Inhalt der Aufgabendatei\par
+}        String{\cf4 [}{\cf4 ]} zeilen {\cf4 =} aufgabe{\cf4 .}{\cf23 split}{\cf4 (}{\cf2 "\\n"}{\cf4 )}{\cf4 ;} {\cf5\i //S{\u228}mtliche Zahlen in der Aufgabedatei, welche ja untereinander geschrieben waren(deswegen trennen wir nach Zeilenumbr{\u252}chen)\par
+}        ArrayList{\cf4 <}Integer{\cf4 >} hoehen_liste {\cf4 =} {\cf8\b new} ArrayList{\cf4 (}{\cf4 )}{\cf4 ;} {\cf5\i //Liste, welche die H{\u246}hen aller B{\u252}cher speichert\par
+}        {\cf18 int} figuren {\cf4 =} Integer{\cf4 .}{\cf23 parseInt}{\cf4 (}zeilen{\cf4 [}{\cf4 0}{\cf4 ]}{\cf4 )}{\cf4 ;} {\cf5\i //Anzahl der Dekofiguren\par
+}        {\cf8\b for} {\cf4 (}{\cf18 int} i {\cf4 =} {\cf4 2}{\cf4 ;} i {\cf4 <} zeilen{\cf4 .}{\cf23 length}{\cf4 ;} i{\cf4 +}{\cf4 +}{\cf4 )} {\cf4 \{} {\cf5\i //Mit Zeile 3 fangen die H{\u246}hen der B{\u252}cher an\par
+}            hoehen_liste{\cf4 .}{\cf23 add}{\cf4 (}Integer{\cf4 .}{\cf23 parseInt}{\cf4 (}zeilen{\cf4 [}i{\cf4 ]}{\cf4 )}{\cf4 )}{\cf4 ;}\par
+        {\cf4 \}}\par
+        hoehen_liste {\cf4 =} sort{\cf4 (}hoehen_liste{\cf4 ,} {\cf8\b new} ArrayList{\cf4 (}{\cf4 )}{\cf4 )}{\cf4 ;} {\cf5\i //Wir sortieren die B{\u252}cher der H{\u246}he nach\par
+}        {\cf5\i //Anmerkung : Es k{\u246}nnte auch eine Die Built-In Sortierfunktion von Java(Arrays.sort(<hoehen>)) auf ein Array angewendet werden\par
+}        {\cf5\i //Da ich jedoch den Sortieralgorithmus f{\u252}r einen wichtigen Teil der Aufgabe halte, habe ich diesen selbst implementiert\par
+}        {\cf18 byte} a {\cf4 =} {\cf4 0}{\cf4 ;} {\cf5\i //Aktueller Abschnitt a\par
+}        {\cf18 int} min {\cf4 =} hoehen_liste{\cf4 .}{\cf23 get}{\cf4 (}{\cf4 0}{\cf4 )}{\cf4 ;} {\cf5\i //Kleinstes Buch des aktuellen Abschnittes\par
+}        ArrayList{\cf4 <}Abschnitt{\cf4 >} abschnitte {\cf4 =} {\cf8\b new} ArrayList{\cf4 (}{\cf4 )}{\cf4 ;}\par
+        abschnitte{\cf4 .}{\cf23 add}{\cf4 (}{\cf8\b new} Abschnitt{\cf4 (}{\cf4 )}{\cf4 )}{\cf4 ;}\par
+        abschnitte{\cf4 .}{\cf23 get}{\cf4 (}{\cf4 0}{\cf4 )}{\cf4 .}{\cf23 add}{\cf4 (}hoehen_liste{\cf4 .}{\cf23 get}{\cf4 (}{\cf4 0}{\cf4 )}{\cf4 )}{\cf4 ;}\par
+        {\cf8\b for} {\cf4 (}{\cf18 int} i {\cf4 =} {\cf4 1}{\cf4 ;} i {\cf4 <} hoehen_liste{\cf4 .}{\cf23 size}{\cf4 (}{\cf4 )}{\cf4 ;} i{\cf4 +}{\cf4 +}{\cf4 )} {\cf4 \{}\par
+            {\cf18 int} wert {\cf4 =} hoehen_liste{\cf4 .}{\cf23 get}{\cf4 (}i{\cf4 )}{\cf4 ;}\par
+            {\cf8\b if} {\cf4 (}wert {\cf4 -} min {\cf4 >} {\cf4 30}{\cf4 )} {\cf4 \{} {\cf5\i //Wenn das jetztige Buch mehr als 30 mm h{\u246}her ist als das kleinste dieses Abschnittes, so muss zwangsweise ein neuer Abschnitt beginnen\par
+}                min {\cf4 =} wert{\cf4 ;} {\cf5\i //Kleinstes Buch des neuen Abschnittes ist das jetztige Buch\par
+}                a{\cf4 +}{\cf4 +}{\cf4 ;} {\cf5\i //Neuer Abschnitt\par
+}                abschnitte{\cf4 .}{\cf23 add}{\cf4 (}{\cf8\b new} Abschnitt{\cf4 (}{\cf4 )}{\cf4 )}{\cf4 ;} {\cf5\i //Neuen Abschnitt zu der Liste der Abschnitte hinzuf{\u252}gen\par
+}            {\cf4 \}}\par
+            abschnitte{\cf4 .}{\cf23 get}{\cf4 (}a{\cf4 )}{\cf4 .}{\cf23 add}{\cf4 (}wert{\cf4 )}{\cf4 ;} {\cf5\i //Dem Abschnitt mit Index a in der Liste von Abschnitten die H{\u246}he des Buches mit Nummer i hinzuf{\u252}gen\par
+}        {\cf4 \}}\par
+        {\cf8\b if} {\cf4 (}abschnitte{\cf4 .}{\cf23 size}{\cf4 (}{\cf4 )} {\cf4 <} figuren{\cf4 )} {\cf4 \{} {\cf5\i //Haben wir noch nicht genug Abschnitte ?\par
+}            {\cf8\b for} {\cf4 (}{\cf18 int} i {\cf4 =} {\cf4 0}{\cf4 ;} i {\cf4 <} abschnitte{\cf4 .}{\cf23 size}{\cf4 (}{\cf4 )}{\cf4 ;} i{\cf4 +}{\cf4 +}{\cf4 )} {\cf4 \{}\par
+                {\cf8\b if} {\cf4 (}abschnitte{\cf4 .}{\cf23 size}{\cf4 (}{\cf4 )} {\cf4 =}{\cf4 =} figuren{\cf4 )} {\cf4 \{}\par
+                    {\cf8\b break}{\cf4 ;}\par
+                {\cf4 \}} {\cf8\b else} {\cf4 \{}\par
+                    {\cf18 int} buecher_im_abschnitt {\cf4 =} abschnitte{\cf4 .}{\cf23 get}{\cf4 (}i{\cf4 )}{\cf4 .}{\cf23 size}{\cf4 (}{\cf4 )}{\cf4 ;}\par
+                    {\cf8\b if} {\cf4 (}buecher_im_abschnitt {\cf4 >} {\cf4 1}{\cf4 )} {\cf4 \{}\par
+                        Abschnitt ab {\cf4 =} {\cf8\b new} Abschnitt{\cf4 (}{\cf4 )}{\cf4 ;}\par
+                        ab{\cf4 .}{\cf23 add}{\cf4 (}abschnitte{\cf4 .}{\cf23 get}{\cf4 (}i{\cf4 )}{\cf4 .}{\cf23 get}{\cf4 (}buecher_im_abschnitt {\cf4 -} {\cf4 1}{\cf4 )}{\cf4 )}{\cf4 ;} {\cf5\i //Neuer Abschnitt aus dem letzten Buch dieses Abschnittes\par
+}                        abschnitte{\cf4 .}{\cf23 get}{\cf4 (}i{\cf4 )}{\cf4 .}{\cf23 remove}{\cf4 (}buecher_im_abschnitt {\cf4 -} {\cf4 1}{\cf4 )}{\cf4 ;} {\cf5\i //Letztes Buch aus altem Abschnitt entfernen\par
+}                        abschnitte{\cf4 .}{\cf23 add}{\cf4 (}ab{\cf4 )}{\cf4 ;} {\cf5\i //Neuen Abschnitt hinzuf{\u252}gen\par
+}                    {\cf4 \}}\par
+                    {\cf8\b if} {\cf4 (}i {\cf4 =}{\cf4 =} abschnitte{\cf4 .}{\cf23 size}{\cf4 (}{\cf4 )} {\cf4 -} {\cf4 1}{\cf4 )} {\cf4 \{}\par
+                        i {\cf4 =} {\cf4 0}{\cf4 ;} {\cf5\i //Wieder von vorne anfangen, wenn immer noch nicht gen{\u252}gend Abschnitte vorhanden sein sollten\par
+}                    {\cf4 \}}\par
+                {\cf4 \}}\par
+            {\cf4 \}}\par
+        {\cf4 \}}\par
+        {\cf8\b if} {\cf4 (}abschnitte{\cf4 .}{\cf23 size}{\cf4 (}{\cf4 )} {\cf4 >}{\cf4 =} figuren{\cf4 )} {\cf4 \{} {\cf5\i //Gibt es genug Abschnitte ?\par
+}            System{\cf4 .}{\cf23 out}{\cf4 .}{\cf23 println}{\cf4 (}Abschnitt{\cf4 .}{\cf23 toString}{\cf4 (}abschnitte{\cf4 )}{\cf4 )}{\cf4 ;} {\cf5\i //L{\u246}sung ausgeben\par
+}        {\cf4 \}} {\cf8\b else} {\cf4 \{} {\cf5\i //Ansonsten war diese Aufgabe offensichtlich unl{\u246}sbar\par
+}            System{\cf4 .}{\cf23 out}{\cf4 .}{\cf23 println}{\cf4 (}{\cf2 "Diese Aufgabe l{\u228}sst sich leider nicht l{\u246}sen."}{\cf4 )}{\cf4 ;}\par
+        {\cf4 \}}\par
+    {\cf4 \}}\par
+\par
+{\cf4 \}}\par
+}

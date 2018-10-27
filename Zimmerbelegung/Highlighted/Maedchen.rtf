@@ -1,0 +1,27 @@
+{\rtf1\ansi\uc0\deff0{\fonttbl{\f0\fmodern\fprq1\fcharset0;}}{\colortbl;\red136\green136\blue136;\red186\green33\blue33;\red0\green68\blue221;\red102\green102\blue102;\red64\green128\blue128;\red160\green160\blue0;\red25\green23\blue124;\red0\green128\blue0;\red187\green102\blue136;\red187\green102\blue34;\red136\green0\blue0;\red170\green34\blue255;\red153\green153\blue153;\red0\green160\blue0;\red160\green0\blue0;\red255\green0\blue0;\red128\green0\blue128;\red176\green0\blue64;\red0\green0\blue255;\red187\green187\blue187;\red188\green122\blue0;\red0\green0\blue128;\red125\green144\blue41;\red210\green65\blue58;}\f0 {\cf5\i /*\par
+ * To change this license header, choose License Headers in Project Properties.\par
+ * To change this template file, choose Tools | Templates\par
+ * and open the template in the editor.\par
+ */}\par
+{\cf8\b package} {\cf19\b zimmerbelegung}{\cf4 ;}\par
+\par
+{\cf8\b import} {\cf19\b java.util.Arrays}{\cf4 ;}\par
+{\cf8\b import} {\cf19\b java.util.List}{\cf4 ;}\par
+\par
+{\cf5\i /**\par
+ *\par
+ * @author lars\par
+ */}\par
+{\cf8\b public} {\cf8\b class} {\cf19\b Maedchen} {\cf4 \{}\par
+\par
+    {\cf8\b public} List{\cf4 <}String{\cf4 >} freunde{\cf4 ;} {\cf5\i //Liste von Freunden\par
+}    {\cf8\b public} List{\cf4 <}String{\cf4 >} feinde{\cf4 ;} {\cf5\i //Liste von Feinden\par
+}    {\cf8\b public} {\cf18 byte} zimmer{\cf4 ;} {\cf5\i //Nummer des Zimmers\par
+}\par
+    {\cf8\b public} {\cf19 Maedchen}{\cf4 (}String{\cf4 [}{\cf4 ]} friends{\cf4 ,} String{\cf4 [}{\cf4 ]} enemies{\cf4 )} {\cf4 \{} {\cf5\i //Konstruktor\par
+}        {\cf8\b this}{\cf4 .}{\cf23 freunde} {\cf4 =} Arrays{\cf4 .}{\cf23 asList}{\cf4 (}friends{\cf4 )}{\cf4 ;}\par
+        {\cf8\b this}{\cf4 .}{\cf23 feinde} {\cf4 =} Arrays{\cf4 .}{\cf23 asList}{\cf4 (}enemies{\cf4 )}{\cf4 ;}\par
+        zimmer {\cf4 =} {\cf4 -}{\cf4 1}{\cf4 ;} {\cf5\i //Unverplante M{\u228}dchen haben -1 als Zimmernummer\par
+}    {\cf4 \}}\par
+{\cf4 \}}\par
+}

@@ -1,0 +1,76 @@
+{\rtf1\ansi\uc0\deff0{\fonttbl{\f0\fmodern\fprq1\fcharset0;}}{\colortbl;\red136\green136\blue136;\red186\green33\blue33;\red0\green68\blue221;\red102\green102\blue102;\red64\green128\blue128;\red160\green160\blue0;\red25\green23\blue124;\red0\green128\blue0;\red187\green102\blue136;\red187\green102\blue34;\red136\green0\blue0;\red170\green34\blue255;\red153\green153\blue153;\red0\green160\blue0;\red160\green0\blue0;\red255\green0\blue0;\red128\green0\blue128;\red176\green0\blue64;\red0\green0\blue255;\red187\green187\blue187;\red188\green122\blue0;\red0\green0\blue128;\red125\green144\blue41;\red210\green65\blue58;}\f0 {\cf5\i /*\par
+ * To change this license header, choose License Headers in Project Properties.\par
+ * To change this template file, choose Tools | Templates\par
+ * and open the template in the editor.\par
+ */}\par
+{\cf8\b package} {\cf19\b schwimmbad}{\cf4 ;}\par
+{\cf5\i /**\par
+ *\par
+ * @author lars\par
+ */}\par
+{\cf8\b public} {\cf8\b class} {\cf19\b Besuch} {\cf4 \{} {\cf5\i //Besuch, speichert alles, was wir {\u252}ber einen Besuch wissen wollen\par
+}\par
+    {\cf8\b public} {\cf18 float} preis{\cf4 ;}\par
+    {\cf8\b public} {\cf18 int} einzelkarten_kinder{\cf4 ;}\par
+    {\cf8\b public} {\cf18 int} einzelkarten_erwachsene{\cf4 ;}\par
+    {\cf8\b public} {\cf18 int} gutscheine_kinder{\cf4 ;}\par
+    {\cf8\b public} {\cf18 int} gutscheine_erwachsene{\cf4 ;}\par
+    {\cf8\b public} {\cf18 boolean} ermaessigung{\cf4 ;}\par
+    {\cf8\b public} {\cf18 int}{\cf4 [}{\cf4 ]} familienkarten{\cf4 ;}\par
+    {\cf8\b public} {\cf18 int} tageskarten{\cf4 ;}\par
+\par
+    {\cf8\b public} {\cf19 Besuch}{\cf4 (}{\cf18 int} einzelkarten_erwachsene{\cf4 ,} {\cf18 int} einzelkarten_kinder{\cf4 ,} {\cf18 int}{\cf4 [}{\cf4 ]} familienkarten{\cf4 ,} {\cf18 int} tageskarten{\cf4 )} {\cf4 \{}\par
+        {\cf8\b this}{\cf4 .}{\cf23 einzelkarten_kinder} {\cf4 =} einzelkarten_kinder{\cf4 ;}\par
+        {\cf8\b this}{\cf4 .}{\cf23 einzelkarten_erwachsene} {\cf4 =} einzelkarten_erwachsene{\cf4 ;}\par
+        {\cf8\b this}{\cf4 .}{\cf23 familienkarten}{\cf4 =}{\cf8\b new} {\cf18 int}{\cf4 [}{\cf4 4}{\cf4 ]}{\cf4 ;}\par
+        System{\cf4 .}{\cf23 arraycopy}{\cf4 (}familienkarten{\cf4 ,}{\cf4 0}{\cf4 ,}{\cf8\b this}{\cf4 .}{\cf23 familienkarten}{\cf4 ,}{\cf4 0}{\cf4 ,}{\cf4 4}{\cf4 )}{\cf4 ;}\par
+        {\cf8\b this}{\cf4 .}{\cf23 tageskarten} {\cf4 =} tageskarten{\cf4 ;}\par
+        {\cf18 float} einzelkarten_preis{\cf4 =}einzelkarten_kinder {\cf4 *} {\cf4 2.50f} {\cf4 +} einzelkarten_erwachsene {\cf4 *} {\cf4 3.50f}{\cf4 ;}\par
+        {\cf8\b if} {\cf4 (}Schwimmbad{\cf4 .}{\cf23 wochentag}{\cf4 )} {\cf4 \{} {\cf5\i //An Wochentagen\par
+}            einzelkarten_preis{\cf4 *}{\cf4 =}{\cf4 0.8f}{\cf4 ;} {\cf5\i //Ist der Einzelkartenpreis um 20 % reduziert\par
+}        {\cf4 \}}\par
+        {\cf8\b this}{\cf4 .}{\cf23 preis} {\cf4 =} einzelkarten_preis  {\cf4 +} {\cf4 (}familienkarten{\cf4 [}{\cf4 0}{\cf4 ]} {\cf4 +} familienkarten{\cf4 [}{\cf4 1}{\cf4 ]} {\cf4 +} familienkarten{\cf4 [}{\cf4 2}{\cf4 ]} {\cf4 +} familienkarten{\cf4 [}{\cf4 3}{\cf4 ]}{\cf4 )} {\cf4 *} {\cf4 8.0f} {\cf4 +} tageskarten {\cf4 *} {\cf4 11.0f}{\cf4 ;}\par
+    {\cf4 \}}\par
+\par
+    {\cf12 @Override}\par
+    {\cf8\b public} String {\cf19 toString}{\cf4 (}{\cf4 )} {\cf4 \{} {\cf5\i //ALLES ausgeben\par
+}        String s {\cf4 =} {\cf2 ""}{\cf4 ;}\par
+        s{\cf4 +}{\cf4 =}{\cf2 "Besuch beim Schwimmbad - Kosten"}{\cf4 ;}\par
+        s{\cf4 +}{\cf4 =}{\cf2 "\\n"}{\cf4 ;}\par
+        s{\cf4 +}{\cf4 =}{\cf2 "Familienkarten(2 Erwachsene, 2 Kinder) : "}{\cf4 +}Integer{\cf4 .}{\cf23 toString}{\cf4 (}familienkarten{\cf4 [}{\cf4 0}{\cf4 ]}{\cf4 )}{\cf4 ;}\par
+        s{\cf4 +}{\cf4 =}{\cf2 "\\n"}{\cf4 ;}\par
+        s{\cf4 +}{\cf4 =}{\cf2 "Familienkarten(1 Erwachsener, 3 Kinder) : "}{\cf4 +}Integer{\cf4 .}{\cf23 toString}{\cf4 (}familienkarten{\cf4 [}{\cf4 1}{\cf4 ]}{\cf4 )}{\cf4 ;}\par
+        s{\cf4 +}{\cf4 =}{\cf2 "\\n"}{\cf4 ;}\par
+        s{\cf4 +}{\cf4 =}{\cf2 "Familienkarten(2 Erwachsene, 1 Kind) : "}{\cf4 +}Integer{\cf4 .}{\cf23 toString}{\cf4 (}familienkarten{\cf4 [}{\cf4 2}{\cf4 ]}{\cf4 )}{\cf4 ;}\par
+        s{\cf4 +}{\cf4 =}{\cf2 "\\n"}{\cf4 ;}\par
+        s{\cf4 +}{\cf4 =}{\cf2 "Familienkarten(1 Erwachsener, 2 Kinder) : "}{\cf4 +}Integer{\cf4 .}{\cf23 toString}{\cf4 (}familienkarten{\cf4 [}{\cf4 3}{\cf4 ]}{\cf4 )}{\cf4 ;}\par
+        s{\cf4 +}{\cf4 =}{\cf2 "\\n"}{\cf4 ;}\par
+        s{\cf4 +}{\cf4 =}{\cf2 "Tageskarten : "}{\cf4 +}Integer{\cf4 .}{\cf23 toString}{\cf4 (}tageskarten{\cf4 )}{\cf4 ;}\par
+        s{\cf4 +}{\cf4 =}{\cf2 "\\n"}{\cf4 ;}\par
+        s{\cf4 +}{\cf4 =}{\cf2 "Einzelkarten Erwachsene : "}{\cf4 +}Integer{\cf4 .}{\cf23 toString}{\cf4 (}einzelkarten_erwachsene{\cf4 )}{\cf4 ;}\par
+        s{\cf4 +}{\cf4 =}{\cf2 "\\n"}{\cf4 ;}\par
+        s{\cf4 +}{\cf4 =}{\cf2 "Einzelkarten Kinder : "}{\cf4 +}Integer{\cf4 .}{\cf23 toString}{\cf4 (}einzelkarten_kinder{\cf4 )}{\cf4 ;}\par
+        s{\cf4 +}{\cf4 =}{\cf2 "\\n"}{\cf4 ;}\par
+        s{\cf4 +}{\cf4 =}{\cf2 "Es werden "}{\cf4 +}Integer{\cf4 .}{\cf23 toString}{\cf4 (}gutscheine_erwachsene{\cf4 )}{\cf4 +}{\cf2 " Gutscheine f{\u252}r den freien Eintritt von Erwachsenen benutzt."}{\cf4 ;}\par
+        s{\cf4 +}{\cf4 =}{\cf2 "\\n"}{\cf4 ;}\par
+        s{\cf4 +}{\cf4 =}{\cf2 "Es werden "}{\cf4 +}Integer{\cf4 .}{\cf23 toString}{\cf4 (}gutscheine_kinder{\cf4 )}{\cf4 +}{\cf2 " Gutscheine f{\u252}r den freien Eintritt von Kindern benutzt."}{\cf4 ;}\par
+        s{\cf4 +}{\cf4 =}{\cf2 "\\n"}{\cf4 ;}\par
+        s{\cf4 +}{\cf4 =}{\cf2 "Es wird "}{\cf4 ;}\par
+        {\cf8\b if} {\cf4 (}ermaessigung{\cf4 )} {\cf4 \{}\par
+            s{\cf4 +}{\cf4 =}{\cf2 "ein"}{\cf4 ;}\par
+        {\cf4 \}}\par
+        {\cf8\b else} {\cf4 \{}\par
+            s{\cf4 +}{\cf4 =}{\cf2 "kein"}{\cf4 ;}\par
+        {\cf4 \}}\par
+        s{\cf4 +}{\cf4 =}{\cf2 " Gutschein f{\u252}r die Erm{\u228}{\u223}igung von 10 % eingesetzt."}{\cf4 ;}\par
+        s{\cf4 +}{\cf4 =}{\cf2 "\\n"}{\cf4 ;}\par
+        s{\cf4 +}{\cf4 =}{\cf2 "Preis : "}{\cf4 +}Float{\cf4 .}{\cf23 toString}{\cf4 (}preis{\cf4 )}{\cf4 ;}\par
+        {\cf8\b return} s{\cf4 ;}\par
+    {\cf4 \}}\par
+    \par
+    {\cf8\b public} {\cf18 void} {\cf19 setErmaessigung}{\cf4 (}{\cf4 )} {\cf4 \{}\par
+        ermaessigung{\cf4 =}{\cf8\b true}{\cf4 ;}\par
+        {\cf8\b this}{\cf4 .}{\cf23 preis}{\cf4 *}{\cf4 =}{\cf4 0.9f}{\cf4 ;} {\cf5\i //-10 %\par
+}    {\cf4 \}}\par
+{\cf4 \}}\par
+}
